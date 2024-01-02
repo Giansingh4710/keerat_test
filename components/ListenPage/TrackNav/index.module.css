@@ -1,0 +1,33 @@
+.trackNavBtn{
+  margin: 1em;
+  flex:1;
+  background-color: #FFA500; 
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  box-shadow: 2px 2px 2px #888888; 
+}
+
+#shuffleBtn{
+  margin: 1em;
+}
+#shuffleBtn img {
+  height: 30px;
+  width: 30px;
+}
+
+.basicBtn {
+  background-color: #FFA500; 
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  box-shadow: 2px 2px 2px #888888; 
+}
+.basicBtn:hover {
+  background-color: #3e8e41; 
+}
+

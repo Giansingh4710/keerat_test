@@ -1,0 +1,227 @@
+#body {
+  background-color: #0074D9;
+  text-align: center;
+  align-items: center;
+  font-family: -apple-system, blinkmacsystemfont, "segoe ui", "roboto", "oxygen",
+    "ubuntu", "cantarell", "fira sans", "droid sans", "helvetica neue",
+    sans-serif;
+}
+
+#audio {
+  width: 100%;
+  /* margin-top: 10px; */
+}
+
+
+/* -------------------- modal -------------- */
+  #saveTrackLocalModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  }
+  #saveTrackLocalModal_content{
+    background-color: #fefefe;
+    border-radius: 1em;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+  #saveTrackLocalModalClose {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  /* -------------------- Global Database Modal -------------- */
+  .dialog {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+  }
+  .dialog_content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+  }
+  .show_dialog {
+    display: block;
+  }
+
+  #modal_content {
+    background-color: #ff7f50;
+    margin: auto;
+    padding: 2em;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 1em;
+  }
+  .userInputItem {
+    text-align: center;
+    align-items: center;
+    background-color: #0077be;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  #closeModal {
+    color: black;
+    float: right;
+    top: 500px;
+    font-size: 61px;
+    font-weight: bold;
+  }
+  #closeModal:hover,
+  #closeModal:focus {
+    color: #aaa;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .shabad_opt_from_userinput {
+    background-color: white;
+    font-size: 0.5em;
+    margin: 5px;
+    border-radius: 5px;
+  }
+  #shabadId_list_opts{
+    background-color:#14148F ;
+    height: 20vh;
+    overflow-y:auto;
+  }
+  #sbdDetails div {
+    font-size: 0.2em;
+    background-color:#14148F ;
+    color: white;
+    height: 30vh;
+    overflow-y:auto;
+  }
+
+/* -------------------- modal end -------------- */
+
+#searchInput {
+  width: 95%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1em;
+  text-align: center;
+}
+
+#searchResults:empty {
+  height: 0;
+}
+#searchResults{
+  height: 30vh;
+  overflow-y:auto;
+  margin: 10px;
+}
+.border{
+  text-align: center;
+  border: 3px solid #34568b;
+  /* margin: 5px; */
+  padding: 5px;
+  border-radius: 10px;
+}
+
+#trackInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#trackNameAtag {
+  width: 90%;
+  word-wrap: break-word;
+  font-weight: bold;
+  margin: 1em;
+  color: darkblue;
+}
+#trackNameAtag:visited {
+  text-decoration-color: hotpink;
+}
+
+#playBackOptions{
+  display: flex;
+  justify-content: space-around;
+}
+
+.skip10btn {
+  /* background-color: grey; */
+  border-radius: 50%;
+  margin: 1em;
+}
+
+#pickSkipInterval{
+  margin: 5px;
+}
+
+#saveTrackBtn{
+  margin: 1em;
+}
+.trackNavBtn{
+  margin: 1em;
+  flex:1;
+  background-color: #FFA500; 
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  box-shadow: 2px 2px 2px #888888; 
+}
+
+#shuffleBtn{
+  margin: 1em;
+}
+#shuffleBtn img {
+  height: 30px;
+  width: 30px;
+}
+
+.basicBtn {
+  background-color: #FFA500; 
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  box-shadow: 2px 2px 2px #888888; 
+}
+.basicBtn:hover {
+  background-color: #3e8e41; 
+}
+
+.sectionDisplay {
+  margin:1em;
+  border-radius: 1em;
+  background-color: navy;
+  color: white;
+}
+
+#checkBtnsOpts{
+  display: flex;
+  justify-content: space-around;
+  padding: 1em;
+}
+
