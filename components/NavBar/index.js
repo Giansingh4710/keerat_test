@@ -8,8 +8,7 @@ export default function NavBar() {
       </a>
       <div className={styles.dropdown}>
         <button className={styles.dropbtn}>
-          Keertan
-          <i class='fa fa-caret-down'></i>
+          Keertan &darr;
         </button>
         <div className={styles.dropdown_content}>
           <a href='/Keertan/AkhandKeertan/'>Akhand Keertan</a>
@@ -28,13 +27,6 @@ export default function NavBar() {
       <a href='/MiscellaneousTopics'>Miscellaneous Topics</a>
       <a href='/GianiSherSinghJi'>Giani Sher Singh Ji</a>
       <a href='http://45.76.2.28/trackIndex'>Tracks Indexed</a>
-      <a
-        href='javascript:void(0);'
-        className={styles.icon}
-        onclick='toggleDropdown()'
-      >
-        &#9776;
-      </a>
     </nav>
   )
 }

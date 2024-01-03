@@ -17,7 +17,7 @@ export default function TrackNavigation({
         className={styles.basicBtn}
         onClick={() => setShuffle(!shuffle)}
       >
-        <Image src='/imgs/shuffle_icon.png' />
+        <Image src='/imgs/shuffle_icon.png' width={20} height={20} />
         <p>Shuffle: {shuffle ? 'ON' : 'OFF'}</p>
       </button>
       <button className={styles.basicBtn} onClick={nextTrack}>

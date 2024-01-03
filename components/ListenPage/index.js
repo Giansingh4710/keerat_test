@@ -1,4 +1,4 @@
-'use client' // This is a client component
+'use client'
 import Image from 'next/image'
 import styles from './index.module.css'
 import Header from './Header/index.js'
@@ -127,18 +127,17 @@ export default function ListenPage({ title, tracksObj }) {
       <div id={styles.saveTrackLocalModal} className={styles.modal}>
         <div id={styles.saveTrackLocalModal_content}>
           <span id={styles.saveTrackLocalModalClose}>&times;</span>
-          <label for='noteForSavedTrack'>
+          <label htmlFor='noteForSavedTrack'>
             Enter a note if you would like (not needed):
           </label>
           <div>
             <textarea
-              multiline
               placeholder='ex: Amazing Bani at 10:00'
               id={styles.noteForSavedTrack}
             ></textarea>
           </div>
           <div>
-            <button className={styles.basicBtn} onclick='saveTrack()'>
+            <button className={styles.basicBtn} onClick='saveTrack()'>
               Save
             </button>
           </div>
@@ -150,13 +149,13 @@ export default function ListenPage({ title, tracksObj }) {
           <p id={styles.formInfo}></p>
           <form
             id={styles.modal_content}
-            onsubmit='formValidation(event)'
+            // onsubmit='formValidation(event)'
             method='post'
             action='http://45.76.2.28/trackIndex/util/addData.php'
           >
             <span id={styles.closeModal}>&times;</span>
             <div className={styles.userInputItem}>
-              <label for='userDesc'>Description:</label>
+              <label htmlFor='userDesc'>Description:</label>
               <input
                 id={styles.userDesc}
                 name='description'
@@ -167,13 +166,13 @@ export default function ListenPage({ title, tracksObj }) {
               <div className={styles.displayNone} id={styles.gurbani_line}>
                 <button id={styles.only_this_line}></button>
               </div>
-              <label for='usedShabadId'>Shabad ID:</label>
+              <label htmlFor='usedShabadId'>Shabad ID:</label>
               <input
                 list='shabadId_list_opts'
                 id={styles.usedShabadId}
                 name='shabadId'
                 placeholder='ਤਕਮਲ'
-                oninput='add_shabad_from_user_input()'
+                // oninput='add_shabad_from_user_input()'
               ></input>
               <div id={styles.shabadId_list_opts}></div>
               <details id={styles.sbdDetails} className={styles.displayNone}>
@@ -181,8 +180,8 @@ export default function ListenPage({ title, tracksObj }) {
                 <div></div>
               </details>
             </div>
-            <div class='userInputItem'>
-              <label for='userTimestamp'>
+            <div className='userInputItem'>
+              <label htmlFor='userTimestamp'>
                 Timestamp of where Description Happened:
               </label>
               <div id={styles.userTimestamp}>
@@ -192,7 +191,7 @@ export default function ListenPage({ title, tracksObj }) {
                   type='number'
                   min='0'
                   max='59'
-                  inputmode='numeric'
+                  inputMode='numeric'
                 ></input>
                 :
                 <input
@@ -201,7 +200,7 @@ export default function ListenPage({ title, tracksObj }) {
                   type='number'
                   min='0'
                   max='59'
-                  inputmode='numeric'
+                  inputMode='numeric'
                 ></input>
                 :
                 <input
@@ -210,13 +209,13 @@ export default function ListenPage({ title, tracksObj }) {
                   type='number'
                   min='0'
                   max='59'
-                  inputmode='numeric'
+                  inputMode='numeric'
                 ></input>
               </div>
               <div id={styles.userTimestamp}>
-                <label for='hours'>hours:</label>
-                <label for='mins'>minutes:</label>
-                <label for='secs'>seconds</label>
+                <label htmlFor='hours'>hours:</label>
+                <label htmlFor='mins'>minutes:</label>
+                <label htmlFor='secs'>seconds</label>
               </div>
             </div>
 
@@ -242,7 +241,7 @@ function ArtistsOptions({ allOpts, setAllOpts, setTrackLinks }) {
           type='checkbox'
           id={artist}
           name={artist}
-          onClick={() => {
+          onChange={() => {
             setAllOpts(() => {
               const newObj = {
                 ...allOpts,
@@ -256,7 +255,7 @@ function ArtistsOptions({ allOpts, setAllOpts, setTrackLinks }) {
             })
           }}
         />
-        <label for={artist}>{artist}</label>
+        <label htmlFor={artist}>{artist}</label>
       </div>
     )
   })
@@ -386,7 +385,7 @@ function FilterTracks({ tracks }) {
           setShowing(true)
         }}
       />
-      <button onclick='showSavedTracks()' id={styles.showSavedTrksBtn}>
+      <button onClick='showSavedTracks()' id={styles.showSavedTrksBtn}>
         Show Saved Tracks
       </button>
       <button
@@ -510,7 +509,7 @@ function TrackPlayback({ link, artist, allOpts }) {
         </button>
       </div>
 
-      <label for='pickSkipInterval'>Skip Interval</label>
+      <label htmlFor='pickSkipInterval'>Skip Interval</label>
       <select
         id={styles.pickSkipInterval}
         onChange={(e) => setSkipTime(parseInt(e.target.value))}
