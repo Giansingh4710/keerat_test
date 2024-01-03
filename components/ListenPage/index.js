@@ -236,7 +236,7 @@ function ArtistsOptions({ allOpts, setAllOpts, setTrackLinks }) {
 
   const artist_options = Object.keys(allOpts).map((artist) => {
     return (
-      <div>
+      <div key={artist}>
         <input
           checked={allOpts[artist].checked}
           type='checkbox'
@@ -404,11 +404,12 @@ function FilterTracks({ tracks }) {
 }
 
 function TrackPlayback({ link, artist, allOpts }) {
-  if (!link) return <></>
   const [currentTime, setCurrentTime] = useState('00:00')
   const [skipTime, setSkipTime] = useState(10)
   const [playPauseImg, setPlayPauseImg] = useState('/imgs/pause.png')
   const audioRef = useRef(null)
+
+  if (!link) return <></>
 
   function copyLink() {
     const url = new URL(window.location.href.split('?')[0].split('#')[0])
@@ -468,7 +469,12 @@ function TrackPlayback({ link, artist, allOpts }) {
           }}
           className={styles.skip10btn}
         >
-          <Image src='/imgs/back10.png' width={30} height={30} />
+          <Image
+            alt='Back Button'
+            src='/imgs/back10.png'
+            width={30}
+            height={30}
+          />
         </button>
         <button
           onClick={() => {
@@ -482,7 +488,12 @@ function TrackPlayback({ link, artist, allOpts }) {
           }}
           className={styles.skip10btn}
         >
-          <Image src={playPauseImg} width={30} height={30} />
+          <Image
+            alt='Play Pause Button'
+            src={playPauseImg}
+            width={30}
+            height={30}
+          />
         </button>
         <button
           onClick={() => {
@@ -490,7 +501,12 @@ function TrackPlayback({ link, artist, allOpts }) {
           }}
           className={styles.skip10btn}
         >
-          <Image src='/imgs/forward10.png' width={30} height={30} />
+          <Image
+            alt='Forward Button'
+            src='/imgs/forward10.png'
+            width={30}
+            height={30}
+          />
         </button>
       </div>
 

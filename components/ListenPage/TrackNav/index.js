@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import styles from './index.module.css'
 
 export default function TrackNavigation({
@@ -16,7 +17,7 @@ export default function TrackNavigation({
         className={styles.basicBtn}
         onClick={() => setShuffle(!shuffle)}
       >
-        <img src='/imgs/shuffle_icon.png' />
+        <Image src='/imgs/shuffle_icon.png' />
         <p>Shuffle: {shuffle ? 'ON' : 'OFF'}</p>
       </button>
       <button className={styles.basicBtn} onClick={nextTrack}>
