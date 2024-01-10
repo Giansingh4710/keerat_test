@@ -1,5 +1,6 @@
 #body {
-  background-color: #0074D9;
+  /* background-color: #0074D9; */
+  background-color: #001f3f;
   text-align: center;
   align-items: center;
   font-family: -apple-system, blinkmacsystemfont, "segoe ui", "roboto", "oxygen",
@@ -119,82 +120,6 @@
 
 /* -------------------- modal end -------------- */
 
-#searchInput {
-  width: 95%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 1em;
-  text-align: center;
-}
-
-#searchResults:empty {
-  height: 0;
-}
-#searchResults{
-  height: 30vh;
-  overflow-y:auto;
-  margin: 10px;
-}
-.border{
-  text-align: center;
-  border: 3px solid #34568b;
-  /* margin: 5px; */
-  padding: 5px;
-  border-radius: 10px;
-}
-
-#trackInfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#trackNameAtag {
-  width: 90%;
-  word-wrap: break-word;
-  font-weight: bold;
-  margin: 1em;
-  color: darkblue;
-}
-#trackNameAtag:visited {
-  text-decoration-color: hotpink;
-}
-
-#playBackOptions{
-  display: flex;
-  justify-content: space-around;
-}
-
-.skip10btn {
-  /* background-color: grey; */
-  border-radius: 50%;
-  margin: 1em;
-}
-
-#pickSkipInterval{
-  margin: 5px;
-}
-
-#saveTrackBtn{
-  margin: 1em;
-}
-.trackNavBtn{
-  margin: 1em;
-  flex:1;
-  background-color: #FFA500; 
-  color: white; 
-  padding: 10px 20px; 
-  border: none; 
-  border-radius: 5px; 
-  cursor: pointer; 
-  box-shadow: 2px 2px 2px #888888; 
-}
-
-#shuffleBtn{
-  margin: 1em;
-}
-
 .basicBtn {
   background-color: #FFA500; 
   color: white; 
@@ -208,16 +133,8 @@
   background-color: #3e8e41; 
 }
 
-.sectionDisplay {
-  margin:1em;
-  border-radius: 1em;
-  background-color: navy;
-  color: white;
-}
-
 #checkBtnsOpts{
   display: flex;
   justify-content: space-around;
   padding: 1em;
 }
-
