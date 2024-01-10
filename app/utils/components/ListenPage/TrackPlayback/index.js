@@ -25,12 +25,45 @@ export default function TrackPlayback({
   allOpts,
   audioRef,
   timeToGoTo,
+  title,
 }) {
   const [currentTime, setCurrentTime] = useState('0.0')
   const [skipTime, setSkipTime] = useState(10)
   const [paused, setPaused] = useState(true)
 
   if (!link) return <></>
+
+  function navigatorStuff() {
+    function skipTrackTime(direction) {
+      theAudioPlayer.currentTime += skipTime * direction
+    }
+    const theAudioPlayer = audioRef.current
+    navigator.mediaSession.setActionHandler('play', () => theAudioPlayer.play())
+    navigator.mediaSession.setActionHandler('pause', () =>
+      theAudioPlayer.pause()
+    )
+
+    navigator.mediaSession.setActionHandler('seekforward', () =>
+      skipTrackTime(1)
+    )
+    navigator.mediaSession.setActionHandler('seekbackward', () =>
+      skipTrackTime(-1)
+    )
+    navigator.mediaSession.setActionHandler('previoustrack', prevTrack)
+    navigator.mediaSession.setActionHandler('nexttrack', nextTrack)
+
+    navigator.mediaSession.setActionHandler('seekto', function (event) {
+      theAudioPlayer.currentTime = event.seekTime
+    })
+
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: getNameOfTrack(link),
+        artist: artist,
+        album: title,
+      })
+    }
+  }
 
   function copyLink() {
     const url = new URL(window.location.href.split('?')[0].split('#')[0])
@@ -79,6 +112,7 @@ export default function TrackPlayback({
           </button>
         </div>
         <TinyText>{artist}</TinyText>
+        <TinyText>{title}</TinyText>
         <div>
           <p style={styles.trackTime}>
             {formatTime(currentTime)} /{' '}
@@ -132,6 +166,7 @@ export default function TrackPlayback({
           console.log(timeToGoTo.current, audioRef.current.duration)
           audioRef.current.currentTime = parseInt(timeToGoTo.current)
           timeToGoTo.current = 0
+          navigatorStuff()
         }}
       ></audio>
 
@@ -172,15 +207,15 @@ const styles = {
     alignItems: 'flex-start',
     padding: '0.5em',
   },
-  trackInfoLine1:{ },
+  trackInfoLine1: {},
   trackNameAtag: {
     // all: "unset",
     wordWrap: 'break-word',
-    fontWeight: 'bold',
-    fontSize: '1rem',
+    paddingRight: '1em',
+
+    fontSize: '0.85rem',
     fontWeight: 500,
     letterSpacing: 0.2,
-    paddingRight: '1em',
   },
   trackTime: {
     all: 'unset',
@@ -207,7 +242,7 @@ const styles = {
 
 const TinyText = styled(Typography)({
   fontSize: '0.75rem',
-  opacity: 0.38,
+  opacity: 0.5,
   fontWeight: 500,
   letterSpacing: 0.2,
 })

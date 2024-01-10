@@ -8,12 +8,6 @@
     sans-serif;
 }
 
-#audio {
-  width: 100%;
-  /* margin-top: 10px; */
-}
-
-
 /* -------------------- modal -------------- */
   /* -------------------- Global Database Modal -------------- */
   .dialog {
@@ -91,22 +85,3 @@
   }
 
 /* -------------------- modal end -------------- */
-
-.basicBtn {
-  background-color: #FFA500; 
-  color: white; 
-  padding: 10px 20px; 
-  border: none; 
-  border-radius: 5px; 
-  cursor: pointer; 
-  box-shadow: 2px 2px 2px #888888; 
-}
-.basicBtn:hover {
-  background-color: #3e8e41; 
-}
-
-#checkBtnsOpts{
-  display: flex;
-  justify-content: space-around;
-  padding: 1em;
-}

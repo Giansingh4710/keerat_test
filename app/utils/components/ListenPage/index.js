@@ -153,7 +153,6 @@ export default function ListenPage({ title, tracksObj }) {
   return (
     <body id={styles.body}>
       <NavBar />
-      <Header title={title} />
       <FilterTracks
         tracks={TRACK_LINKS}
         playSpecificTrack={playSpecificTrack}
@@ -175,6 +174,7 @@ export default function ListenPage({ title, tracksObj }) {
         nextTrack={nextTrack}
         prevTrack={prevTrack}
         timeToGoTo={timeToGoTo}
+        title={title}
       />
 
       <Button variant='contained' onClick={() => setSaveTracksModal(true)}>
@@ -278,7 +278,14 @@ function ArtistsOptions({ allOpts, setAllOpts, setTrackLinks, numOfTracks }) {
 
   const artist_options = Object.keys(allOpts).map((artist) => {
     return (
-      <div key={artist}>
+      <div
+        key={artist}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
         <input
           checked={allOpts[artist].checked}
           type='checkbox'
@@ -315,10 +322,10 @@ function ArtistsOptions({ allOpts, setAllOpts, setTrackLinks, numOfTracks }) {
       {showingOpts ? (
         <div className='sectionDisplay'>
           <p>Total Tracks in Queue: {numOfTracks}</p>
-          <div id={styles.tracksOpts}>
-            <div id={styles.checkBtnsOpts}>
-              <button
-                className={styles.basicBtn}
+          <div>
+            <div>
+              <Button
+                variant='contained'
                 onClick={() => {
                   setAllOpts((opts) => {
                     Object.keys(opts).forEach((artist) => {
@@ -330,8 +337,9 @@ function ArtistsOptions({ allOpts, setAllOpts, setTrackLinks, numOfTracks }) {
                 }}
               >
                 Uncheck All Options
-              </button>
-              <button
+              </Button>
+              <Button
+                variant='contained'
                 className={styles.basicBtn}
                 onClick={() => {
                   setAllOpts((opts) => {
@@ -344,9 +352,19 @@ function ArtistsOptions({ allOpts, setAllOpts, setTrackLinks, numOfTracks }) {
                 }}
               >
                 Check All Options
-              </button>
+              </Button>
             </div>
-            {artist_options}
+            <div
+              style={{
+                display: 'flex',
+                // flexDirection: 'column',
+                alignItems: 'flex-start',
+                overflowY: 'scroll',
+                overflowX: 'scroll',
+              }}
+            >
+              {artist_options}
+            </div>
           </div>
         </div>
       ) : (
