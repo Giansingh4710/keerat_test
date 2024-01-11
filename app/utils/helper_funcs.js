@@ -3,15 +3,14 @@ export function getNameOfTrack(link) {
   return decodeURIComponent(decodeURIComponent(title))
 }
 
-function formatTime3(timeInSeconds) {
-  function str_pad_left(string, pad, length) {
-    return (new Array(length + 1).join(pad) + string).slice(-length)
-  }
-  const minutes = Math.floor(timeInSeconds / 60)
-  const seconds = Math.floor(timeInSeconds - minutes * 60)
-  const formatedTime =
-    str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds, '0', 2)
-  return formatedTime
+export function getTrackLinks(tracksObj) {
+  const links = []
+  Object.keys(tracksObj).forEach((artist) => {
+    if (tracksObj[artist].checked) {
+      links.push(...tracksObj[artist].trackLinks)
+    }
+  })
+  return links
 }
 
 export function formatTime(timeInSeconds) {

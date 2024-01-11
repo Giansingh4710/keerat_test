@@ -1,9 +1,12 @@
-import { ToggleButton } from '@mui/material'
-import Typography from '@mui/material/Typography'
+import { Button, Typography } from '@mui/material'
 
 import { useState } from 'react'
 import { formatTime, getNameOfTrack } from '../../../helper_funcs.js'
-import { styled, useTheme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
+
+import AudiotrackIcon from '@mui/icons-material/Audiotrack'
+import PersonIcon from '@mui/icons-material/Person'
+import AlbumIcon from '@mui/icons-material/Album'
 
 import PauseRounded from '@mui/icons-material/PauseRounded'
 import PlayArrowRounded from '@mui/icons-material/PlayArrowRounded'
@@ -25,7 +28,7 @@ export default function TrackPlayback({
   allOpts,
   audioRef,
   timeToGoTo,
-  title,
+  album,
 }) {
   const [currentTime, setCurrentTime] = useState('0.0')
   const [skipTime, setSkipTime] = useState(10)
@@ -60,7 +63,7 @@ export default function TrackPlayback({
       navigator.mediaSession.metadata = new MediaMetadata({
         title: getNameOfTrack(link),
         artist: artist,
-        album: title,
+        album: album,
       })
     }
   }
@@ -82,7 +85,7 @@ export default function TrackPlayback({
     navigator.clipboard.writeText(url.href)
   }
 
-  function PlayPauseBtn() {
+  function PlayPauseBtn({ style }) {
     function onclick() {
       if (paused) {
         audioRef.current.play()
@@ -94,62 +97,81 @@ export default function TrackPlayback({
     }
 
     if (paused) {
-      return <PlayArrowRounded onClick={onclick} style={styles.iconStyle} />
+      return <PlayArrowRounded style={style} onClick={onclick} />
     }
 
-    return <PauseRounded onClick={onclick} style={styles.iconStyle} />
+    return <PauseRounded style={style} onClick={onclick} />
   }
 
   return (
-    <div className='border' style={styles.container}>
-      <div style={styles.trackInfo}>
-        <div style={styles.trackInfoLine1}>
-          <a style={styles.trackNameAtag} target='_blank' href={link}>
-            {getNameOfTrack(link)}
-          </a>
-          <button style={styles.copyTrackBtn} onClick={copyLink}>
-            Copy Track Link
-          </button>
-        </div>
-        <TinyText>{artist}</TinyText>
-        <TinyText>{title}</TinyText>
-        <div>
-          <p style={styles.trackTime}>
-            {formatTime(currentTime)} /{' '}
-            {formatTime(audioRef?.current?.duration)}
-          </p>
-        </div>
+    <div style={styles.trackInfo}>
+      <div style={styles.trackInfoLine}>
+        <AudiotrackIcon
+          style={styles.musicIcon}
+          onClick={async () => {
+            await navigator.clipboard.writeText(link)
+            alert('Copied Raw Link to Clipboard:')
+          }}
+        />
+        <a style={styles.trackNameAtag} target='_blank' href={link}>
+          {getNameOfTrack(link)}
+        </a>
       </div>
-
-      <ToggleButton
-        value='shuffleButton'
-        onClick={() => {
-          setShuffle(!shuffle)
-        }}
-        size='small'
-        style={{
-          ...styles.shuffle,
-          backgroundColor: !shuffle ? '#1565c0' : '#c07015',
-        }}
-      >
-        <p>Shuffle: {shuffle ? 'ON' : 'OFF'}</p>
-      </ToggleButton>
+      <div style={styles.trackInfoLine}>
+        <PersonIcon style={styles.musicIcon} />
+        <TinyText>{artist}</TinyText>
+      </div>
+      <div style={styles.trackInfoLine}>
+        <AlbumIcon style={styles.musicIcon} />
+        <TinyText>{album}</TinyText>
+      </div>
+      <div style={styles.randomRow}>
+        <p style={styles.trackTime}>
+          {formatTime(currentTime)} /{' '}
+          {formatTime(audioRef?.current?.duration)}
+        </p>
+        <Button
+          onClick={() => {
+            setShuffle(!shuffle)
+          }}
+          style={{
+            ...styles.btn,
+            backgroundColor: !shuffle ? '#1565c0' : '#c07015',
+          }}
+        >
+          <p>Shuffle: {shuffle ? 'ON' : 'OFF'}</p>
+        </Button>
+        <Button variant='contained' style={styles.btn} onClick={copyLink}>
+          Copy Link
+        </Button>
+      </div>
+      <div style={styles.skipIntervelDiv}>
+        <label htmlFor='pickSkipInterval'>Skip Interval:</label>
+        <select
+          style={styles.seekTimeSelect}
+          id='pickSkipInterval'
+          onChange={(e) => setSkipTime(parseInt(e.target.value))}
+        >
+          <option value='5'>5 Seconds</option>
+          <option value='10' defaultValue>
+            10 Seconds
+          </option>
+          <option value='30'>30 Seconds</option>
+          <option value='60'>60 Seconds</option>
+        </select>
+      </div>
       <div style={styles.playBackOptions}>
-        <SkipPreviousIcon onClick={prevTrack} style={styles.iconStyle} />
+        <SkipPreviousIcon style={styles.playbackIcon} onClick={prevTrack} />
         <FastRewindIcon
-          style={styles.iconStyle}
-          onClick={() => {
-            audioRef.current.currentTime -= skipTime
-          }}
+          style={styles.playbackIcon}
+          onClick={() => (audioRef.current.currentTime -= skipTime)}
         />
-        <PlayPauseBtn />
+        <PlayPauseBtn style={styles.playbackIcon} />
         <FastForwardIcon
-          onClick={() => {
-            audioRef.current.currentTime += skipTime
-          }}
-          style={styles.iconStyle}
+          onClick={() => (audioRef.current.currentTime += skipTime)}
+          style={styles.playbackIcon}
         />
-        <SkipNextIcon onClick={nextTrack} style={styles.iconStyle} />
+        <SkipNextIcon onClick={nextTrack} style={styles.playbackIcon} />
       </div>
       <audio
         src={link}
@@ -169,20 +191,6 @@ export default function TrackPlayback({
           navigatorStuff()
         }}
       ></audio>
-
-      <label htmlFor='pickSkipInterval'>Skip Interval</label>
-      <select
-        style={styles.seekTimeSelect}
-        id={styles.pickSkipInterval}
-        onChange={(e) => setSkipTime(parseInt(e.target.value))}
-      >
-        <option value='5'>5 Seconds</option>
-        <option value='10' defaultValue>
-          10 Seconds
-        </option>
-        <option value='30'>30 Seconds</option>
-        <option value='60'>60 Seconds</option>
-      </select>
     </div>
   )
 }
@@ -193,56 +201,80 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
   },
-  shuffle: {
-    backgroundColor: '#1565c0',
-    fontSize: '0.5em',
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '2px',
-  },
   trackInfo: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#E4922C',
     alignItems: 'flex-start',
+
+    backgroundColor: '#E4922C',
     padding: '0.5em',
+    borderRadius: '0.5em',
+    height: '100%',
   },
-  trackInfoLine1: {},
+  trackInfoLine: {
+    display: 'flex',
+    paddingTop: '0.5em',
+  },
+  musicIcon: {
+    fontSize: '1rem',
+    paddingRight: '0.5em',
+  },
   trackNameAtag: {
     // all: "unset",
-    wordWrap: 'break-word',
-    paddingRight: '1em',
-
-    fontSize: '0.85rem',
+    wordBreak: 'break-all',
     fontWeight: 500,
     letterSpacing: 0.2,
+    fontSize: '0.85rem',
   },
-  trackTime: {
-    all: 'unset',
-    fontSize: '0.75rem',
-  },
-  copyTrackBtn: {
-    color: 'black',
+  skipIntervelDiv: {
+    display: 'flex',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    padding: '0.5em',
   },
   audio: {
     width: '100%',
   },
   playBackOptions: {
     display: 'flex',
+    width: '100%',
   },
-  iconStyle: {
+  playbackIcon: {
     flex: 1,
     fontSize: '3rem',
-    // backgroundColor: 'red',
   },
   seekTimeSelect: {
     color: 'black',
+    marginLeft: '0.5em',
+  },
+
+  randomRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+    backgroundColor: 'navy',
+    borderRadius: '0.5em',
+  },
+  trackTime: {
+    all: 'unset',
+    fontSize: '0.85rem',
+    alignSelf: 'center',
+    flex: 1,
+    // backgroundColor: '#1565c0',
+  },
+  btn: {
+    margin: '0.5em',
+    fontSize: '0.5em',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '2px',
+    flex: 1,
   },
 }
 
 const TinyText = styled(Typography)({
-  fontSize: '0.75rem',
-  opacity: 0.5,
+  fontSize: '0.8rem',
+  opacity: 0.7,
   fontWeight: 500,
   letterSpacing: 0.2,
 })

@@ -1,19 +1,22 @@
 'use client'
 
 import styles from './index.module.css'
-import Header from './Header/index.js'
+import ArtistsOptions from './ArtistsOptions/index.js'
 import TrackPlayback from './TrackPlayback/index.js'
 import NavBar from '../NavBar/index.js'
+import SaveTrackModal from './SaveTrackModal/index.js'
+import IndexTrackModal from './IndexTrackModal/index.js'
+
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '@mui/material'
-import { getNameOfTrack } from '../../helper_funcs.js'
-import SaveTrackModal from './SaveTrackModal'
+import { getNameOfTrack, getTrackLinks } from '../../helper_funcs.js'
 
-// <script type="text/javascript" src="/assets/allShabads.js"></script>
 export default function ListenPage({ title, tracksObj }) {
   const [TRACK_LINKS, setTrackLinks] = useState(getTrackLinks(tracksObj))
   const [allOpts, setAllOpts] = useState(tracksObj)
   const [saveTracksModal, setSaveTracksModal] = useState(false)
+  const [indexTracksModal, setIndexTrackModal] = useState(!false)
+  const [showingOpts, setShowingOpts] = useState(false)
 
   const [shuffle, setShuffle] = useState(false) // audio track stuff
   const audioRef = useRef(null)
@@ -24,6 +27,36 @@ export default function ListenPage({ title, tracksObj }) {
     links_lst: [], //list of links
     curr_link: '',
   })
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const urlInd = parseInt(urlParams.get('trackIndex'))
+    const urlArtist = urlParams.get('artist')
+    const urlTime = urlParams.get('time')
+    const urlSearch = urlParams.get('search')
+
+    if (urlArtist && allOpts[urlArtist].checked === false) {
+      setAllOpts({
+        ...allOpts,
+        [urlArtist]: {
+          trackLinks: allOpts[urlArtist].trackLinks,
+          checked: true,
+        },
+      })
+    }
+
+    if (urlInd > -1) {
+      const the_link = allOpts[urlArtist].trackLinks[urlInd]
+
+      playSpecificTrack(the_link)
+
+      if (urlTime) {
+        timeToGoTo.current = parseInt(urlTime)
+      }
+      return
+    }
+    nextTrack()
+  }, [])
 
   function getTypeOfTrack(link) {
     let trackType = 'Unable To Get Info'
@@ -120,36 +153,6 @@ export default function ListenPage({ title, tracksObj }) {
     })
   }
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search)
-    const urlInd = parseInt(urlParams.get('trackIndex'))
-    const urlArtist = urlParams.get('artist')
-    const urlTime = urlParams.get('time')
-    const urlSearch = urlParams.get('search')
-
-    if (urlArtist && allOpts[urlArtist].checked === false) {
-      setAllOpts({
-        ...allOpts,
-        [urlArtist]: {
-          trackLinks: allOpts[urlArtist].trackLinks,
-          checked: true,
-        },
-      })
-    }
-
-    if (urlInd > -1) {
-      const the_link = allOpts[urlArtist].trackLinks[urlInd]
-
-      playSpecificTrack(the_link)
-
-      if (urlTime) {
-        timeToGoTo.current = parseInt(urlTime)
-      }
-      return
-    }
-    nextTrack()
-  }, [])
-
   return (
     <body id={styles.body}>
       <NavBar />
@@ -158,11 +161,16 @@ export default function ListenPage({ title, tracksObj }) {
         playSpecificTrack={playSpecificTrack}
         localStorageKey={title}
       />
+      <Button variant='contained' onClick={() => setShowingOpts(!showingOpts)}>
+        {showingOpts ? 'Show Options' : 'Hide Options'}
+      </Button>
       <ArtistsOptions
         allOpts={allOpts}
         setAllOpts={setAllOpts}
         setTrackLinks={setTrackLinks}
         numOfTracks={TRACK_LINKS.length}
+        showingOpts={showingOpts}
+        setShowingOpts={setShowingOpts}
       />
       <TrackPlayback
         artist={getTypeOfTrack(tracksHistory.curr_link)}
@@ -174,7 +182,7 @@ export default function ListenPage({ title, tracksObj }) {
         nextTrack={nextTrack}
         prevTrack={prevTrack}
         timeToGoTo={timeToGoTo}
-        title={title}
+        album={title}
       />
 
       <Button variant='contained' onClick={() => setSaveTracksModal(true)}>
@@ -188,200 +196,17 @@ export default function ListenPage({ title, tracksObj }) {
       />
       <br />
       <hr />
-      <div id={styles.dialog} className={styles.dialog}>
-        <div className={styles.dialog_content}>
-          <p id={styles.formInfo}></p>
-          <form
-            id={styles.modal_content}
-            // onsubmit='formValidation(event)'
-            method='post'
-            action='http://45.76.2.28/trackIndex/util/addData.php'
-          >
-            <span id={styles.closeModal}>&times;</span>
-            <div className={styles.userInputItem}>
-              <label htmlFor='userDesc'>Description:</label>
-              <input
-                id={styles.userDesc}
-                name='description'
-                placeholder='bin ek naam ik chit leen'
-              ></input>
-            </div>
-            <div className={styles.userInputItem}>
-              <div className={styles.displayNone} id={styles.gurbani_line}>
-                <button id={styles.only_this_line}></button>
-              </div>
-              <label htmlFor='usedShabadId'>Shabad ID:</label>
-              <input
-                list='shabadId_list_opts'
-                id={styles.usedShabadId}
-                name='shabadId'
-                placeholder='ਤਕਮਲ'
-                // oninput='add_shabad_from_user_input()'
-              ></input>
-              <div id={styles.shabadId_list_opts}></div>
-              <details id={styles.sbdDetails} className={styles.displayNone}>
-                <summary>Shabad ID</summary>
-                <div></div>
-              </details>
-            </div>
-            <div className='userInputItem'>
-              <label htmlFor='userTimestamp'>
-                Timestamp of where Description Happened:
-              </label>
-              <div id={styles.userTimestamp}>
-                <input
-                  name='hours'
-                  id={styles.hours}
-                  type='number'
-                  min='0'
-                  max='59'
-                  inputMode='numeric'
-                ></input>
-                :
-                <input
-                  name='mins'
-                  id={styles.mins}
-                  type='number'
-                  min='0'
-                  max='59'
-                  inputMode='numeric'
-                ></input>
-                :
-                <input
-                  name='secs'
-                  id={styles.secs}
-                  type='number'
-                  min='0'
-                  max='59'
-                  inputMode='numeric'
-                ></input>
-              </div>
-              <div id={styles.userTimestamp}>
-                <label htmlFor='hours'>hours:</label>
-                <label htmlFor='mins'>minutes:</label>
-                <label htmlFor='secs'>seconds</label>
-              </div>
-            </div>
-
-            <button>Add</button>
-          </form>
-        </div>
-      </div>
-
-      <Button variant='contained'>Save to Global Database</Button>
+      <IndexTrackModal
+        modalOpen={indexTracksModal}
+        setModal={setIndexTrackModal}
+        artist={getTypeOfTrack(tracksHistory.curr_link)}
+        link={tracksHistory.curr_link}
+      />
+      <Button variant='contained' onClick={() => setIndexTrackModal(true)}>
+        Save to Global Database
+      </Button>
     </body>
   )
-}
-
-function ArtistsOptions({ allOpts, setAllOpts, setTrackLinks, numOfTracks }) {
-  const [showingOpts, setShowingOpts] = useState(false)
-
-  const artist_options = Object.keys(allOpts).map((artist) => {
-    return (
-      <div
-        key={artist}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <input
-          checked={allOpts[artist].checked}
-          type='checkbox'
-          id={artist}
-          name={artist}
-          onChange={() => {
-            setAllOpts(() => {
-              const newObj = {
-                ...allOpts,
-                [artist]: {
-                  trackLinks: allOpts[artist].trackLinks,
-                  checked: !allOpts[artist].checked,
-                },
-              }
-              setTrackLinks(getTrackLinks(newObj))
-              return newObj
-            })
-          }}
-        />
-        <label htmlFor={artist}>{artist}</label>
-      </div>
-    )
-  })
-
-  return (
-    <div id={styles.optionMenu} className={styles.section}>
-      <Button
-        variant='contained'
-        id={styles.toggleShowingOpts}
-        onClick={() => setShowingOpts(!showingOpts)}
-      >
-        {showingOpts ? 'Show Options' : 'Hide Options'}
-      </Button>
-      {showingOpts ? (
-        <div className='sectionDisplay'>
-          <p>Total Tracks in Queue: {numOfTracks}</p>
-          <div>
-            <div>
-              <Button
-                variant='contained'
-                onClick={() => {
-                  setAllOpts((opts) => {
-                    Object.keys(opts).forEach((artist) => {
-                      opts[artist].checked = false
-                    })
-                    setTrackLinks(getTrackLinks(opts))
-                    return opts
-                  })
-                }}
-              >
-                Uncheck All Options
-              </Button>
-              <Button
-                variant='contained'
-                className={styles.basicBtn}
-                onClick={() => {
-                  setAllOpts((opts) => {
-                    Object.keys(opts).forEach((artist) => {
-                      opts[artist].checked = true
-                    })
-                    setTrackLinks(getTrackLinks(opts))
-                    return opts
-                  })
-                }}
-              >
-                Check All Options
-              </Button>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                // flexDirection: 'column',
-                alignItems: 'flex-start',
-                overflowY: 'scroll',
-                overflowX: 'scroll',
-              }}
-            >
-              {artist_options}
-            </div>
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
-    </div>
-  )
-}
-
-function getTrackLinks(tracksObj) {
-  const links = []
-  Object.keys(tracksObj).forEach((artist) => {
-    if (tracksObj[artist].checked) {
-      links.push(...tracksObj[artist].trackLinks)
-    }
-  })
-  return links
 }
 
 function FilterTracks({ tracks, playSpecificTrack, localStorageKey }) {
