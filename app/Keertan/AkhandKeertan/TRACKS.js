@@ -1,4 +1,4 @@
-export const SDO_TRACK_LINKS = [
+const SDO_TRACK_LINKS = [
   'http://sikhsoul.com/golden_khajana_files/mp3/Keertan/Bhai Mohinder Singh SDO/Aad Steh Jugad Steh.mp3',
   'http://sikhsoul.com/golden_khajana_files/mp3/Keertan/Bhai Mohinder Singh SDO/Aadhi Such Jugaadi Such.mp3',
   'http://sikhsoul.com/golden_khajana_files/mp3/Keertan/Bhai Mohinder Singh SDO/Aae Mil Gurasikh Aae Mil.mp3',
@@ -1604,7 +1604,7 @@ export const SDO_TRACK_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/sdo/yt_kirtanSewa/007 Har Jio Tudh Vito Bal - Bhai Mohinder Singh SDO (Chandigarh - May 1965) (kirtanSewa).mp3',
 ]
 
-export const GIANI_AMOLAK_TRACK_LINKS = [
+const GIANI_AMOLAK_TRACK_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/giani_amolak_singh/01-03DEC1988-Simran-610284210.mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/giani_amolak_singh/01-14SEP2003-Hukumnama-610287222.mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/giani_amolak_singh/01-GASJ-03JUL1984-Simran-Kabeer-Loottanaa-Hai-Th-Loott-Lai-599854848.mp3',
@@ -1865,7 +1865,7 @@ export const GIANI_AMOLAK_TRACK_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/giani_amolak_singh/yt_kirtanSewa/034 Gursikh Har Bolahu Mere Bhaiee - Giani Amolak Singh (kirtanSewa).mp3',
 ]
 
-export const TALWARAJI_TRACK_LINKS = [
+const TALWARAJI_TRACK_LINKS = [
   'http://sikhsoul.com/golden_khajana_files/mp3/Keertan/Bhai Joginder Singh Talwara/Aao sakhee har meyl kareyhaa.mp3',
   'http://sikhsoul.com/golden_khajana_files/mp3/Keertan/Bhai Joginder Singh Talwara/Aapeh meyl ley.mp3',
   'http://sikhsoul.com/golden_khajana_files/mp3/Keertan/Bhai Joginder Singh Talwara/Aeeh Sant Pauraneh.mp3',
@@ -2030,7 +2030,7 @@ export const TALWARAJI_TRACK_LINKS = [
   'https://www.ikirtan.com/Bhai_Joginder_Singh_Jee_Talwara/Bhai_Joginder_Singh_Talwara_Ludhiana_1980s.mp3',
 ]
 
-export const BHAI_MEHAR_SINGH_LINKS = [
+const BHAI_MEHAR_SINGH_LINKS = [
   'http://sikhsoul.com/golden_khajana_files/mp3/Keertan/Bhai Mehar Singh/Bhai Mehar Singh - Aae Mil Gurasikh Aae Mil.mp3',
   'http://sikhsoul.com/golden_khajana_files/mp3/Keertan/Bhai Mehar Singh/Bhai Mehar Singh - Dhannu Su Dhes Jahaa Toon Vasiaa.mp3',
   'http://sikhsoul.com/golden_khajana_files/mp3/Keertan/Bhai Mehar Singh/Bhai Mehar Singh - Gopaal thaeraa aarathaa.mp3',
@@ -2176,7 +2176,7 @@ export const BHAI_MEHAR_SINGH_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/bhai_mehar_singh/Visakhi Samagam NJ 2001 Raensabhai-741119791.mp3',
 ]
 
-export const ANJAAN_JI_LINKS = [
+const ANJAAN_JI_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/dr_pritam_singh_anjaan/Aisa Koe Jeh Dubida Maar Gavave - Late 90s-695561185.mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/dr_pritam_singh_anjaan/Anand Sahib - Dr Pritam Singh Anjaan-766900804.mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/dr_pritam_singh_anjaan/Chaupai Sahib  - Dr Pritam Singh Anjaan-766900762.mp3',
@@ -2252,7 +2252,7 @@ export const ANJAAN_JI_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/dr_pritam_singh_anjaan/Shabad Hazare - Dr Pritam Singh Anjaan-766900843.mp3',
 ]
 
-export const DULLAJI_LINKS = [
+const DULLAJI_LINKS = [
   'http://sikhsoul.com/golden_khajana_files/mp3/Keertan/Bhai Tejinderpal Singh Dulla/Bhai Tejinderpal Singh Dulla  - Andhar Sachaa Naehu Laaeiaa Preetham Aapanai.mp3',
   'http://sikhsoul.com/golden_khajana_files/mp3/Keertan/Bhai Tejinderpal Singh Dulla/Bhai Tejinderpal Singh Dulla  - Aoudh Ghattai Dhinas Rainaarae.mp3',
   'http://sikhsoul.com/golden_khajana_files/mp3/Keertan/Bhai Tejinderpal Singh Dulla/Bhai Tejinderpal Singh Dulla  - Baabaa Mai Karameheen Koorriaa.mp3',
@@ -3310,7 +3310,7 @@ export const DULLAJI_LINKS = [
   'https://akj.media/Media/Keertan/Amritsar/1984/001_Amritsar_Apr1984_SatE_RSK_BhaiTejinderpalSinghJeeDoolaVeerjee.mp3',
 ]
 
-export const BHAI_JEEVAN_SINGH_JI_LINKS = [
+const BHAI_JEEVAN_SINGH_JI_LINKS = [
   'https://akj.media/Media/Keertan/Delhi/2009/082_Delhi_Sep2009_SunE_RSK_BhaiJeevanSinghJee.mp3',
   'https://akj.media/Media/Keertan/Toronto/2002/013_Toronto_Apr2002_MonM_AK_BhaiJeevanSinghJee.mp3',
   'https://akj.media/Media/Keertan/Ludhiana/2002/005_Ludhiana_Jan2002_SatE_RSK_BhaiJeevanSinghJee.mp3',
@@ -3524,7 +3524,7 @@ export const BHAI_JEEVAN_SINGH_JI_LINKS = [
   'https://www.ikirtan.com//_Bhai_Jeevan_Singh_Jee/Old_Times/Folder%25202/side%25202%2520-%2520Bhai%2520Jiwan%2520Singh%2520-%2520Gur%2520Sathigur%2520Kaa%2520Jo%2520Sikh%2520Akhaaeae.mp3',
 ]
 
-export const GURINDER_S_LINKS = [
+const GURINDER_S_LINKS = [
   'https://akj.media/Media/Keertan/FatehgarhSahib/2021/005_FatehgarhSahib_25Dec2021_SatM_DSK_BhaiGurinderSinghJeeCA.mp3',
   'https://akj.media/Media/Keertan/FatehgarhSahib/2021/023_FatehgarhSahib_26Dec2021_SunM_DSK_BhaiGurinderSinghJeeCA.mp3',
   'https://akj.media/Media/Keertan/Vancouver/2019/013_Vancouver_Dec2019_SatM_ADV_BhaiGurinderSinghJeeCA.mp3',
@@ -3604,7 +3604,7 @@ export const GURINDER_S_LINKS = [
   'https://akj.media/Media/Keertan/Chicago/2006/001_Chicago_Mar2006_SatE_RSK_BhaiGurinderSinghJeeCA.mp3',
 ]
 
-export const HPS_TRACK_LINKS = [
+const HPS_TRACK_LINKS = [
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/hps/sc/AKV sabh kichh tum te maagnaa vaddbhaagee paae - Bh Hps.mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/hps/sc/aisee kirpaa karhu prabh mere - Bh Hps.mp3',
   'https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/hps/sc/aukhee gharree na dekhan daeee apnaa birad samaale - Bh Hps.mp3',
@@ -4072,3 +4072,44 @@ export const HPS_TRACK_LINKS = [
   'https://akj.media/Media/Keertan/Detroit/1992/010_Detroit_Sep1992_MonM_ADV_BhaiHarpreetSinghJeeToronto.mp3',
   'https://akj.media/Media/Keertan/Amritsar/1990/003_Amritsar_Dec1990_Mor_AK_BhaiHarpreetSinghJeeToronto.mp3',
 ]
+
+const ALL_OPTS = {
+  'Bhai Mohinder Singh Ji SDO': {
+    checked: true,
+    trackLinks: SDO_TRACK_LINKS,
+  },
+  'Bhai Tejinderpal Singh Ji Dulla': {
+    checked: true,
+    trackLinks: DULLAJI_LINKS,
+  },
+  'Giani Amolak Singh Ji': {
+    checked: true,
+    trackLinks: GIANI_AMOLAK_TRACK_LINKS,
+  },
+  'Bhai Sahib Jeevan Singh Ji': {
+    checked: true,
+    trackLinks: BHAI_JEEVAN_SINGH_JI_LINKS,
+  },
+  'Bhai Joginder Singh Ji Talwara': {
+    checked: true,
+    trackLinks: TALWARAJI_TRACK_LINKS,
+  },
+  'Bhai Mehar Singh Ji': {
+    checked: true,
+    trackLinks: BHAI_MEHAR_SINGH_LINKS,
+  },
+  'Dr.Preetam Singh Ji Anjaan': {
+    checked: true,
+    trackLinks: ANJAAN_JI_LINKS,
+  },
+  'Bhai Harpreet Singh Ji Toronto': {
+    checked: true,
+    trackLinks: HPS_TRACK_LINKS,
+  },
+  'Bhai Gurinder Singh Ji CA': {
+    checked: true,
+    trackLinks: GURINDER_S_LINKS,
+  },
+}
+
+module.exports = { ALL_OPTS };

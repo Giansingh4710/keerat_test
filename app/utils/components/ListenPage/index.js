@@ -1,31 +1,34 @@
 'use client'
 
-import styles from './index.module.css'
 import ArtistsOptions from './ArtistsOptions/index.js'
 import TrackPlayback from './TrackPlayback/index.js'
 import NavBar from '../NavBar/index.js'
 import SaveTrackModal from './SaveTrackModal/index.js'
-import IndexTrackModal from './IndexTrackModal/index.js'
+import SearchTracks from './SearchTracks/index.js'
 
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '@mui/material'
-import { getNameOfTrack, getTrackLinks } from '../../helper_funcs.js'
+import { getTrackLinks } from '../../helper_funcs.js'
 
-export default function ListenPage({ title, tracksObj }) {
+export default function ListenPage({
+  title,
+  tracksObj,
+  setTrackDetailForIndex,
+}) {
   const [TRACK_LINKS, setTrackLinks] = useState(getTrackLinks(tracksObj))
   const [allOpts, setAllOpts] = useState(tracksObj)
-  const [saveTracksModal, setSaveTracksModal] = useState(false)
-  const [indexTracksModal, setIndexTrackModal] = useState(!false)
-  const [showingOpts, setShowingOpts] = useState(false)
 
   const [shuffle, setShuffle] = useState(false) // audio track stuff
   const audioRef = useRef(null)
   const timeToGoTo = useRef(0)
 
+  const [artistOptModal, setArtistModal] = useState(false)
+
   const [tracksHistory, setTracksHistory] = useState({
     curr_ind: -1, //index in links_lst
     links_lst: [], //list of links
     curr_link: '',
+    curr_artist: '',
   })
 
   useEffect(() => {
@@ -77,6 +80,23 @@ export default function ListenPage({ title, tracksObj }) {
     return trackType
   }
 
+  function playTrack(curr_ind, curr_link, links_lst) {
+    const curr_artist = getTypeOfTrack(curr_link)
+    setTracksHistory({
+      curr_ind,
+      curr_link,
+      links_lst,
+      curr_artist,
+    })
+
+    if (setTrackDetailForIndex !== undefined) {
+      setTrackDetailForIndex({
+        artist: curr_artist,
+        link: curr_link,
+      })
+    }
+  }
+
   function nextTrack() {
     let curr_ind
     let curr_link
@@ -104,11 +124,7 @@ export default function ListenPage({ title, tracksObj }) {
       links_lst = tracksHistory.links_lst
     }
 
-    setTracksHistory({
-      curr_ind,
-      curr_link,
-      links_lst,
-    })
+    playTrack(curr_ind, curr_link, links_lst)
     console.log('After Next', { curr_ind, curr_link, links_lst })
   }
 
@@ -132,11 +148,7 @@ export default function ListenPage({ title, tracksObj }) {
       links_lst = tracksHistory.links_lst
     }
 
-    setTracksHistory({
-      curr_ind,
-      curr_link,
-      links_lst,
-    })
+    playTrack(curr_ind, curr_link, links_lst)
     console.log('After Prev', { curr_ind, curr_link, links_lst })
   }
 
@@ -145,35 +157,36 @@ export default function ListenPage({ title, tracksObj }) {
     ind = ind === -1 ? 0 : ind
 
     const linksLst = tracksHistory.links_lst
-    const updated = [...linksLst.slice(0, ind), link, ...linksLst.slice(ind)]
-    setTracksHistory({
-      curr_ind: ind, //same as old
-      curr_link: link,
-      links_lst: updated,
-    })
+    const updatedLinksLst = [
+      ...linksLst.slice(0, ind),
+      link,
+      ...linksLst.slice(ind),
+    ]
+
+    playTrack(ind, link, updatedLinksLst)
+  }
+
+  function BodyOrDiv({ children }) {
+    if (setTrackDetailForIndex !== undefined) {
+      return <div>{children}</div>
+    }
+    return <body>{children}</body>
   }
 
   return (
-    <body id={styles.body}>
+    <BodyOrDiv>
       <NavBar />
-      <FilterTracks
+      <SearchTracks
         tracks={TRACK_LINKS}
         playSpecificTrack={playSpecificTrack}
-        localStorageKey={title}
       />
-      <Button variant='contained' onClick={() => setShowingOpts(!showingOpts)}>
-        {showingOpts ? 'Show Options' : 'Hide Options'}
-      </Button>
-      <ArtistsOptions
-        allOpts={allOpts}
-        setAllOpts={setAllOpts}
-        setTrackLinks={setTrackLinks}
-        numOfTracks={TRACK_LINKS.length}
-        showingOpts={showingOpts}
-        setShowingOpts={setShowingOpts}
+      <SaveTrackModal
+        localStorageKey={`SavedTracks: ${title}`}
+        link={tracksHistory.curr_link}
+        playSpecificTrack={playSpecificTrack}
       />
       <TrackPlayback
-        artist={getTypeOfTrack(tracksHistory.curr_link)}
+        artist={tracksHistory.curr_artist}
         link={tracksHistory.curr_link}
         allOpts={allOpts}
         audioRef={audioRef}
@@ -184,142 +197,14 @@ export default function ListenPage({ title, tracksObj }) {
         timeToGoTo={timeToGoTo}
         album={title}
       />
-
-      <Button variant='contained' onClick={() => setSaveTracksModal(true)}>
-        Save Track Locally
-      </Button>
-      <SaveTrackModal
-        modalOpen={saveTracksModal}
-        setModal={setSaveTracksModal}
-        localStorageKey={`SavedTracks: ${title}`}
-        link={tracksHistory.curr_link}
+      <ArtistsOptions
+        allOpts={allOpts}
+        setAllOpts={setAllOpts}
+        setTrackLinks={setTrackLinks}
+        numOfTracks={TRACK_LINKS.length}
+        modalOpen={artistOptModal}
+        setModal={setArtistModal}
       />
-      <br />
-      <hr />
-      <IndexTrackModal
-        modalOpen={indexTracksModal}
-        setModal={setIndexTrackModal}
-        artist={getTypeOfTrack(tracksHistory.curr_link)}
-        link={tracksHistory.curr_link}
-      />
-      <Button variant='contained' onClick={() => setIndexTrackModal(true)}>
-        Save to Global Database
-      </Button>
-    </body>
-  )
-}
-
-function FilterTracks({ tracks, playSpecificTrack, localStorageKey }) {
-  const [searchInput, setSearchInput] = useState('')
-  const [searchedTracks, setTracks] = useState([])
-  const [showTracks, setShowing] = useState(false)
-
-  const styles = {
-    searchInput: {
-      color: 'black',
-      width: '95%',
-      padding: '10px',
-      border: '1px solid #ccc',
-      borderRadius: '10px',
-      fontSize: '1em',
-      textAlign: 'center',
-    },
-  }
-
-  function ShowingOfTracks() {
-    if (!showTracks) return <></>
-    const styles = {
-      btn: {
-        color: 'black',
-      },
-    }
-    return (
-      <div className='sectionDisplay'>
-        <p>{searchedTracks.length} Results Found</p>
-        <ol>
-          {searchedTracks.map((link, index) => {
-            return (
-              <li key={index}>
-                <button
-                  style={styles.btn}
-                  onClick={() => {
-                    playSpecificTrack(link)
-                  }}
-                >
-                  {getNameOfTrack(link)}
-                </button>
-              </li>
-            )
-          })}
-        </ol>
-      </div>
-    )
-  }
-
-  return (
-    <div>
-      <input
-        placeholder='Search for Track:'
-        style={styles.searchInput}
-        value={searchInput}
-        onInput={(e) => {
-          setSearchInput(e.target.value)
-          if (e.target.value === '') {
-            setTracks([])
-            setShowing(false)
-            return
-          }
-          const searchWordsLst = e.target.value.toLowerCase().split(' ')
-          const allLinksWithWordInds = []
-          tracks.forEach((link, index) => {
-            /* const trackName = getNameOfTrack(link) */
-            const trackName = link.toLowerCase()
-            let allWordsInTrackName = true
-            for (const word of searchWordsLst) {
-              if (!trackName.includes(word)) {
-                allWordsInTrackName = false
-                break
-              }
-            }
-            if (allWordsInTrackName) {
-              // allLinksWithWordInds.push(index)
-              allLinksWithWordInds.push(link)
-            }
-          })
-          setTracks(allLinksWithWordInds)
-          setShowing(true)
-        }}
-      />
-      <Button
-        onClick={() => {
-          let savedTracks = localStorage.getItem(
-            `SavedTracks: ${localStorageKey}`
-          )
-          savedTracks = JSON.parse(savedTracks)
-
-          const links = []
-          for (const link in savedTracks) {
-            const trkMsg = savedTracks[link].replaceAll('\n', ' ')
-            links.push(link)
-          }
-          setTracks(links)
-          setShowing(true)
-        }}
-        variant='outlined'
-      >
-        Show Saved Tracks
-      </Button>
-      <Button
-        variant='outlined'
-        onClick={() => {
-          setSearchInput('')
-          setTracks([])
-          setShowing(false)
-        }}
-      >
-        Clear Results
-      </Button>
-      <ShowingOfTracks />
-    </div>
+    </BodyOrDiv>
   )
 }

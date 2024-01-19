@@ -1,6 +1,6 @@
-import { Button, Typography } from '@mui/material'
+import { Button, IconButton, Typography } from '@mui/material'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { formatTime, getNameOfTrack } from '../../../helper_funcs.js'
 import { styled } from '@mui/material/styles'
 
@@ -33,8 +33,6 @@ export default function TrackPlayback({
   const [currentTime, setCurrentTime] = useState('0.0')
   const [skipTime, setSkipTime] = useState(10)
   const [paused, setPaused] = useState(true)
-
-  if (!link) return <></>
 
   function navigatorStuff() {
     function skipTrackTime(direction) {
@@ -97,38 +95,73 @@ export default function TrackPlayback({
     }
 
     if (paused) {
-      return <PlayArrowRounded style={style} onClick={onclick} />
+      return (
+        <IconButton onClick={onclick} style={style}>
+          <PlayArrowRounded style={style} />
+        </IconButton>
+      )
     }
 
-    return <PauseRounded style={style} onClick={onclick} />
+    return (
+      <IconButton onClick={onclick} style={style}>
+        <PauseRounded style={style} />
+      </IconButton>
+    )
   }
+
+  const audioComponent = useMemo(() => {
+    return (
+      <audio
+        src={link}
+        style={styles.audio}
+        ref={audioRef}
+        controls={true}
+        autoPlay={true}
+        onPause={() => setPaused(true)}
+        onPlay={() => setPaused(false)}
+        onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
+        onError={() => {}}
+        onEnded={nextTrack}
+        onLoadedData={() => {
+          console.log(timeToGoTo.current, audioRef.current.duration)
+          audioRef.current.currentTime = parseInt(timeToGoTo.current)
+          timeToGoTo.current = 0
+          navigatorStuff()
+        }}
+      ></audio>
+    )
+  }, [])
 
   return (
     <div style={styles.trackInfo}>
       <div style={styles.trackInfoLine}>
-        <AudiotrackIcon
-          style={styles.musicIcon}
+        <IconButton
           onClick={async () => {
             await navigator.clipboard.writeText(link)
             alert('Copied Raw Link to Clipboard:')
           }}
-        />
+        >
+          <AudiotrackIcon style={styles.musicIcon} />
+        </IconButton>
         <a style={styles.trackNameAtag} target='_blank' href={link}>
           {getNameOfTrack(link)}
         </a>
       </div>
       <div style={styles.trackInfoLine}>
-        <PersonIcon style={styles.musicIcon} />
+        <IconButton>
+          <PersonIcon style={styles.musicIcon} />
+        </IconButton>
         <TinyText>{artist}</TinyText>
       </div>
       <div style={styles.trackInfoLine}>
-        <AlbumIcon style={styles.musicIcon} />
+        <IconButton>
+          <AlbumIcon style={styles.musicIcon} />
+        </IconButton>
         <TinyText>{album}</TinyText>
       </div>
       <div style={styles.randomRow}>
         <p style={styles.trackTime}>
-          {formatTime(currentTime)} /{' '}
-          {formatTime(audioRef?.current?.duration)}
+          {formatTime(currentTime)} / {formatTime(audioRef?.current?.duration)}
         </p>
         <Button
           onClick={() => {
@@ -161,46 +194,36 @@ export default function TrackPlayback({
         </select>
       </div>
       <div style={styles.playBackOptions}>
-        <SkipPreviousIcon style={styles.playbackIcon} onClick={prevTrack} />
-        <FastRewindIcon
-          style={styles.playbackIcon}
+        <IconButton onClick={prevTrack} style={styles.playbackIcon}>
+          <SkipPreviousIcon style={styles.playbackIcon} />
+        </IconButton>
+
+        <IconButton
           onClick={() => (audioRef.current.currentTime -= skipTime)}
-        />
+          style={styles.playbackIcon}
+        >
+          <FastRewindIcon style={styles.playbackIcon} />
+        </IconButton>
+
         <PlayPauseBtn style={styles.playbackIcon} />
-        <FastForwardIcon
+
+        <IconButton
           onClick={() => (audioRef.current.currentTime += skipTime)}
           style={styles.playbackIcon}
-        />
-        <SkipNextIcon onClick={nextTrack} style={styles.playbackIcon} />
+        >
+          <FastForwardIcon style={styles.playbackIcon} />
+        </IconButton>
+
+        <IconButton onClick={nextTrack} style={styles.playbackIcon}>
+          <SkipNextIcon style={styles.playbackIcon} />
+        </IconButton>
       </div>
-      <audio
-        src={link}
-        style={styles.audio}
-        ref={audioRef}
-        controls={true}
-        autoPlay={true}
-        onPause={() => setPaused(true)}
-        onPlay={() => setPaused(false)}
-        onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
-        onError={() => {}}
-        onEnded={nextTrack}
-        onLoadedData={() => {
-          console.log(timeToGoTo.current, audioRef.current.duration)
-          audioRef.current.currentTime = parseInt(timeToGoTo.current)
-          timeToGoTo.current = 0
-          navigatorStuff()
-        }}
-      ></audio>
+      {audioComponent}
     </div>
   )
 }
 
 const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
   trackInfo: {
     display: 'flex',
     flexDirection: 'column',
@@ -209,7 +232,8 @@ const styles = {
     backgroundColor: '#E4922C',
     padding: '0.5em',
     borderRadius: '0.5em',
-    height: '100%',
+    height: '40vh',
+    marginTop: '1.5em',
   },
   trackInfoLine: {
     display: 'flex',
@@ -225,6 +249,7 @@ const styles = {
     fontWeight: 500,
     letterSpacing: 0.2,
     fontSize: '0.85rem',
+    paddingTop: '0.5em',
   },
   skipIntervelDiv: {
     display: 'flex',
@@ -277,4 +302,5 @@ const TinyText = styled(Typography)({
   opacity: 0.7,
   fontWeight: 500,
   letterSpacing: 0.2,
+  paddingTop: '0.5em',
 })

@@ -78,6 +78,11 @@
     float: right;
     display: block;
   }
+
+  .icon {
+    float: right;
+    display: block;
+  }
 }
 
 @media screen and (max-width: 600px) {

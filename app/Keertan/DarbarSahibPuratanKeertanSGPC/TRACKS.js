@@ -1,4 +1,4 @@
-export const BhaiRandhirSingh = [
+const BhaiRandhirSingh = [
   "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/bhai_randhir_singh/Apr,02 2017 (08.40pm - Samapti) Bhai Randhir Singh.mp3",
   "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/bhai_randhir_singh/Apr,03 2017 (03.20pm - 04.20pm) Bhai Randhir Singh.mp3",
   "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/bhai_randhir_singh/Apr,03 2017 (08.00am - 09.00am) Bhai Randhir Singh.mp3",
@@ -750,7 +750,7 @@ export const BhaiRandhirSingh = [
   "https://daasstorage13.blob.core.windows.net/ds1/audios/keertan/bhai_randhir_singh/Sep,30 2019 (02.20pm - 03.20pm) Bhai Randhir Singh.mp3",
 ]
 
-export const AjitSinghAlankary = [
+const AjitSinghAlankary = [
   "http://sgpc.net/puratan-kirtan/Ajit Singh Alankary/01 Track 01 1.m4a",
   "http://sgpc.net/puratan-kirtan/Ajit Singh Alankary/01 Track 01.m4a",
   "http://sgpc.net/puratan-kirtan/Ajit Singh Alankary/02 Track 02 1.m4a",
@@ -761,7 +761,7 @@ export const AjitSinghAlankary = [
   "http://sgpc.net/puratan-kirtan/Ajit Singh Alankary/asa di vaar ajit singh.mp3",
 ]
 
-export const AvtarSingh = [
+const AvtarSingh = [
   "http://sgpc.net/puratan-kirtan/Avtar Singh/01 Track 01.m4a",
   "http://sgpc.net/puratan-kirtan/Avtar Singh/01 Track 1.wma",
   "http://sgpc.net/puratan-kirtan/Avtar Singh/02 Track 02.m4a",
@@ -819,11 +819,11 @@ export const AvtarSingh = [
   "http://sgpc.net/puratan-kirtan/Avtar Singh/thir ghar baiso har jan pyare.mp3",
 ]
 
-export const BahadurSinghJi = [
+const BahadurSinghJi = [
   "http://sgpc.net/puratan-kirtan/Bahadur Singh Ji/Bal Jaaon/oh bela ko houn bal jaoun.mp3",
 ]
 
-export const BalbirSingh = [
+const BalbirSingh = [
   "http://sgpc.net/puratan-kirtan/Balbir Singh/anand sahib ramkali.mp3",
   "http://sgpc.net/puratan-kirtan/Balbir Singh/at pritam man mohna.mp3",
   "http://sgpc.net/puratan-kirtan/Balbir Singh/bisar gyi sabh tat parayi guldasta kauns.mp3",
@@ -845,7 +845,7 @@ export const BalbirSingh = [
   "http://sgpc.net/puratan-kirtan/Balbir Singh/veer ras shabads.mp3",
 ]
 
-export const BhakshishSingh = [
+const BhakshishSingh = [
   "http://sgpc.net/puratan-kirtan/Bhakshish Singh/AAA2%2520AW2%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/Bhakshish Singh/AAA3%2520AW3%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/Bhakshish Singh/AAA5%2520AW5%5B1%5D.mp3",
@@ -914,7 +914,7 @@ export const BhakshishSingh = [
   "http://sgpc.net/puratan-kirtan/Bhakshish Singh/zahar%2520pir%2520jagat%2520gur%2520baba%5B1%5D.mp3",
 ]
 
-export const chatersingh = [
+const chatersingh = [
   "http://sgpc.net/puratan-kirtan/chater singh/Aaj more aayen hain.mp3",
   "http://sgpc.net/puratan-kirtan/chater singh/Aaye mil gursikh aaye mil.mp3",
   "http://sgpc.net/puratan-kirtan/chater singh/Aisa prabh tyag avar kat laago.mp3",
@@ -993,7 +993,7 @@ export const chatersingh = [
   "http://sgpc.net/puratan-kirtan/chater singh/Tu samrath vada meri mat thori raam.mp3",
 ]
 
-export const DALBIRSINGH = [
+const DALBIRSINGH = [
   "http://sgpc.net/puratan-kirtan/DALBIR SINGH/ab%2520ham%2520chali%2520thakur%2520kay%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/DALBIR SINGH/asi%2520kirpa%2520kro%2520prabh%2520meray%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/DALBIR SINGH/hamari%2520payari%2520amrit%2520dhari%5B1%5D.mp3",
@@ -1007,7 +1007,7 @@ export const DALBIRSINGH = [
   "http://sgpc.net/puratan-kirtan/DALBIR SINGH/thakur%2520gaiya%2520atam%2520rang%5B1%5D.mp3",
 ]
 
-export const DarshanSinghSohal = [
+const DarshanSinghSohal = [
   "http://sgpc.net/puratan-kirtan/Darshan Singh Sohal/01 Agam Anant Anad aad Jis Koyee Na.mp3",
   "http://sgpc.net/puratan-kirtan/Darshan Singh Sohal/01 Basant Rut Aayee.mp3",
   "http://sgpc.net/puratan-kirtan/Darshan Singh Sohal/01 Introduction.mp3",
@@ -1032,12 +1032,12 @@ export const DarshanSinghSohal = [
   "http://sgpc.net/puratan-kirtan/Darshan Singh Sohal/08 Anand Sahib.mp3",
 ]
 
-export const devindersingh = [
+const devindersingh = [
   "http://sgpc.net/puratan-kirtan/devinder singh/3/tere banke loan dant rasala%5D.mp3",
   "http://sgpc.net/puratan-kirtan/devinder singh/3/teri chal suhavi%5B1%5D.mp3",
 ]
 
-export const DharamSinghZakhme = [
+const DharamSinghZakhme = [
   "http://sgpc.net/puratan-kirtan/Dharam Singh Zakhme/Aeh Sunt Sipahee Dekho.mp3",
   "http://sgpc.net/puratan-kirtan/Dharam Singh Zakhme/Ahsee Lal Tujh Bin Kaun Kareh.mp3",
   "http://sgpc.net/puratan-kirtan/Dharam Singh Zakhme/Amrit Bani Har Har Teri.mp3",
@@ -1316,7 +1316,7 @@ export const DharamSinghZakhme = [
   "http://sgpc.net/puratan-kirtan/Dharam Singh Zakhme/Zahir Pir Jagat Gur Baba.mp3",
 ]
 
-export const DilbaghSinghGulbaghSingh = [
+const DilbaghSinghGulbaghSingh = [
   "http://sgpc.net/puratan-kirtan/Dilbagh Singh Gulbagh Singh/Bhai%2520Dilbagh%2520Singh%2520Gulbagh%2520Singh%2520-%2520Amrit%2520pivoh%2520sadaa%2520chir%2520jivoh%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/Dilbagh Singh Gulbagh Singh/Bhai%2520Dilbagh%2520Singh%2520Gulbagh%2520Singh%2520-%2520Anand%2520Sahib%2520Ramkali%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/Dilbagh Singh Gulbagh Singh/Bhai%2520Dilbagh%2520Singh%2520Gulbagh%2520Singh%2520-%2520Anand%2520sahib%5B1%5D.mp3",
@@ -1338,7 +1338,7 @@ export const DilbaghSinghGulbaghSingh = [
   "http://sgpc.net/puratan-kirtan/Dilbagh Singh Gulbagh Singh/Waheguru%2520Waheguru%2520Waheguru%2520Wahe%2520Jiyo%5B1%5D.mp3",
 ]
 
-export const DyalSingh = [
+const DyalSingh = [
   "http://sgpc.net/puratan-kirtan/Dyal Singh/38%3DJAGAT JALANDA RAKH LE.mp3",
   "http://sgpc.net/puratan-kirtan/Dyal Singh/ab%2520mohe%2520jivan%2520padvee%2520pai%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/Dyal Singh/agam%2520anat%2520anad%5B1%5D.mp3",
@@ -1436,19 +1436,19 @@ export const DyalSingh = [
   "http://sgpc.net/puratan-kirtan/Dyal Singh/sun%2520yar%2520hamare%2520sajjan%2520karo%2520benantiya%5B1%5D.mp3",
 ]
 
-export const GhulamMohammedChand = [
+const GhulamMohammedChand = [
   "http://sgpc.net/puratan-kirtan/Ghulam Mohammed Chand/Shabad Recording/01 Kirat Prabk Ki Gavo Meri Rasna.mp3",
   "http://sgpc.net/puratan-kirtan/Ghulam Mohammed Chand/Shabad Recording/01 Prabh Ju To Kehe Laj Hmari %28incom.mp3",
 ]
 
-export const GianSinghAlmast = [
+const GianSinghAlmast = [
   "http://sgpc.net/puratan-kirtan/Gian Singh Almast/Gian Singh Almast  - Aise Gur Ko Bal Bal Jaiye.mp3",
   "http://sgpc.net/puratan-kirtan/Gian Singh Almast/Gian Singh Almast - Guldasta Bajat Basant.mp3",
   "http://sgpc.net/puratan-kirtan/Gian Singh Almast/Gian Singh Almast - Ragmala.mp3",
   "http://sgpc.net/puratan-kirtan/Gian Singh Almast/sajna sant aavoh mere almast ji.mp3",
 ]
 
-export const GOPALSINGH = [
+const GOPALSINGH = [
   "http://sgpc.net/puratan-kirtan/GOPAL SINGH/39%3DLAKH KHUSHIYAN.mp3",
   "http://sgpc.net/puratan-kirtan/GOPAL SINGH/40%3DMERE MAN.mp3",
   "http://sgpc.net/puratan-kirtan/GOPAL SINGH/41%3DSABHE GAT RAM BOLE.mp3",
@@ -1459,7 +1459,7 @@ export const GOPALSINGH = [
   "http://sgpc.net/puratan-kirtan/GOPAL SINGH/mate%2520matang%2520jare%2520jur%2520sung%5B1%5D.mp3",
 ]
 
-export const GurmejSingh = [
+const GurmejSingh = [
   "http://sgpc.net/puratan-kirtan/Gurmej Singh/Album/02%2520-%2520bhai%2520gurmej%2520singh%2520-%2520pooran%2520jot%2520jagai%2520ghat%2520me%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/Gurmej Singh/Album/03%2520-%2520bhai%2520gurmej%2520singh%2520-%2520eh%2520tisar%2520mazhab%2520khalsa%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/Gurmej Singh/Album/Bhai%2520Gurmej%2520Singh%2520-%2520Lal%2520lal%2520mohan%2520%5B1%5D.mp3",
@@ -1476,7 +1476,7 @@ export const GurmejSingh = [
   "http://sgpc.net/puratan-kirtan/Gurmej Singh/New Jersey 1994/sab%2520ko%2520tera%2520tu%2520sabas%2520da%5B1%5D.mp3",
 ]
 
-export const GyanSInghJogi = [
+const GyanSInghJogi = [
   "http://sgpc.net/puratan-kirtan/Gyan SIngh Jogi/Gyan SIngh Jogi Asa Di Var%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/Gyan SIngh Jogi/Gyan SIngh Jogi Hey GobinD Hey Gopal Hey Dyal Lal%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/Gyan SIngh Jogi/Gyan SIngh Jogi Hou Vaare Vaare Joun%5B1%5D.mp3",
@@ -1484,7 +1484,7 @@ export const GyanSInghJogi = [
   "http://sgpc.net/puratan-kirtan/Gyan SIngh Jogi/Gyan SIngh Jogi Rut Aile Saras Basant Mahe%5B1%5D.mp3",
 ]
 
-export const kanwarpalsingh = [
+const kanwarpalsingh = [
   "http://sgpc.net/puratan-kirtan/kanwarpal singh/aiso%2520koun%2520bali%2520re%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/kanwarpal singh/andin%2520har%2520nam%2520kirtan%2520karo%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/kanwarpal singh/asa%2520ki%2520var%25201%5B1%5D.mp3",
@@ -1591,7 +1591,7 @@ export const kanwarpalsingh = [
   "http://sgpc.net/puratan-kirtan/kanwarpal singh/yar%2520ve%2520priye%2520habe%2520sakhiyan%5B1%5D.mp3",
 ]
 
-export const nirmalsingh = [
+const nirmalsingh = [
   "http://sgpc.net/puratan-kirtan/nirmal singh/Unknown Album/Bhai%2520Nirmal%2520Singh%2520-%2520Apne%2520har%2520pe%2520benti%2520kahiya%28devgandhari%2520jhaptaal%29%5B2%5D.mp3",
   "http://sgpc.net/puratan-kirtan/nirmal singh/Unknown Album/Bhai%2520Nirmal%2520Singh%2520-%2520Jap%2520gobind%2520gopal%2520lal_0114232328%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/nirmal singh/Unknown Album/Bhai%2520Nirmal%2520Singh%2520-%2520Mohan%2520ghar%2520avoh%2520karon%2520jodadiya%2520%28basant%2520keherwa%29%5B1%5D.mp3",
@@ -1600,7 +1600,7 @@ export const nirmalsingh = [
   "http://sgpc.net/puratan-kirtan/nirmal singh/Too Prabh Daata Daan Mat.mp3",
 ]
 
-export const NirmalSinghNagpuri = [
+const NirmalSinghNagpuri = [
   "http://sgpc.net/puratan-kirtan/Nirmal Singh Nagpuri/Unknown Album %281_29_2007 6_54_34 PM%29/01 Gur Pooray Meri Raakh Layi.mp3",
   "http://sgpc.net/puratan-kirtan/Nirmal Singh Nagpuri/Unknown Album %281_29_2007 6_54_34 PM%29/02 Tu Bhagtan Kai Vass.mp3",
   "http://sgpc.net/puratan-kirtan/Nirmal Singh Nagpuri/Unknown Album %281_29_2007 6_54_34 PM%29/02 Tu Bhagtan Kai Vass 1.mp3",
@@ -1619,7 +1619,7 @@ export const NirmalSinghNagpuri = [
   "http://sgpc.net/puratan-kirtan/Nirmal Singh Nagpuri/Unknown Album %282_3_2007 3_17_18 PM%29/02 Sarab Sukhan Ka Daata 1.mp3",
 ]
 
-export const PARAMJOTSINGH = [
+const PARAMJOTSINGH = [
   "http://sgpc.net/puratan-kirtan/PARAMJOT SINGH/baso%2520mere%2520man%2520maahe%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/PARAMJOT SINGH/bisar%2520gai%2520sabh%2520taat%2520parai%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/PARAMJOT SINGH/mai%2520man%2520wadhi%2520aas%2520hray%5B1%5D.mp3",
@@ -1628,7 +1628,7 @@ export const PARAMJOTSINGH = [
   "http://sgpc.net/puratan-kirtan/PARAMJOT SINGH/say%2520sanjog%2520karo%2520mayray%2520piaray%5B1%5D.mp3",
 ]
 
-export const PARKASHSINGH = [
+const PARKASHSINGH = [
   "http://sgpc.net/puratan-kirtan/PARKASH SINGH/Anand%2520Rang%2520Binod%2520Hamaaray%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/PARKASH SINGH/Asi%2520Bhavra%2520Baas%2520Lay%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/PARKASH SINGH/Baaraj%2520Kar%2520Daayan%5B1%5D.mp3",
@@ -1642,7 +1642,7 @@ export const PARKASHSINGH = [
   "http://sgpc.net/puratan-kirtan/PARKASH SINGH/Preet%2520Man%2520Lagi%5B1%5D 1.mp3",
 ]
 
-export const pirthipalsinghmohanpalsingh = [
+const pirthipalsinghmohanpalsingh = [
   "http://sgpc.net/puratan-kirtan/pirthipal singh mohanpal singh/bhai%2520pirthipal%2520singh%2520mohanpal%2520singh%2520-%2520asa%2520ki%2520var%25201%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/pirthipal singh mohanpal singh/bhai%2520pirthipal%2520singh%2520mohanpal%2520singh%2520-%2520asa%2520ki%2520var%25202%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/pirthipal singh mohanpal singh/bhai%2520pirthipal%2520singh%2520mohanpal%2520singh%2520-%2520asa%2520ki%2520var%25203%5B1%5D.mp3",
@@ -1658,7 +1658,7 @@ export const pirthipalsinghmohanpalsingh = [
   "http://sgpc.net/puratan-kirtan/pirthipal singh mohanpal singh/sun%2520murakh%2520man%2520ajana%5B1%5D.mp3",
 ]
 
-export const PremSingh = [
+const PremSingh = [
   "http://sgpc.net/puratan-kirtan/Prem Singh/aavoh%2520jee%2520tum%2520aavoh%2520hamare%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/Prem Singh/aavoh%2520meet%2520pyare%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/Prem Singh/at%2520pritam%2520man%2520mohna%5B1%5D.mp3",
@@ -1690,7 +1690,7 @@ export const PremSingh = [
   "http://sgpc.net/puratan-kirtan/Prem Singh/vas%2520mere%2520pyaryea%5B1%5D.mp3",
 ]
 
-export const RaiSingh = [
+const RaiSingh = [
   "http://sgpc.net/puratan-kirtan/Rai Singh/aaj%2520moray%2520aaya%2520hain%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/Rai Singh/Bhai%2520Rai%2520Singh%2520-%2520AKV1%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/Rai Singh/Bhai%2520Rai%2520Singh%2520-%2520AKV2%5B1%5D.mp3",
@@ -1713,11 +1713,11 @@ export const RaiSingh = [
   "http://sgpc.net/puratan-kirtan/Rai Singh/yudh%2520kay%2520jitaiya%5B1%5D.mp3",
 ]
 
-export const SalokKabirji = [
+const SalokKabirji = [
   "http://sgpc.net/puratan-kirtan/Salok Kabir ji/Unknown Album/Salok Kabir ji.mp3",
 ]
 
-export const SamundSingh = [
+const SamundSingh = [
   "http://sgpc.net/puratan-kirtan/Samund Singh/01 Beet Jehai Beet Jehai Janam Akajr.mp3",
   "http://sgpc.net/puratan-kirtan/Samund Singh/01 Kirat Prabk Ki Gavo Meri Rasna.mp3",
   "http://sgpc.net/puratan-kirtan/Samund Singh/01 Prabh Ju To Kehe Laj Hmari %28incom.mp3",
@@ -1751,7 +1751,7 @@ export const SamundSingh = [
   "http://sgpc.net/puratan-kirtan/Samund Singh/Yahin Kaaj Dhara Ham Janam%5B1%5D.mp3",
 ]
 
-export const SantaSingh = [
+const SantaSingh = [
   "http://sgpc.net/puratan-kirtan/Santa Singh/01WAHEGURU SIMRAN GG.P1402.MP3.mp3",
   "http://sgpc.net/puratan-kirtan/Santa Singh/02DHUN SO WAYLA JIT-GG.P562.MP3.mp3",
   "http://sgpc.net/puratan-kirtan/Santa Singh/03SUNOH MEET AIYSA PREM-GG.P391.MP3.mp3",
@@ -1813,7 +1813,7 @@ export const SantaSingh = [
   "http://sgpc.net/puratan-kirtan/Santa Singh/shamsher singh %284%29.mp3",
 ]
 
-export const SHAMSHERSINGH = [
+const SHAMSHERSINGH = [
   "http://sgpc.net/puratan-kirtan/SHAMSHER SINGH/01 Track 01.m4a",
   "http://sgpc.net/puratan-kirtan/SHAMSHER SINGH/01_Bhai_ShemSher_Singh_Jee_Bhai_MohanPal_Singh_Jee_Bhoolay_Marag_Jineh_Batayae%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/SHAMSHER SINGH/02 Track 02.m4a",
@@ -1857,13 +1857,13 @@ export const SHAMSHERSINGH = [
   "http://sgpc.net/puratan-kirtan/SHAMSHER SINGH/Zakhmi_Mere%2520Heeyerey%2520Ratan%2520Namm%5B1%5D.mp3",
 ]
 
-export const SudhSinghPradanSinghJi = [
+const SudhSinghPradanSinghJi = [
   "http://sgpc.net/puratan-kirtan/Sudh Singh - Pradan Singh Ji/asa di var pathar de record 1940.mp3",
   "http://sgpc.net/puratan-kirtan/Sudh Singh - Pradan Singh Ji/SudhPradanSingh_SakhiNaalVasaa%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/Sudh Singh - Pradan Singh Ji/SudhPradanSingh_ThikhBoojhGaee%5B1%5D.mp3",
 ]
 
-export const SurjitSingh = [
+const SurjitSingh = [
   "http://sgpc.net/puratan-kirtan/Surjit Singh/Baisakhi%2520-%2520Jai%2520Jai%2520Jag%2520Karan%2520Srist%2520Ubarang%2520Mam%2520Prit%2520Parang%2520Jai%2520Te%2520Gangg%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/Surjit Singh/Baisakhi%2520-%2520Mer%2520Abhai%2520Benti%2520Sun%2520Leejai%2520%28Patshahi%252010%29%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/Surjit Singh/Baisakhi%2520-%2520Raj%2520Me%2520Raj%2520Jog%2520Me%2520Jogi%2520Tap%2520Me%2520Tapisar%2520Grasth%2520Me%2520Bhogi%5B1%5D.mp3",
@@ -1908,7 +1908,7 @@ export const SurjitSingh = [
   "http://sgpc.net/puratan-kirtan/Surjit Singh/Surjit Singh Tou darshan ki karo samai.mp3",
 ]
 
-export const TakhatSinghJee = [
+const TakhatSinghJee = [
   "http://sgpc.net/puratan-kirtan/Takhat Singh Jee/Bhai Takhat Singh Jee %282A%29.mp3",
   "http://sgpc.net/puratan-kirtan/Takhat Singh Jee/Bhai Takhat Singh Jee %284A - India 1987%29.mp3",
   "http://sgpc.net/puratan-kirtan/Takhat Singh Jee/Bhai Takhat Singh Jee %284B - India 1987%29.mp3",
@@ -1922,7 +1922,7 @@ export const TakhatSinghJee = [
   "http://sgpc.net/puratan-kirtan/Takhat Singh Jee/Bhai Takhat Singh Jee 6 B.mp3",
 ]
 
-export const UnknownArtist = [
+const UnknownArtist = [
   "http://sgpc.net/puratan-kirtan/Unknown Artist/shabads/New folder/01 Track 1.wma",
   "http://sgpc.net/puratan-kirtan/Unknown Artist/shabads/New folder/02 Track 2.wma",
   "http://sgpc.net/puratan-kirtan/Unknown Artist/shabads/New folder/03 Track 3.wma",
@@ -2336,3 +2336,144 @@ export const UnknownArtist = [
   "http://sgpc.net/puratan-kirtan/Unknown Artist/Unknown Album/yar%2520ve%2520priye%2520habe%2520sakhiyan%5B1%5D.mp3",
   "http://sgpc.net/puratan-kirtan/Unknown Artist/Unknown Album/yudh%2520kay%2520jitaiya%5B1%5D.mp3",
 ]
+
+const ALL_OPTS = {
+  'Bhai Randhir Singh': {
+    checked: true,
+    trackLinks: BhaiRandhirSingh,
+  },
+  'Ajit Singh Alankary': {
+    checked: true,
+    trackLinks: AjitSinghAlankary,
+  },
+  'Avtar Singh': {
+    checked: true,
+    trackLinks: AvtarSingh,
+  },
+  'Bahadur Singh Ji': {
+    checked: true,
+    trackLinks: BahadurSinghJi,
+  },
+  'Balbir Singh': {
+    checked: true,
+    trackLinks: BalbirSingh,
+  },
+  'Bhakshish Singh': {
+    checked: true,
+    trackLinks: BhakshishSingh,
+  },
+  'Chapter Singh': {
+    checked: true,
+    trackLinks: chatersingh,
+  },
+  'Dalbir Singh': {
+    checked: true,
+    trackLinks: DALBIRSINGH,
+  },
+  'Darshan Singh Sohal': {
+    checked: true,
+    trackLinks: DarshanSinghSohal,
+  },
+  'Devinder Singh': {
+    checked: true,
+    trackLinks: devindersingh,
+  },
+  'Dharam Singh Zakhme': {
+    checked: true,
+    trackLinks: DharamSinghZakhme,
+  },
+  'Dilbagh Singh Gulbagh Singh': {
+    checked: true,
+    trackLinks: DilbaghSinghGulbaghSingh,
+  },
+  'Dyal Singh': {
+    checked: true,
+    trackLinks: DyalSingh,
+  },
+  'Ghulam Mohammed Chand': {
+    checked: true,
+    trackLinks: GhulamMohammedChand,
+  },
+  'Gian Singh Almast': {
+    checked: true,
+    trackLinks: GianSinghAlmast,
+  },
+  'Gopal Singh': {
+    checked: true,
+    trackLinks: GOPALSINGH,
+  },
+  'Gurmej Singh': {
+    checked: true,
+    trackLinks: GurmejSingh,
+  },
+  'Gyan Singh Jogi': {
+    checked: true,
+    trackLinks: GyanSInghJogi,
+  },
+  'Kanwarpal Singh': {
+    checked: true,
+    trackLinks: kanwarpalsingh,
+  },
+  'Nirmal Singh': {
+    checked: true,
+    trackLinks: nirmalsingh,
+  },
+  'Nirmal Singh Nagpuri': {
+    checked: true,
+    trackLinks: NirmalSinghNagpuri,
+  },
+  'Paramjot Singh': {
+    checked: true,
+    trackLinks: PARAMJOTSINGH,
+  },
+  'Parkash Singh': {
+    checked: true,
+    trackLinks: PARKASHSINGH,
+  },
+  'Prithpal Singh Mohanpal Singh': {
+    checked: true,
+    trackLinks: pirthipalsinghmohanpalsingh,
+  },
+  'Prem Singh': {
+    checked: true,
+    trackLinks: PremSingh,
+  },
+  'Rai Singh': {
+    checked: true,
+    trackLinks: RaiSingh,
+  },
+  'Salok Kabir Ji': {
+    checked: true,
+    trackLinks: SalokKabirji,
+  },
+  'Samund Singh': {
+    checked: true,
+    trackLinks: SamundSingh,
+  },
+  'Santa Singh': {
+    checked: true,
+    trackLinks: SantaSingh,
+  },
+  'Shamsher Singh': {
+    checked: true,
+    trackLinks: SHAMSHERSINGH,
+  },
+  'Sudh Singh Pradan Singh Ji': {
+    checked: true,
+    trackLinks: SudhSinghPradanSinghJi,
+  },
+  'Surjit Singh': {
+    checked: true,
+    trackLinks: SurjitSingh,
+  },
+  'Takhat Singh Jee': {
+    checked: true,
+    trackLinks: TakhatSinghJee,
+  },
+  'Unknown Artist': {
+    checked: true,
+    trackLinks: UnknownArtist,
+  },
+}
+
+module.exports = { ALL_OPTS };

@@ -12,7 +12,7 @@ export default function OptsPage({opts}) {
   })
 
   return (
-    <body id={styles.body}>
+    <body>
       <div id={styles.header}>
         ਸੁਣਿਐਦੂਖਪਾਪਕਾਨਾਸੁ॥੮॥
         <div id='GurbaniLine'></div>

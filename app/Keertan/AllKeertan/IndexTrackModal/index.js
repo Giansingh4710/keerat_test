@@ -3,7 +3,8 @@ import { useRef, useState } from 'react'
 import { ALL_SHABADS } from './allShabads.js'
 import CancelIcon from '@mui/icons-material/Cancel'
 
-export default function IndexTrackModal({ modalOpen, setModal, artist, link }) {
+export default function IndexTrackBtnAndModal({ artist, link }) {
+  const [modalOpen, setModal] = useState(false)
   const [description, setDescription] = useState('')
   const [shabadId, setShabadId] = useState('')
   const [shabads, setShabads] = useState([])
@@ -16,8 +17,6 @@ export default function IndexTrackModal({ modalOpen, setModal, artist, link }) {
     minutes: '',
     seconds: '',
   })
-
-  if (!modalOpen) return <></>
 
   function formValidation(e) {
     e.preventDefault()
@@ -83,15 +82,19 @@ export default function IndexTrackModal({ modalOpen, setModal, artist, link }) {
           <details>
             <summary>{shabadId}</summary>
             {ALL_SHABADS[shabadId].map((line, ind) => {
-              let style;
+              let style
               if (ind % 3 == 0) {
-                style=gurbaniStyle.gurmukhi
+                style = gurbaniStyle.gurmukhi
               } else if (ind % 3 == 1) {
-                style=gurbaniStyle.roman
+                style = gurbaniStyle.roman
               } else {
-                style=gurbaniStyle.trans
+                style = gurbaniStyle.trans
               }
-              return <p style={style} key={ind}>{line}</p>
+              return (
+                <p style={style} key={ind}>
+                  {line}
+                </p>
+              )
             })}
           </details>
         </div>
@@ -123,120 +126,125 @@ export default function IndexTrackModal({ modalOpen, setModal, artist, link }) {
   }
 
   return (
-    <Modal open={modalOpen} onClose={() => setModal(false)}>
-      <div>
-        <form
-          ref={formData}
-          style={styles.modal_content}
-          onSubmit={(event) => formValidation(event)}
-          method='post'
-          action='http://45.76.2.28/trackIndex/util/addData.php'
-        >
-          <span onClick={() => setModal(false)} style={styles.closeModal}>
-            &times;
-          </span>
-          <div style={styles.userInputItem}>
-            <label style={styles.label} htmlFor='userDesc'>
-              Description:
-            </label>
-            <input
-              style={styles.userDesc}
-              name='description'
-              placeholder='bin ek naam ik chit leen'
-              value={description}
-              onChange={(event) => setDescription(event.target.value)}
-            ></input>
-            <CancelIcon onClick={() => setDescription('')} />
-          </div>
-          <div style={styles.userInputItem}>
-            <label style={styles.label} htmlFor='usedShabadId'>
-              Shabad ID:
-            </label>
-            <input
-              style={styles.userDesc}
-              name='shabadId'
-              placeholder='ਤਕਮਲ'
-              value={shabadId}
-              onChange={(event) => {
-                const newInput = convertToGurmukhi(event.target.value)
-                setShabadId(newInput)
-                if (newInput.length > 2) {
-                  const shabads = get_sbds_first_letters(newInput)
-                  setShabads(shabads)
-                }
-              }}
-            ></input>
-            <CancelIcon onClick={() => setShabadId('')} />
-          </div>
-          <ShowShabads />
-          <div style={styles.userInputItem}>
-            <label style={styles.label} htmlFor='userTimestamp'>
-              Timestamp:
-            </label>
-            <div style={styles.userDesc}>
-              <input
-                name='hours'
-                type='number'
-                min='0'
-                max='59'
-                inputMode='numeric'
-                placeholder='00'
-                style={styles.time}
-                value={timestamp.hours}
-                onChange={(event) =>
-                  setTimestamp({ ...timestamp, hours: event.target.value })
-                }
-              ></input>
-              :
-              <input
-                name='mins'
-                type='number'
-                min='0'
-                max='59'
-                inputMode='numeric'
-                placeholder='00'
-                style={styles.time}
-                value={timestamp.minutes}
-                onChange={(event) =>
-                  setTimestamp({ ...timestamp, minutes: event.target.value })
-                }
-              ></input>
-              :
-              <input
-                name='secs'
-                type='number'
-                min='0'
-                max='59'
-                inputMode='numeric'
-                placeholder='00'
-                style={styles.time}
-                value={timestamp.seconds}
-                onChange={(event) =>
-                  setTimestamp({ ...timestamp, seconds: event.target.value })
-                }
-              ></input>
-            </div>
-
-            <CancelIcon
-              onClick={() =>
-                setTimestamp({
-                  hours: '',
-                  minutes: '',
-                  seconds: '',
-                })
-              }
-            />
-          </div>
-          <Button
-            variant='contained'
-            type='submit'
-            disabled={submitFormBtnDisabled}
+    <div>
+      <Button variant='contained' onClick={() => setModal(true)}>
+        Index Track
+      </Button>
+      <Modal open={modalOpen} onClose={() => setModal(false)}>
+        <div>
+          <form
+            ref={formData}
+            style={styles.modal_content}
+            onSubmit={(event) => formValidation(event)}
+            method='post'
+            action='http://45.76.2.28/trackIndex/util/addData.php'
           >
-            Add
-          </Button>
-        </form>
-      </div>
-    </Modal>
+            <span onClick={() => setModal(false)} style={styles.closeModal}>
+              &times;
+            </span>
+            <div style={styles.userInputItem}>
+              <label style={styles.label} htmlFor='userDesc'>
+                Description:
+              </label>
+              <input
+                style={styles.userDesc}
+                name='description'
+                placeholder='bin ek naam ik chit leen'
+                value={description}
+                onChange={(event) => setDescription(event.target.value)}
+              ></input>
+              <CancelIcon onClick={() => setDescription('')} />
+            </div>
+            <div style={styles.userInputItem}>
+              <label style={styles.label} htmlFor='usedShabadId'>
+                Shabad ID:
+              </label>
+              <input
+                style={styles.userDesc}
+                name='shabadId'
+                placeholder='ਤਕਮਲ'
+                value={shabadId}
+                onChange={(event) => {
+                  const newInput = convertToGurmukhi(event.target.value)
+                  setShabadId(newInput)
+                  if (newInput.length > 2) {
+                    const shabads = get_sbds_first_letters(newInput)
+                    setShabads(shabads)
+                  }
+                }}
+              ></input>
+              <CancelIcon onClick={() => setShabadId('')} />
+            </div>
+            <ShowShabads />
+            <div style={styles.userInputItem}>
+              <label style={styles.label} htmlFor='userTimestamp'>
+                Timestamp:
+              </label>
+              <div style={styles.userDesc}>
+                <input
+                  name='hours'
+                  type='number'
+                  min='0'
+                  max='59'
+                  inputMode='numeric'
+                  placeholder='00'
+                  style={styles.time}
+                  value={timestamp.hours}
+                  onChange={(event) =>
+                    setTimestamp({ ...timestamp, hours: event.target.value })
+                  }
+                ></input>
+                :
+                <input
+                  name='mins'
+                  type='number'
+                  min='0'
+                  max='59'
+                  inputMode='numeric'
+                  placeholder='00'
+                  style={styles.time}
+                  value={timestamp.minutes}
+                  onChange={(event) =>
+                    setTimestamp({ ...timestamp, minutes: event.target.value })
+                  }
+                ></input>
+                :
+                <input
+                  name='secs'
+                  type='number'
+                  min='0'
+                  max='59'
+                  inputMode='numeric'
+                  placeholder='00'
+                  style={styles.time}
+                  value={timestamp.seconds}
+                  onChange={(event) =>
+                    setTimestamp({ ...timestamp, seconds: event.target.value })
+                  }
+                ></input>
+              </div>
+
+              <CancelIcon
+                onClick={() =>
+                  setTimestamp({
+                    hours: '',
+                    minutes: '',
+                    seconds: '',
+                  })
+                }
+              />
+            </div>
+            <Button
+              variant='contained'
+              type='submit'
+              disabled={submitFormBtnDisabled}
+            >
+              Add
+            </Button>
+          </form>
+        </div>
+      </Modal>
+    </div>
   )
 }
 
