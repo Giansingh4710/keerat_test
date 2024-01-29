@@ -1,14 +1,12 @@
-const colors = {
+export const colors = {
   theme1: {
     text1: 'white',
     text2: 'black',
-    primany: '#466995',
-    // primany: '#001f3f',
-    // third: '#4464AD',
+    primany: '#001f3f',
     secondary: '#F58F29',
-    third: '#1565c0',
-    fourth: '#7D4600',
-    five: 'skyblue',
+    third: 'skyblue',
+    fourth: '#466995',
+    five: '#7D4600',
   },
 }
 const theme1 = {
@@ -18,7 +16,7 @@ const theme1 = {
       backgroundColor: colors.theme1.secondary,
     },
     opt: {
-      backgroundColor: colors.theme1.five,
+      backgroundColor: colors.theme1.third,
     },
   },
   listenPage: {
@@ -32,13 +30,13 @@ const theme1 = {
         color: colors.theme1.text1,
       },
       artistOption: {
-        backgroundColor: colors.theme1.secondary,
+        backgroundColor: colors.theme1.primany,
       },
     },
     SaveTrackModal: {
       btn: {
-        color: colors.theme1.text1,
-        backgroundColor: colors.theme1.fourth,
+        color: colors.theme1.text2,
+        backgroundColor: colors.theme1.third,
       },
       modalDiv: {
         backgroundColor: colors.theme1.primany,
@@ -77,13 +75,13 @@ const theme1 = {
         backgroundColor: colors.theme1.primany,
       },
       btn: {
-        color: colors.theme1.text1,
-        backgroundColor: colors.theme1.fourth,
+        color: colors.theme1.text2,
+        backgroundColor: colors.theme1.third,
       },
       colorChangerVal: (bool) =>
         bool
-          ? { backgroundColor: colors.theme1.third }
-          : { backgroundColor: colors.theme1.fourth },
+          ? { backgroundColor: colors.theme1.fourth }
+          : { backgroundColor: colors.theme1.third },
     },
     IndexTrackModal: {
       main_btn: {

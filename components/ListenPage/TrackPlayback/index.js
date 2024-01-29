@@ -28,9 +28,9 @@ export default function TrackPlayback({
   link,
   artist,
   allOpts,
-  audioRef,
   timeToGoTo,
   album,
+  audioRef,
 }) {
   const [currentTime, setCurrentTime] = useState('0.0')
   const [paused, setPaused] = useState(true)
@@ -77,7 +77,7 @@ export default function TrackPlayback({
       return -1
     }
 
-    url.searchParams.append('time', currentTime)
+    url.searchParams.append('time', parseInt(currentTime))
     url.searchParams.append('artist', artist)
     url.searchParams.append('trackIndex', get_ind_from_artist_tracks(link))
     navigator.clipboard.writeText(url.href)
@@ -93,7 +93,7 @@ export default function TrackPlayback({
             setPaused(false)
           }}
         >
-          &#x23F5;
+          <img style={styles.playbackImg} src='/playbackImgs/play.svg' />
         </button>
       )
     }
@@ -106,7 +106,7 @@ export default function TrackPlayback({
           setPaused(true)
         }}
       >
-        &#x23F8;
+        <img style={styles.playbackImg} src='/playbackImgs/pause.svg' />
       </button>
     )
   }
@@ -170,6 +170,7 @@ export default function TrackPlayback({
         <button
           onClick={() => {
             setShuffle(!shuffle)
+            localStorage.setItem('shuffle', !shuffle)
           }}
           style={{
             ...styles.btn,
@@ -203,13 +204,13 @@ export default function TrackPlayback({
       </div>
       <div style={styles.playBackOptions}>
         <button onClick={prevTrack} style={styles.playbackIcon}>
-          &larr;
+          <img style={styles.playbackImg} src='/playbackImgs/left.svg' />
         </button>
         <button
           onClick={() => (audioRef.current.currentTime -= skipTime.current)}
           style={styles.playbackIcon}
         >
-          &#8634;
+          <img style={styles.playbackImg} src='/playbackImgs/skip-back.svg' />
         </button>
 
         <PlayPauseBtn style={styles.playbackIcon} />
@@ -218,10 +219,13 @@ export default function TrackPlayback({
           onClick={() => (audioRef.current.currentTime += skipTime.current)}
           style={styles.playbackIcon}
         >
-          &#8635;
+          <img
+            style={styles.playbackImg}
+            src='/playbackImgs/skip-forward.svg'
+          />
         </button>
         <button onClick={nextTrack} style={styles.playbackIcon}>
-          &rarr;
+          <img style={styles.playbackImg} src='/playbackImgs/right.svg' />
         </button>
       </div>
       {audioComponent}
@@ -271,12 +275,17 @@ const styles = {
   },
   playbackIcon: {
     flex: 1,
-    fontSize: '4rem',
+    // fontSize: '4rem',
     border: 'none',
     background: 'none',
     cursor: 'pointer',
     margin: '0',
     padding: '0.5rem',
+    height: '10vh',
+  },
+  playbackImg: {
+    width: '100%',
+    height: '100%',
   },
   seekTimeSelect: {
     marginLeft: '0.5em',

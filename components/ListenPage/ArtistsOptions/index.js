@@ -1,7 +1,7 @@
 import ALL_THEMES from '@/utils/themes'
 
 import { getTrackLinks } from '@/utils/helper_funcs'
-import { useMemo} from 'react'
+import { useMemo } from 'react'
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@mui/icons-material/CheckBox'
@@ -62,7 +62,7 @@ export default function ArtistsOptions({
             }}
           >
             <CheckBoxOutlineBlankIcon />
-            Uncheck All
+            <p>Uncheck All</p>
           </button>
         </div>
         <p style={styles.trackNums}>Total Tracks in Queue: {numOfTracks}</p>
@@ -81,7 +81,7 @@ export default function ArtistsOptions({
             }}
           >
             <CheckBoxIcon />
-            Check All
+            <p>Check All</p>
           </button>
         </div>
       </div>
@@ -97,6 +97,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: '0.5em',
+    padding: '1em',
     ...ALL_THEMES.theme1.listenPage.ArtistsOptionsModal.container,
   },
   topRow: {
@@ -105,7 +106,7 @@ const styles = {
   },
   trackNums: {
     flex: 1,
-    fontSize: '1.0em',
+    fontSize: '1.5em',
   },
   checkOptsBtnsDiv: {
     flex: 1,
@@ -113,7 +114,6 @@ const styles = {
     fontSize: '0.5em',
   },
   checkOptsBtns: {
-    margin: '1em',
     padding: '0.5em',
     fontSize: '0.8em',
     fontWeight: 'bold',
@@ -123,20 +123,23 @@ const styles = {
   optionsDiv: {
     display: 'flex',
     flexDirection: 'row',
-    margin: '1em',
     borderRadius: '1em',
     overflow: 'scroll',
     padding: '1em',
     border: '1px solid black',
+    // backgroundColor: ALL_THEMES.theme1.backgroundColor
   },
   artistOption: {
-    flex: 3,
+    alignItems: 'center',
     fontSize: '1em',
     display: 'flex',
+    margin: '0.5em',
+    padding: '0.5em',
+    borderRadius: '15px',
     ...ALL_THEMES.theme1.listenPage.ArtistsOptionsModal.artistOption,
   },
   checkbox: {
-    // flex: 1,
+    flex: 1,
   },
   label: {
     // flex: 30,

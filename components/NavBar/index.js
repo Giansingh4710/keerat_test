@@ -1,16 +1,18 @@
-import styles from './index.module.css'
+import { useRef, useState } from 'react'
+import './index.css'
 
 export default function NavBar() {
   const dev = !true
   const prefix = dev ? '' : '/keerat_test'
+
   return (
-    <nav className={styles.topnav}>
-      <a href={`${prefix}/`} className={styles.active}>
+    <nav className='topnav'>
+      <a href={`${prefix}/`} className='active'>
         Home
       </a>
-      <div className={styles.dropdown}>
-        <button className={styles.dropbtn}>Keertan &darr;</button>
-        <div className={styles.dropdown_content}>
+      <div className='dropdown'>
+        <button className='dropbtn'>Keertan &darr;</button>
+        <div className='dropdown_content'>
           <a href={`${prefix}/Keertan/AkhandKeertan/`}>Akhand Keertan</a>
           <a href={`${prefix}/Keertan/DarbarSahibPuratanKeertanSGPC`}>
             Darbar Sahib Puratan Keertan
@@ -29,6 +31,14 @@ export default function NavBar() {
       <a href={`${prefix}/MiscellaneousTopics`}>Miscellaneous Topics</a>
       <a href={`${prefix}/GianiSherSinghJi`}>Giani Sher Singh Ji</a>
       <a href='http://45.76.2.28/trackIndex'>Tracks Indexed</a>
+      <a
+        href=''
+        style={{ fontSize: '15px' }}
+        className='icon'
+        onClick={() => {}}
+      >
+        ☰
+      </a>
     </nav>
   )
 }
