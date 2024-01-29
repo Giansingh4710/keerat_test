@@ -1,9 +1,10 @@
+import ALL_THEMES from '@/utils/themes'
 import { useState } from 'react'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import SearchIcon from '@mui/icons-material/Search'
 
 import { Button, IconButton } from '@mui/material'
-import { getNameOfTrack } from '../../../helper_funcs.js'
+import { getNameOfTrack } from '@/utils/helper_funcs'
 
 export default function SearchTracks({ tracks, playSpecificTrack }) {
   const [searchInput, setSearchInput] = useState('')
@@ -21,14 +22,14 @@ export default function SearchTracks({ tracks, playSpecificTrack }) {
       alignSelf: 'center',
       borderRadius: '5px',
       padding: '5px',
-      color: 'black',
       fontSize: '1em',
+      ...ALL_THEMES.theme1.listenPage.SearchTracks.searchInput,
     },
     xIcon: {
       flex: 1,
-      fontSize: '2rem',
       paddingLeft: '1em',
       alignSelf: 'center',
+      ...ALL_THEMES.theme1.listenPage.SearchTracks.xIcon,
     },
   }
 
@@ -60,9 +61,9 @@ export default function SearchTracks({ tracks, playSpecificTrack }) {
         overflow: 'scroll',
         border: '1px solid white',
         borderRadius: '5px',
+        ...ALL_THEMES.theme1.listenPage.SearchTracks.cont,
       },
       btn: {
-        color: 'black',
         fontSize: '0.5em',
       },
     }

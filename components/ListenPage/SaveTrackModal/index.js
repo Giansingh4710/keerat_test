@@ -1,9 +1,10 @@
+import ALL_THEMES from '@/utils/themes'
 import { Modal } from '@mui/material'
 import { useState } from 'react'
 
 import BookmarkAddedIcon from '@mui/icons-material/BookmarkAdded'
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered'
-import { getNameOfTrack } from '../../../helper_funcs.js'
+import { getNameOfTrack } from '@/utils/helper_funcs'
 
 export default function SaveTrackModal({
   localStorageKey,
@@ -29,9 +30,7 @@ export default function SaveTrackModal({
         display: 'inline-block',
         paddingRight: '1em',
       },
-      btn: {
-        color: 'black',
-      },
+      btn: {},
     }
 
     let savedTracks = localStorage.getItem(localStorageKey)
@@ -81,9 +80,9 @@ export default function SaveTrackModal({
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
-        <div style={styles.saveTrackLocalModal} className={styles.modal}>
+        <div style={styles.modalDiv} className={styles.modal}>
           <button onClick={() => setModal(false)}>
-            <span style={styles.saveTrackLocalModalClose}>&times;</span>
+            <span style={styles.modalDivClose}>&times;</span>
           </button>
           <label htmlFor='noteForSavedTrack' style={styles.label}>
             Enter a note if you would like:
@@ -133,7 +132,7 @@ const styles = {
   btn: {
     fontWeight: 'bold',
     borderRadius: '15px',
-    backgroundColor: '#1565c0',
+    ...ALL_THEMES.theme1.listenPage.SaveTrackModal.btn,
   },
   btnTxt: {
     display: 'inline-block',
@@ -142,31 +141,30 @@ const styles = {
   icon: {
     fontSize: '1rem',
   },
-  saveTrackLocalModal: {
+  modalDiv: {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-    backgroundColor: '#fefefe',
     borderRadius: '10px',
     padding: '20px',
+    ...ALL_THEMES.theme1.listenPage.SaveTrackModal.modalDiv,
   },
-  saveTrackLocalModalClose: {
-    color: 'black',
+  modalDivClose: {
     fontSize: '28px',
     fontWeight: 'bold',
+    ...ALL_THEMES.theme1.listenPage.SaveTrackModal.modalDivClose,
   },
   label: {
-    color: 'black',
     fontSize: '1.2em',
     fontWeight: 'bold',
+    ...ALL_THEMES.theme1.listenPage.SaveTrackModal.label,
   },
   textArea: {
-    color: 'black',
+    ...ALL_THEMES.theme1.listenPage.SaveTrackModal.textArea,
   },
 }

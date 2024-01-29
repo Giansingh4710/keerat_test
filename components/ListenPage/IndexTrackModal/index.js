@@ -1,3 +1,4 @@
+import ALL_THEMES from '@/utils/themes.js'
 import { Button, Modal } from '@mui/material'
 import { useRef, useState } from 'react'
 import { ALL_SHABADS } from './allShabads.js'
@@ -127,19 +128,19 @@ export default function IndexTrackBtnAndModal({ artist, link }) {
 
   return (
     <div>
-      <Button variant='contained' onClick={() => setModal(true)}>
+      <button style={styles.main_btn} onClick={() => setModal(true)}>
         Index Track
-      </Button>
+      </button>
       <Modal open={modalOpen} onClose={() => setModal(false)}>
         <div>
           <form
             ref={formData}
-            style={styles.modal_content}
+            style={styles.cont}
             onSubmit={(event) => formValidation(event)}
             method='post'
             action='http://45.76.2.28/trackIndex/util/addData.php'
           >
-            <span onClick={() => setModal(false)} style={styles.closeModal}>
+            <span onClick={() => setModal(false)} style={styles.closeModalBtn}>
               &times;
             </span>
             <div style={styles.userInputItem}>
@@ -188,7 +189,7 @@ export default function IndexTrackBtnAndModal({ artist, link }) {
                   max='59'
                   inputMode='numeric'
                   placeholder='00'
-                  style={styles.time}
+                  style={styles.timeInput}
                   value={timestamp.hours}
                   onChange={(event) =>
                     setTimestamp({ ...timestamp, hours: event.target.value })
@@ -202,7 +203,7 @@ export default function IndexTrackBtnAndModal({ artist, link }) {
                   max='59'
                   inputMode='numeric'
                   placeholder='00'
-                  style={styles.time}
+                  style={styles.timeInput}
                   value={timestamp.minutes}
                   onChange={(event) =>
                     setTimestamp({ ...timestamp, minutes: event.target.value })
@@ -216,7 +217,7 @@ export default function IndexTrackBtnAndModal({ artist, link }) {
                   max='59'
                   inputMode='numeric'
                   placeholder='00'
-                  style={styles.time}
+                  style={styles.timeInput}
                   value={timestamp.seconds}
                   onChange={(event) =>
                     setTimestamp({ ...timestamp, seconds: event.target.value })
@@ -458,48 +459,51 @@ function get_sbds_first_letters(gurmukhi_input) {
 }
 
 const styles = {
-  modal_content: {
-    backgroundColor: '#ff7f50',
+  main_btn:{
+    margin: '2em',
+    borderRadius: '10px',
+    ...ALL_THEMES.theme1.listenPage.IndexTrackModal.main_btn
+  },
+  cont: {
     padding: '2em',
     borderRadius: '1em',
-
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '70vw',
+    ...ALL_THEMES.theme1.listenPage.IndexTrackModal.cont
   },
-  closeModal: {
+  closeModalBtn: {
     display: 'flex',
     justifyContent: 'flex-end',
     fontSize: '31px',
     fontWeight: 'bold',
-    // backgroundColor: 'red',
     margin: '-1em',
+    ...ALL_THEMES.theme1.listenPage.IndexTrackModal.closeModalBtn
   },
   userInputItem: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    width: '100%',
     justifyContent: 'center',
-    backgroundColor: '#0077be',
-    borderRadius: '10px',
-    margin: '10px',
-    padding: '10px',
+    borderRadius: '1em',
+    margin: '1em',
+    padding: '0.5em',
+    ...ALL_THEMES.theme1.listenPage.IndexTrackModal.userInputItem
   },
   label: {
     flex: 0.5,
     fontWeight: 500,
     letterSpacing: 0.2,
     fontSize: '0.75rem',
+    ...ALL_THEMES.theme1.listenPage.IndexTrackModal.label
   },
   userDesc: {
     flex: 1,
-    color: 'black',
   },
-  time: {
-    color: 'black',
+  timeInput: {
     width: '3em',
+    ...ALL_THEMES.theme1.listenPage.IndexTrackModal.timeInput,
   },
 }

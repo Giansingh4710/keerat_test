@@ -1,7 +1,9 @@
-import { Button, IconButton, Typography } from '@mui/material'
+import ALL_THEMES from '@/utils/themes'
 
-import { useMemo, useState } from 'react'
-import { formatTime, getNameOfTrack } from '../../../helper_funcs.js'
+import { IconButton, Typography } from '@mui/material'
+
+import { useMemo, useRef, useState } from 'react'
+import { formatTime, getNameOfTrack } from '@/utils/helper_funcs'
 import { styled } from '@mui/material/styles'
 
 import AudiotrackIcon from '@mui/icons-material/Audiotrack'
@@ -31,24 +33,22 @@ export default function TrackPlayback({
   album,
 }) {
   const [currentTime, setCurrentTime] = useState('0.0')
-  const [skipTime, setSkipTime] = useState(10)
   const [paused, setPaused] = useState(true)
+  const skipTime = useRef(5)
 
   function navigatorStuff() {
-    function skipTrackTime(direction) {
-      theAudioPlayer.currentTime += skipTime * direction
-    }
     const theAudioPlayer = audioRef.current
     navigator.mediaSession.setActionHandler('play', () => theAudioPlayer.play())
     navigator.mediaSession.setActionHandler('pause', () =>
       theAudioPlayer.pause()
     )
 
-    navigator.mediaSession.setActionHandler('seekforward', () =>
-      skipTrackTime(1)
-    )
-    navigator.mediaSession.setActionHandler('seekbackward', () =>
-      skipTrackTime(-1)
+    navigator.mediaSession.setActionHandler('seekforward', () => {
+      theAudioPlayer.currentTime += skipTime.current
+    })
+    navigator.mediaSession.setActionHandler(
+      'seekbackward',
+      () => (theAudioPlayer.currentTime += skipTime.current * -1)
     )
     navigator.mediaSession.setActionHandler('previoustrack', prevTrack)
     navigator.mediaSession.setActionHandler('nexttrack', nextTrack)
@@ -83,29 +83,31 @@ export default function TrackPlayback({
     navigator.clipboard.writeText(url.href)
   }
 
-  function PlayPauseBtn({ style }) {
-    function onclick() {
-      if (paused) {
-        audioRef.current.play()
-        setPaused(false)
-      } else {
-        audioRef.current.pause()
-        setPaused(true)
-      }
-    }
-
+  function PlayPauseBtn() {
     if (paused) {
       return (
-        <IconButton onClick={onclick} style={style}>
-          <PlayArrowRounded style={style} />
-        </IconButton>
+        <button
+          style={styles.playbackIcon}
+          onClick={() => {
+            audioRef.current.play()
+            setPaused(false)
+          }}
+        >
+          &#x23F5;
+        </button>
       )
     }
 
     return (
-      <IconButton onClick={onclick} style={style}>
-        <PauseRounded style={style} />
-      </IconButton>
+      <button
+        style={styles.playbackIcon}
+        onClick={() => {
+          audioRef.current.pause()
+          setPaused(true)
+        }}
+      >
+        &#x23F8;
+      </button>
     )
   }
 
@@ -120,7 +122,9 @@ export default function TrackPlayback({
         onPause={() => setPaused(true)}
         onPlay={() => setPaused(false)}
         onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
-        onError={() => {}}
+        onError={() => {
+          alert('Error Loading Track!')
+        }}
         onEnded={nextTrack}
         onLoadedData={() => {
           console.log(timeToGoTo.current, audioRef.current.duration)
@@ -130,11 +134,11 @@ export default function TrackPlayback({
         }}
       ></audio>
     )
-  }, [])
+  }, [link])
 
   return (
-    <div style={styles.trackInfo}>
-      <div style={styles.trackInfoLine}>
+    <div style={styles.cont}>
+      <div style={styles.contLine}>
         <IconButton
           onClick={async () => {
             await navigator.clipboard.writeText(link)
@@ -147,13 +151,13 @@ export default function TrackPlayback({
           {getNameOfTrack(link)}
         </a>
       </div>
-      <div style={styles.trackInfoLine}>
+      <div style={styles.contLine}>
         <IconButton>
           <PersonIcon style={styles.musicIcon} />
         </IconButton>
         <TinyText>{artist}</TinyText>
       </div>
-      <div style={styles.trackInfoLine}>
+      <div style={styles.contLine}>
         <IconButton>
           <AlbumIcon style={styles.musicIcon} />
         </IconButton>
@@ -163,27 +167,31 @@ export default function TrackPlayback({
         <p style={styles.trackTime}>
           {formatTime(currentTime)} / {formatTime(audioRef?.current?.duration)}
         </p>
-        <Button
+        <button
           onClick={() => {
             setShuffle(!shuffle)
           }}
           style={{
             ...styles.btn,
-            backgroundColor: !shuffle ? '#1565c0' : '#c07015',
+            ...ALL_THEMES.theme1.listenPage.TrackPlayback.colorChangerVal(
+              shuffle
+            ),
           }}
         >
           <p>Shuffle: {shuffle ? 'ON' : 'OFF'}</p>
-        </Button>
-        <Button variant='contained' style={styles.btn} onClick={copyLink}>
+        </button>
+        <button style={styles.btn} onClick={copyLink}>
           Copy Link
-        </Button>
+        </button>
       </div>
       <div style={styles.skipIntervelDiv}>
         <label htmlFor='pickSkipInterval'>Skip Interval:</label>
         <select
           style={styles.seekTimeSelect}
           id='pickSkipInterval'
-          onChange={(e) => setSkipTime(parseInt(e.target.value))}
+          onChange={(e) => {
+            skipTime.current = parseInt(e.target.value)
+          }}
         >
           <option value='5'>5 Seconds</option>
           <option value='10' defaultValue>
@@ -194,29 +202,27 @@ export default function TrackPlayback({
         </select>
       </div>
       <div style={styles.playBackOptions}>
-        <IconButton onClick={prevTrack} style={styles.playbackIcon}>
-          <SkipPreviousIcon style={styles.playbackIcon} />
-        </IconButton>
-
-        <IconButton
-          onClick={() => (audioRef.current.currentTime -= skipTime)}
+        <button onClick={prevTrack} style={styles.playbackIcon}>
+          &larr;
+        </button>
+        <button
+          onClick={() => (audioRef.current.currentTime -= skipTime.current)}
           style={styles.playbackIcon}
         >
-          <FastRewindIcon style={styles.playbackIcon} />
-        </IconButton>
+          &#8634;
+        </button>
 
         <PlayPauseBtn style={styles.playbackIcon} />
 
-        <IconButton
-          onClick={() => (audioRef.current.currentTime += skipTime)}
+        <button
+          onClick={() => (audioRef.current.currentTime += skipTime.current)}
           style={styles.playbackIcon}
         >
-          <FastForwardIcon style={styles.playbackIcon} />
-        </IconButton>
-
-        <IconButton onClick={nextTrack} style={styles.playbackIcon}>
-          <SkipNextIcon style={styles.playbackIcon} />
-        </IconButton>
+          &#8635;
+        </button>
+        <button onClick={nextTrack} style={styles.playbackIcon}>
+          &rarr;
+        </button>
       </div>
       {audioComponent}
     </div>
@@ -224,18 +230,17 @@ export default function TrackPlayback({
 }
 
 const styles = {
-  trackInfo: {
+  cont: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
-
-    backgroundColor: '#E4922C',
     padding: '0.5em',
     borderRadius: '0.5em',
     height: '40vh',
     marginTop: '1.5em',
+    ...ALL_THEMES.theme1.listenPage.TrackPlayback.cont,
   },
-  trackInfoLine: {
+  contLine: {
     display: 'flex',
     paddingTop: '0.5em',
   },
@@ -266,34 +271,41 @@ const styles = {
   },
   playbackIcon: {
     flex: 1,
-    fontSize: '3rem',
+    fontSize: '4rem',
+    border: 'none',
+    background: 'none',
+    cursor: 'pointer',
+    margin: '0',
+    padding: '0.5rem',
   },
   seekTimeSelect: {
-    color: 'black',
     marginLeft: '0.5em',
+    ...ALL_THEMES.theme1.listenPage.TrackPlayback.seekTimeSelect,
   },
 
   randomRow: {
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
-    backgroundColor: 'navy',
     borderRadius: '0.5em',
+    ...ALL_THEMES.theme1.listenPage.TrackPlayback.randomRow,
   },
   trackTime: {
     all: 'unset',
     fontSize: '0.85rem',
     alignSelf: 'center',
     flex: 1,
-    // backgroundColor: '#1565c0',
   },
   btn: {
     margin: '0.5em',
-    fontSize: '0.5em',
+    fontSize: '0.8em',
     display: 'flex',
     flexDirection: 'column',
-    padding: '2px',
+    borderRadius: '0.5em',
+    alignItems: 'center',
+    justifyContent: 'center',
     flex: 1,
+    ...ALL_THEMES.theme1.listenPage.TrackPlayback.btn,
   },
 }
 

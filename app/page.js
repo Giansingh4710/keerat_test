@@ -1,4 +1,4 @@
-import OptsPage from './utils/components/OptionsPage/index.js'
+import OptsPage from '@/components/OptionsPage/index.js'
 
 export default function Home() {
   const allOpts = [
@@ -12,3 +12,4 @@ export default function Home() {
   ]
   return <OptsPage opts={allOpts} />
 }
+

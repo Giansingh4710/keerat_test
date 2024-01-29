@@ -1,5 +1,5 @@
 import {allKathas} from './TRACKS.js'
-import ListenPage from '../utils/components/ListenPage/index.js'
+import ListenPage from '@/components/ListenPage/index.js'
 
 export default function PaathPage() {
   const ALL_OPTS = {

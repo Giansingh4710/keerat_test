@@ -1,20 +1,18 @@
 'use client'
 
+import ALL_THEMES from '@/utils/themes'
+
 import ArtistsOptions from './ArtistsOptions/index.js'
 import TrackPlayback from './TrackPlayback/index.js'
 import NavBar from '../NavBar/index.js'
 import SaveTrackModal from './SaveTrackModal/index.js'
 import SearchTracks from './SearchTracks/index.js'
+import IndexTrackBtnAndModal from './IndexTrackModal/index.js'
 
 import { useEffect, useRef, useState } from 'react'
-import { Button } from '@mui/material'
-import { getTrackLinks } from '../../helper_funcs.js'
+import { getTrackLinks } from '@/utils/helper_funcs.js'
 
-export default function ListenPage({
-  title,
-  tracksObj,
-  setTrackDetailForIndex,
-}) {
+export default function ListenPage({ title, tracksObj }) {
   const [TRACK_LINKS, setTrackLinks] = useState(getTrackLinks(tracksObj))
   const [allOpts, setAllOpts] = useState(tracksObj)
 
@@ -22,7 +20,6 @@ export default function ListenPage({
   const audioRef = useRef(null)
   const timeToGoTo = useRef(0)
 
-  const [artistOptModal, setArtistModal] = useState(false)
 
   const [tracksHistory, setTracksHistory] = useState({
     curr_ind: -1, //index in links_lst
@@ -88,13 +85,6 @@ export default function ListenPage({
       links_lst,
       curr_artist,
     })
-
-    if (setTrackDetailForIndex !== undefined) {
-      setTrackDetailForIndex({
-        artist: curr_artist,
-        link: curr_link,
-      })
-    }
   }
 
   function nextTrack() {
@@ -166,15 +156,12 @@ export default function ListenPage({
     playTrack(ind, link, updatedLinksLst)
   }
 
-  function BodyOrDiv({ children }) {
-    if (setTrackDetailForIndex !== undefined) {
-      return <div>{children}</div>
-    }
-    return <body>{children}</body>
-  }
-
   return (
-    <BodyOrDiv>
+    <body
+      style={{
+        backgroundColor: ALL_THEMES.theme1.backgroundColor,
+      }}
+    >
       <NavBar />
       <SearchTracks
         tracks={TRACK_LINKS}
@@ -184,6 +171,12 @@ export default function ListenPage({
         localStorageKey={`SavedTracks: ${title}`}
         link={tracksHistory.curr_link}
         playSpecificTrack={playSpecificTrack}
+      />
+      <ArtistsOptions
+        allOpts={allOpts}
+        setAllOpts={setAllOpts}
+        setTrackLinks={setTrackLinks}
+        numOfTracks={TRACK_LINKS.length}
       />
       <TrackPlayback
         artist={tracksHistory.curr_artist}
@@ -197,14 +190,10 @@ export default function ListenPage({
         timeToGoTo={timeToGoTo}
         album={title}
       />
-      <ArtistsOptions
-        allOpts={allOpts}
-        setAllOpts={setAllOpts}
-        setTrackLinks={setTrackLinks}
-        numOfTracks={TRACK_LINKS.length}
-        modalOpen={artistOptModal}
-        setModal={setArtistModal}
+      <IndexTrackBtnAndModal
+        artist={tracksHistory.curr_artist}
+        link={tracksHistory.curr_link}
       />
-    </BodyOrDiv>
+    </body>
   )
 }
