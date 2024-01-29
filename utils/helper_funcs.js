@@ -14,7 +14,7 @@ export function getTrackLinks(tracksObj) {
 }
 
 export function formatTime(timeInSeconds) {
-  if(!timeInSeconds) return ''
+  if (!timeInSeconds) return ''
   function str_pad_left(string, pad, length) {
     return (new Array(length + 1).join(pad) + string).slice(-length)
   }
@@ -23,16 +23,22 @@ export function formatTime(timeInSeconds) {
   let minutes = Math.floor((timeInSeconds % 3600) / 60)
   let seconds = Math.floor(timeInSeconds % 60)
 
-  hours = str_pad_left(hours, '0', 2) 
+  hours = str_pad_left(hours, '0', 2)
   minutes = str_pad_left(minutes, '0', 2)
   seconds = str_pad_left(seconds, '0', 2)
 
   let formattedTime = ''
   if (hours === '00') {
     formattedTime = `${minutes}:${seconds}`
-  }else{
+  } else {
     formattedTime = `${hours}:${minutes}:${seconds}`
   }
 
   return formattedTime
+}
+
+export function getPrefixForProd() {
+  const prod = !true
+  const prefix = prod ? '' : '/keerat_test'
+  return prefix
 }

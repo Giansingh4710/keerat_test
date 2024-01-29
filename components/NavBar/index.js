@@ -1,10 +1,8 @@
-import { useRef, useState } from 'react'
+import { getPrefixForProd } from '@/utils/helper_funcs'
 import './index.css'
 
+const prefix = getPrefixForProd()
 export default function NavBar() {
-  const dev = !true
-  const prefix = dev ? '' : '/keerat_test'
-
   return (
     <nav className='topnav'>
       <a href={`${prefix}/`} className='active'>

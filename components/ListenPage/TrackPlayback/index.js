@@ -1,4 +1,5 @@
 import ALL_THEMES from '@/utils/themes'
+import { getPrefixForProd } from '@/utils/helper_funcs'
 
 import { IconButton, Typography } from '@mui/material'
 
@@ -10,14 +11,7 @@ import AudiotrackIcon from '@mui/icons-material/Audiotrack'
 import PersonIcon from '@mui/icons-material/Person'
 import AlbumIcon from '@mui/icons-material/Album'
 
-import PauseRounded from '@mui/icons-material/PauseRounded'
-import PlayArrowRounded from '@mui/icons-material/PlayArrowRounded'
-
-import FastForwardIcon from '@mui/icons-material/FastForward'
-import FastRewindIcon from '@mui/icons-material/FastRewind'
-
-import SkipNextIcon from '@mui/icons-material/SkipNext'
-import SkipPreviousIcon from '@mui/icons-material/SkipPrevious'
+const prefix = getPrefixForProd()
 
 export default function TrackPlayback({
   shuffle,
@@ -93,7 +87,7 @@ export default function TrackPlayback({
             setPaused(false)
           }}
         >
-          <img style={styles.playbackImg} src='/playbackImgs/play.svg' />
+          <img src={`${prefix}/playbackImgs/play.svg`} style={styles.playbackImg} />
         </button>
       )
     }
@@ -106,7 +100,7 @@ export default function TrackPlayback({
           setPaused(true)
         }}
       >
-        <img style={styles.playbackImg} src='/playbackImgs/pause.svg' />
+        <img src={`${prefix}/playbackImgs/pause.svg`} style={styles.playbackImg} />
       </button>
     )
   }
@@ -204,13 +198,13 @@ export default function TrackPlayback({
       </div>
       <div style={styles.playBackOptions}>
         <button onClick={prevTrack} style={styles.playbackIcon}>
-          <img style={styles.playbackImg} src='/playbackImgs/left.svg' />
+          <img src={`${prefix}/playbackImgs/left.svg`} style={styles.playbackImg}  />
         </button>
         <button
           onClick={() => (audioRef.current.currentTime -= skipTime.current)}
           style={styles.playbackIcon}
         >
-          <img style={styles.playbackImg} src='/playbackImgs/skip-back.svg' />
+          <img src={`${prefix}/playbackImgs/skip-back.svg`} style={styles.playbackImg}  />
         </button>
 
         <PlayPauseBtn style={styles.playbackIcon} />
@@ -219,13 +213,10 @@ export default function TrackPlayback({
           onClick={() => (audioRef.current.currentTime += skipTime.current)}
           style={styles.playbackIcon}
         >
-          <img
-            style={styles.playbackImg}
-            src='/playbackImgs/skip-forward.svg'
-          />
+          <img src={`${prefix}/playbackImgs/skip-forward.svg`} style={styles.playbackImg} />
         </button>
         <button onClick={nextTrack} style={styles.playbackIcon}>
-          <img style={styles.playbackImg} src='/playbackImgs/right.svg' />
+          <img src={`${prefix}/playbackImgs/right.svg`} style={styles.playbackImg}  />
         </button>
       </div>
       {audioComponent}
