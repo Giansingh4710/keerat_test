@@ -79,6 +79,7 @@ export default function ListenPage({ title, tracksObj }) {
     if (!urlStuff()) {
       if (!getTrackLocalStorage()) {
         nextTrack()
+        // randTrack()
       }
     }
 
@@ -128,6 +129,14 @@ export default function ListenPage({ title, tracksObj }) {
     saveTrackInLocalStorage(curr_link, '0')
   }
 
+  function randTrack() {
+    const randNum = Math.floor(Math.random() * TRACK_LINKS.length)
+    const curr_link = TRACK_LINKS[randNum]
+    const curr_ind = tracksHistory.links_lst.length
+    const links_lst = [...tracksHistory.links_lst, curr_link]
+    playTrack(curr_ind, curr_link, links_lst)
+  }
+
   function nextTrack() {
     let curr_ind
     let curr_link
@@ -135,10 +144,8 @@ export default function ListenPage({ title, tracksObj }) {
 
     if (tracksHistory.curr_ind === tracksHistory.links_lst.length - 1) {
       if (shuffle) {
-        const randNum = Math.floor(Math.random() * TRACK_LINKS.length)
-        curr_link = TRACK_LINKS[randNum]
-        curr_ind = tracksHistory.links_lst.length
-        links_lst = [...tracksHistory.links_lst, curr_link]
+        randTrack()
+        return
       } else {
         const indOfCurrLink = TRACK_LINKS.indexOf(tracksHistory.curr_link)
         let indOfNextLink = indOfCurrLink + 1

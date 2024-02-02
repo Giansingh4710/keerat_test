@@ -7,9 +7,12 @@ import { useMemo, useRef, useState } from 'react'
 import { formatTime, getNameOfTrack } from '@/utils/helper_funcs'
 import { styled } from '@mui/material/styles'
 
+import toast, { Toaster } from 'react-hot-toast'
+
 import AudiotrackIcon from '@mui/icons-material/Audiotrack'
 import PersonIcon from '@mui/icons-material/Person'
 import AlbumIcon from '@mui/icons-material/Album'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
 
 const prefix = getPrefixForProd()
 
@@ -75,6 +78,7 @@ export default function TrackPlayback({
     url.searchParams.append('artist', artist)
     url.searchParams.append('trackIndex', get_ind_from_artist_tracks(link))
     navigator.clipboard.writeText(url.href)
+    toast.success(`Link with timestamp: ${formatTime(currentTime)} Copied`)
   }
 
   function PlayPauseBtn() {
@@ -123,7 +127,7 @@ export default function TrackPlayback({
         onPlay={() => setPaused(false)}
         onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
         onError={() => {
-          alert('Error Loading Track!')
+          toast.error('Error Loading Track!')
         }}
         onEnded={nextTrack}
         onLoadedData={() => {
@@ -136,16 +140,25 @@ export default function TrackPlayback({
     )
   }, [link])
 
+  const shuffleImg = useMemo(() => {
+    let imgSrc = `${prefix}/playbackImgs/inorder.svg`
+    if (shuffle) {
+      imgSrc = `${prefix}/playbackImgs/shuffle.svg`
+    }
+    return <img src={imgSrc} style={styles.playbackImg} />
+  }, [shuffle])
+
   const playPauseBtn = useMemo(() => <PlayPauseBtn />, [paused])
 
   return (
     <div style={styles.cont}>
+      <Toaster position='top-left' reverseOrder={true} />
       <div style={styles.trackInfo}>
         <div style={styles.contLine}>
           <IconButton
             onClick={async () => {
               await navigator.clipboard.writeText(link)
-              alert('Copied Raw Link to Clipboard:')
+              toast.success('Copied Raw Link to Clipboard!')
             }}
           >
             <AudiotrackIcon style={styles.musicIcon} />
@@ -155,38 +168,70 @@ export default function TrackPlayback({
           </a>
         </div>
         <div style={styles.contLine}>
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              toast.success(`Dhan ${artist}!`)
+            }}
+          >
             <PersonIcon style={styles.musicIcon} />
           </IconButton>
           <TinyText>{artist}</TinyText>
         </div>
         <div style={styles.contLine}>
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              toast.success(`You are listening to '${album}' !!!`)
+            }}
+          >
             <AlbumIcon style={styles.musicIcon} />
           </IconButton>
           <TinyText>{album}</TinyText>
         </div>
+        <div style={styles.contLine}>
+          <IconButton
+            onClick={() => {
+              toast.success(`At ${formatTime(currentTime)} = ${currentTime}!`)
+            }}
+          >
+            <AccessTimeIcon style={styles.musicIcon} />
+          </IconButton>
+          <TinyText>
+            {formatTime(currentTime)} /{' '}
+            {formatTime(audioRef?.current?.duration)}
+          </TinyText>
+        </div>
       </div>
       <div style={styles.randomRow}>
-        <p style={styles.trackTime}>
-          {formatTime(currentTime)} / {formatTime(audioRef?.current?.duration)}
-        </p>
         <button
           onClick={() => {
             setShuffle(!shuffle)
             localStorage.setItem('shuffle', !shuffle)
+            toast.success('Shuffle ' + (!shuffle ? 'Enabled' : 'Disabled'))
           }}
-          style={{
-            ...styles.btn,
-            ...ALL_THEMES.theme1.listenPage.TrackPlayback.colorChangerVal(
-              shuffle
-            ),
-          }}
+          style={styles.btn}
         >
-          <p>Shuffle: {shuffle ? 'ON' : 'OFF'}</p>
+          {shuffleImg}
         </button>
+
+        <div style={styles.skipIntervelDiv}>
+          <label htmlFor='pickSkipInterval'>Skip Interval:</label>
+          <select
+            style={styles.seekTimeSelect}
+            id='pickSkipInterval'
+            onChange={(e) => {
+              skipTime.current = parseInt(e.target.value)
+            }}
+          >
+            <option value='5'>5 Seconds</option>
+            <option value='10' defaultValue>
+              10 Seconds
+            </option>
+            <option value='30'>30 Seconds</option>
+            <option value='60'>60 Seconds</option>
+          </select>
+        </div>
         <button style={styles.btn} onClick={copyLink}>
-          Copy Link
+          <img src={`${prefix}/playbackImgs/copy.svg`} style={styles.playbackImg} />
         </button>
       </div>
       {audioComponent}
@@ -225,23 +270,6 @@ export default function TrackPlayback({
           />
         </button>
       </div>
-      <div style={styles.skipIntervelDiv}>
-        <label htmlFor='pickSkipInterval'>Skip Interval:</label>
-        <select
-          style={styles.seekTimeSelect}
-          id='pickSkipInterval'
-          onChange={(e) => {
-            skipTime.current = parseInt(e.target.value)
-          }}
-        >
-          <option value='5'>5 Seconds</option>
-          <option value='10' defaultValue>
-            10 Seconds
-          </option>
-          <option value='30'>30 Seconds</option>
-          <option value='60'>60 Seconds</option>
-        </select>
-      </div>
     </div>
   )
 }
@@ -257,7 +285,7 @@ const styles = {
     // marginTop: '1.5em',
     ...ALL_THEMES.theme1.listenPage.TrackPlayback.cont,
   },
-  trackInfo:{
+  trackInfo: {
     flex: 4,
   },
   contLine: {
@@ -318,14 +346,12 @@ const styles = {
     // marginButtom: '1.5em',
     ...ALL_THEMES.theme1.listenPage.TrackPlayback.randomRow,
   },
-  trackTime: {
-    all: 'unset',
-    fontSize: '0.85rem',
-    alignSelf: 'center',
-    flex: 1,
-  },
   btn: {
+    border: 'none',
+    padding: '0.5rem',
+    height: '4vh',
     margin: '0.5em',
+
     fontSize: '0.8em',
     display: 'flex',
     flexDirection: 'column',

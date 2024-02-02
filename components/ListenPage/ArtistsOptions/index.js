@@ -1,13 +1,11 @@
 import ALL_THEMES from '@/utils/themes'
 
 import { getTrackLinks } from '@/utils/helper_funcs'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import { IconButton } from '@mui/material'
-
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
-import CheckBoxIcon from '@mui/icons-material/CheckBox'
 
 export default function ArtistsOptions({
   allOpts,
@@ -16,6 +14,23 @@ export default function ArtistsOptions({
   numOfTracks,
 }) {
   const [showOpts, setShowOpts] = useState(false)
+
+  const optionsDivRef = useRef(null)
+  const scrollTo = useRef(0)
+
+  useEffect(() => {
+    if (scrollTo.current !== 0 && optionsDivRef.current) {
+      optionsDivRef.current.scrollTop = scrollTo.current
+    }
+
+    toast((t) => (
+      <span>
+        Total Tracks in Queue: <b>{numOfTracks}</b> <br />
+        <button onClick={() => toast.dismiss(t.id)}>Dismiss</button>
+      </span>
+    ))
+  }, [allOpts, numOfTracks])
+
   function TheOptions() {
     const artist_options = Object.keys(allOpts).map((artist) => {
       return (
@@ -37,6 +52,7 @@ export default function ArtistsOptions({
                 setTrackLinks(getTrackLinks(newObj))
                 return newObj
               })
+              scrollTo.current = optionsDivRef.current.scrollTop
             }}
           />
           <label style={styles.label} htmlFor={artist}>
@@ -45,28 +61,33 @@ export default function ArtistsOptions({
         </div>
       )
     })
-    return <div style={styles.optionsDiv}>{artist_options}</div>
+    return (
+      <div ref={optionsDivRef} style={styles.optionsDiv}>
+        {artist_options}
+      </div>
+    )
   }
 
   if (!showOpts) {
     return (
       <button
-        style={styles.checkOptsBtns}
+        style={styles.mainBtn}
         onClick={() => {
           setShowOpts(true)
         }}
       >
-        <p>Show Options</p>
+        Track Options
       </button>
     )
   }
 
   return (
     <div style={styles.container}>
+      <Toaster position='top-left' reverseOrder={true} />
       <div style={styles.topRow}>
         <p style={styles.trackNums}>Total Tracks in Queue: {numOfTracks}</p>
         <IconButton style={styles.xIcon} onClick={() => setShowOpts(false)}>
-          <HighlightOffIcon />
+          <HighlightOffIcon style={styles.xIcon} />
         </IconButton>
       </div>
       <TheOptions />
@@ -83,7 +104,7 @@ export default function ArtistsOptions({
             })
           }}
         >
-          <p>Select All</p>
+          Select All
         </button>
         <button
           style={styles.checkOptsBtns}
@@ -97,13 +118,10 @@ export default function ArtistsOptions({
             })
           }}
         >
-          <p>Unselect</p>
+          Unselect All
         </button>
-        <button
-          style={styles.checkOptsBtns}
-          onClick={() => setShowOpts(false)}
-        >
-          <p>Close</p>
+        <button style={styles.checkOptsBtns} onClick={() => setShowOpts(false)}>
+          Close
         </button>
       </div>
     </div>
@@ -117,49 +135,61 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: '0.5em',
-    padding: '1em',
+    padding: '0.5em',
     ...ALL_THEMES.theme1.listenPage.ArtistsOptionsModal.container,
+  },
+  mainBtn: {
+    fontSize: '0.5em',
+    borderRadius: '1em',
+    height: '2em',
   },
   topRow: {
     flex: 1,
     display: 'flex',
+    alignItems: 'center',
     flexDirection: 'row',
-
+    height: '2em',
+    // backgroundColor: 'red',
   },
   trackNums: {
     flex: 1,
     display: 'flex',
     justifyContent: 'flex-start',
-    fontSize: '2em',
   },
   xIcon: {
+    fontSize: '1rem',
     ...ALL_THEMES.theme1.listenPage.SearchTracks.xIcon,
   },
   checkBtnsRow: {
     display: 'flex',
-    borderRadius: '1em',
+    marginTop: '0.5em',
   },
   checkOptsBtns: {
-    margin: '1em',
     // fontSize: '0.8em',
     // fontWeight: 'bold',
-    borderRadius: '15px',
+    // margin: '0rem',
+    margin: '0.5em',
+    marginLeft: '0.5em',
+    fontSize: '0.5em',
+    borderRadius: '5px',
+
+    // border: 'none',
+    cursor: 'pointer',
     // ...ALL_THEMES.theme1.listenPage.ArtistsOptionsModal.checkOptsBtns,
   },
   optionsDiv: {
+    fontSize: '0.5em',
+    fontWeight: 500,
     display: 'flex',
     flexDirection: 'column',
     borderRadius: '1em',
     overflow: 'scroll',
-    padding: '1em',
     border: '1px solid black',
     height: '20em',
     // backgroundColor: ALL_THEMES.theme1.backgroundColor
   },
   artistOption: {
     alignItems: 'center',
-    padding: '0.5em',
-    fontSize: '2em',
     display: 'flex',
     margin: '0.25em',
     borderRadius: '15px',
