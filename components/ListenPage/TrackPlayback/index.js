@@ -87,7 +87,10 @@ export default function TrackPlayback({
             setPaused(false)
           }}
         >
-          <img src={`${prefix}/playbackImgs/play.svg`} style={styles.playbackImg} />
+          <img
+            src={`${prefix}/playbackImgs/play.svg`}
+            style={styles.playbackImg}
+          />
         </button>
       )
     }
@@ -100,7 +103,10 @@ export default function TrackPlayback({
           setPaused(true)
         }}
       >
-        <img src={`${prefix}/playbackImgs/pause.svg`} style={styles.playbackImg} />
+        <img
+          src={`${prefix}/playbackImgs/pause.svg`}
+          style={styles.playbackImg}
+        />
       </button>
     )
   }
@@ -130,32 +136,36 @@ export default function TrackPlayback({
     )
   }, [link])
 
+  const playPauseBtn = useMemo(() => <PlayPauseBtn />, [paused])
+
   return (
     <div style={styles.cont}>
-      <div style={styles.contLine}>
-        <IconButton
-          onClick={async () => {
-            await navigator.clipboard.writeText(link)
-            alert('Copied Raw Link to Clipboard:')
-          }}
-        >
-          <AudiotrackIcon style={styles.musicIcon} />
-        </IconButton>
-        <a style={styles.trackNameAtag} target='_blank' href={link}>
-          {getNameOfTrack(link)}
-        </a>
-      </div>
-      <div style={styles.contLine}>
-        <IconButton>
-          <PersonIcon style={styles.musicIcon} />
-        </IconButton>
-        <TinyText>{artist}</TinyText>
-      </div>
-      <div style={styles.contLine}>
-        <IconButton>
-          <AlbumIcon style={styles.musicIcon} />
-        </IconButton>
-        <TinyText>{album}</TinyText>
+      <div style={styles.trackInfo}>
+        <div style={styles.contLine}>
+          <IconButton
+            onClick={async () => {
+              await navigator.clipboard.writeText(link)
+              alert('Copied Raw Link to Clipboard:')
+            }}
+          >
+            <AudiotrackIcon style={styles.musicIcon} />
+          </IconButton>
+          <a style={styles.trackNameAtag} target='_blank' href={link}>
+            {getNameOfTrack(link)}
+          </a>
+        </div>
+        <div style={styles.contLine}>
+          <IconButton>
+            <PersonIcon style={styles.musicIcon} />
+          </IconButton>
+          <TinyText>{artist}</TinyText>
+        </div>
+        <div style={styles.contLine}>
+          <IconButton>
+            <AlbumIcon style={styles.musicIcon} />
+          </IconButton>
+          <TinyText>{album}</TinyText>
+        </div>
       </div>
       <div style={styles.randomRow}>
         <p style={styles.trackTime}>
@@ -179,6 +189,42 @@ export default function TrackPlayback({
           Copy Link
         </button>
       </div>
+      {audioComponent}
+      <div style={styles.playBackOptions}>
+        <button onClick={prevTrack} style={styles.playbackIcon}>
+          <img
+            src={`${prefix}/playbackImgs/left.svg`}
+            style={styles.playbackImg}
+          />
+        </button>
+        <button
+          onClick={() => (audioRef.current.currentTime -= skipTime.current)}
+          style={styles.playbackIcon}
+        >
+          <img
+            src={`${prefix}/playbackImgs/skip-back.svg`}
+            style={styles.playbackImg}
+          />
+        </button>
+
+        {playPauseBtn}
+
+        <button
+          onClick={() => (audioRef.current.currentTime += skipTime.current)}
+          style={styles.playbackIcon}
+        >
+          <img
+            src={`${prefix}/playbackImgs/skip-forward.svg`}
+            style={styles.playbackImg}
+          />
+        </button>
+        <button onClick={nextTrack} style={styles.playbackIcon}>
+          <img
+            src={`${prefix}/playbackImgs/right.svg`}
+            style={styles.playbackImg}
+          />
+        </button>
+      </div>
       <div style={styles.skipIntervelDiv}>
         <label htmlFor='pickSkipInterval'>Skip Interval:</label>
         <select
@@ -196,30 +242,6 @@ export default function TrackPlayback({
           <option value='60'>60 Seconds</option>
         </select>
       </div>
-      <div style={styles.playBackOptions}>
-        <button onClick={prevTrack} style={styles.playbackIcon}>
-          <img src={`${prefix}/playbackImgs/left.svg`} style={styles.playbackImg}  />
-        </button>
-        <button
-          onClick={() => (audioRef.current.currentTime -= skipTime.current)}
-          style={styles.playbackIcon}
-        >
-          <img src={`${prefix}/playbackImgs/skip-back.svg`} style={styles.playbackImg}  />
-        </button>
-
-        <PlayPauseBtn style={styles.playbackIcon} />
-
-        <button
-          onClick={() => (audioRef.current.currentTime += skipTime.current)}
-          style={styles.playbackIcon}
-        >
-          <img src={`${prefix}/playbackImgs/skip-forward.svg`} style={styles.playbackImg} />
-        </button>
-        <button onClick={nextTrack} style={styles.playbackIcon}>
-          <img src={`${prefix}/playbackImgs/right.svg`} style={styles.playbackImg}  />
-        </button>
-      </div>
-      {audioComponent}
     </div>
   )
 }
@@ -231,9 +253,12 @@ const styles = {
     alignItems: 'flex-start',
     padding: '0.5em',
     borderRadius: '0.5em',
-    height: '40vh',
-    marginTop: '1.5em',
+    // height: '40vh',
+    // marginTop: '1.5em',
     ...ALL_THEMES.theme1.listenPage.TrackPlayback.cont,
+  },
+  trackInfo:{
+    flex: 4,
   },
   contLine: {
     display: 'flex',
@@ -259,6 +284,8 @@ const styles = {
   },
   audio: {
     width: '100%',
+    height: '100%',
+    margin: '1em 0',
   },
   playBackOptions: {
     display: 'flex',
@@ -266,13 +293,12 @@ const styles = {
   },
   playbackIcon: {
     flex: 1,
-    // fontSize: '4rem',
     border: 'none',
     background: 'none',
     cursor: 'pointer',
     margin: '0',
     padding: '0.5rem',
-    height: '10vh',
+    height: '7vh',
   },
   playbackImg: {
     width: '100%',
@@ -284,10 +310,12 @@ const styles = {
   },
 
   randomRow: {
+    flex: 2,
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
     borderRadius: '0.5em',
+    // marginButtom: '1.5em',
     ...ALL_THEMES.theme1.listenPage.TrackPlayback.randomRow,
   },
   trackTime: {

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import SearchIcon from '@mui/icons-material/Search'
 
-import { Button, IconButton } from '@mui/material'
+import { IconButton } from '@mui/material'
 import { getNameOfTrack } from '@/utils/helper_funcs'
 
 export default function SearchTracks({ tracks, playSpecificTrack }) {
