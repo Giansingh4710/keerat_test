@@ -137,7 +137,7 @@ const styles = {
     fontSize: '0.5em',
     padding: '0.5em',
     color: ALL_THEMES.theme1.text1,
-    backgroundColor: ALL_THEMES.theme1.secondary,
+    backgroundColor: ALL_THEMES.theme1.third,
   },
   mainBtn: {
     fontSize: '0.5em',

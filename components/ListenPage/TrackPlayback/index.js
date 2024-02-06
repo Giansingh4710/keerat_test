@@ -282,8 +282,8 @@ const styles = {
     padding: '0.5em',
     // height: '40vh',
     // marginTop: '1.5em',
-    backgroundColor: ALL_THEMES.theme1.secondary,
-    color: ALL_THEMES.theme1.text1,
+    backgroundColor: ALL_THEMES.theme1.third,
+    color: ALL_THEMES.theme1.text2,
 
     border: "3px solid #34568b",
     borderRadius: '1.5em',
