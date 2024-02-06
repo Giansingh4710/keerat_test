@@ -206,7 +206,7 @@ export default function ListenPage({ title, tracksObj }) {
   return (
     <body
       style={{
-        backgroundColor: ALL_THEMES.theme1.backgroundColor,
+        backgroundColor: ALL_THEMES.theme1.primany,
       }}
     >
       <NavBar />

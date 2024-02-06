@@ -38,7 +38,7 @@ export function formatTime(timeInSeconds) {
 }
 
 export function getPrefixForProd() {
-  const dev = !true
+  const dev = true
   const prefix = dev ? '' : '/keerat_test'
   return prefix
 }

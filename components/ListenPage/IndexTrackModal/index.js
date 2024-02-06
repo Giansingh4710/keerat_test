@@ -462,7 +462,8 @@ const styles = {
   main_btn:{
     margin: '2em',
     borderRadius: '10px',
-    ...ALL_THEMES.theme1.listenPage.IndexTrackModal.main_btn
+    color: ALL_THEMES.theme1.text2,
+    backgroundColor: ALL_THEMES.theme1.third,
   },
   cont: {
     padding: '2em',
@@ -472,7 +473,8 @@ const styles = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '70vw',
-    ...ALL_THEMES.theme1.listenPage.IndexTrackModal.cont
+    backgroundColor: '#ff7f50',
+    color: ALL_THEMES.theme1.text1,
   },
   closeModalBtn: {
     display: 'flex',
@@ -480,7 +482,7 @@ const styles = {
     fontSize: '31px',
     fontWeight: 'bold',
     margin: '-1em',
-    ...ALL_THEMES.theme1.listenPage.IndexTrackModal.closeModalBtn
+    color: ALL_THEMES.theme1.text2,
   },
   userInputItem: {
     display: 'flex',
@@ -490,20 +492,19 @@ const styles = {
     borderRadius: '1em',
     margin: '1em',
     padding: '0.5em',
-    ...ALL_THEMES.theme1.listenPage.IndexTrackModal.userInputItem
+    backgroundColor: '#0077be',
   },
   label: {
     flex: 0.5,
     fontWeight: 500,
     letterSpacing: 0.2,
     fontSize: '0.75rem',
-    ...ALL_THEMES.theme1.listenPage.IndexTrackModal.label
   },
   userDesc: {
     flex: 1,
   },
   timeInput: {
     width: '3em',
-    ...ALL_THEMES.theme1.listenPage.IndexTrackModal.timeInput,
+    color: ALL_THEMES.theme1.text2,
   },
 }

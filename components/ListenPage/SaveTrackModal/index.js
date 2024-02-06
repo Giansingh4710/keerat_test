@@ -132,7 +132,8 @@ const styles = {
   btn: {
     fontWeight: 'bold',
     borderRadius: '15px',
-    ...ALL_THEMES.theme1.listenPage.SaveTrackModal.btn,
+    color: ALL_THEMES.theme1.text2,
+    backgroundColor: ALL_THEMES.theme1.third,
   },
   btnTxt: {
     display: 'inline-block',
@@ -152,19 +153,20 @@ const styles = {
     p: 4,
     borderRadius: '10px',
     padding: '20px',
-    ...ALL_THEMES.theme1.listenPage.SaveTrackModal.modalDiv,
+    backgroundColor: ALL_THEMES.theme1.primany,
+    color: ALL_THEMES.theme1.text1,
   },
   modalDivClose: {
     fontSize: '28px',
     fontWeight: 'bold',
-    ...ALL_THEMES.theme1.listenPage.SaveTrackModal.modalDivClose,
+    color: ALL_THEMES.theme1.text2,
   },
   label: {
     fontSize: '1.2em',
     fontWeight: 'bold',
-    ...ALL_THEMES.theme1.listenPage.SaveTrackModal.label,
+    color: ALL_THEMES.theme1.text2,
   },
   textArea: {
-    ...ALL_THEMES.theme1.listenPage.SaveTrackModal.textArea,
+    color: ALL_THEMES.theme1.text2,
   },
 }

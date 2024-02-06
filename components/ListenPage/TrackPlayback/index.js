@@ -280,10 +280,13 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'flex-start',
     padding: '0.5em',
-    borderRadius: '0.5em',
     // height: '40vh',
     // marginTop: '1.5em',
-    ...ALL_THEMES.theme1.listenPage.TrackPlayback.cont,
+    backgroundColor: ALL_THEMES.theme1.secondary,
+    color: ALL_THEMES.theme1.text1,
+
+    border: "3px solid #34568b",
+    borderRadius: '1.5em',
   },
   trackInfo: {
     flex: 4,
@@ -334,7 +337,7 @@ const styles = {
   },
   seekTimeSelect: {
     marginLeft: '0.5em',
-    ...ALL_THEMES.theme1.listenPage.TrackPlayback.seekTimeSelect,
+    color: ALL_THEMES.theme1.text2,
   },
 
   randomRow: {
@@ -344,7 +347,7 @@ const styles = {
     width: '100%',
     borderRadius: '0.5em',
     // marginButtom: '1.5em',
-    ...ALL_THEMES.theme1.listenPage.TrackPlayback.randomRow,
+    backgroundColor: ALL_THEMES.theme1.primany,
   },
   btn: {
     border: 'none',
@@ -359,7 +362,8 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
-    ...ALL_THEMES.theme1.listenPage.TrackPlayback.btn,
+    color: ALL_THEMES.theme1.text2,
+    backgroundColor: ALL_THEMES.theme1.third,
   },
 }
 

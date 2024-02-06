@@ -23,13 +23,13 @@ export default function SearchTracks({ tracks, playSpecificTrack }) {
       borderRadius: '5px',
       padding: '5px',
       fontSize: '1em',
-      ...ALL_THEMES.theme1.listenPage.SearchTracks.searchInput,
+      color: ALL_THEMES.theme1.text2,
     },
     xIcon: {
       flex: 1,
       paddingLeft: '1em',
       alignSelf: 'center',
-      ...ALL_THEMES.theme1.listenPage.SearchTracks.xIcon,
+      color: ALL_THEMES.theme1.text1,
     },
   }
 
@@ -61,7 +61,7 @@ export default function SearchTracks({ tracks, playSpecificTrack }) {
         overflow: 'scroll',
         border: '1px solid white',
         borderRadius: '5px',
-        ...ALL_THEMES.theme1.listenPage.SearchTracks.cont,
+        color: ALL_THEMES.theme1.text1,
       },
       btn: {
         fontSize: '0.5em',

@@ -136,7 +136,8 @@ const styles = {
     justifyContent: 'center',
     fontSize: '0.5em',
     padding: '0.5em',
-    ...ALL_THEMES.theme1.listenPage.ArtistsOptionsModal.container,
+    color: ALL_THEMES.theme1.text1,
+    backgroundColor: ALL_THEMES.theme1.secondary,
   },
   mainBtn: {
     fontSize: '0.5em',
@@ -158,7 +159,7 @@ const styles = {
   },
   xIcon: {
     fontSize: '1rem',
-    ...ALL_THEMES.theme1.listenPage.SearchTracks.xIcon,
+    color: ALL_THEMES.theme1.text1,
   },
   checkBtnsRow: {
     display: 'flex',
@@ -175,7 +176,6 @@ const styles = {
 
     // border: 'none',
     cursor: 'pointer',
-    // ...ALL_THEMES.theme1.listenPage.ArtistsOptionsModal.checkOptsBtns,
   },
   optionsDiv: {
     fontSize: '0.5em',
@@ -186,14 +186,13 @@ const styles = {
     overflow: 'scroll',
     border: '1px solid black',
     height: '20em',
-    // backgroundColor: ALL_THEMES.theme1.backgroundColor
   },
   artistOption: {
     alignItems: 'center',
     display: 'flex',
     margin: '0.25em',
     borderRadius: '15px',
-    ...ALL_THEMES.theme1.listenPage.ArtistsOptionsModal.artistOption,
+    backgroundColor: ALL_THEMES.theme1.primany,
   },
   checkbox: {
     // flex: 1,

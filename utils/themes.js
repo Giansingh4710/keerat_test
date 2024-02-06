@@ -1,4 +1,4 @@
-export const colors = {
+const ALL_THEMES = {
   theme1: {
     text1: 'white',
     text2: 'black',
@@ -7,106 +7,23 @@ export const colors = {
     third: 'skyblue',
     fourth: '#466995',
     five: '#7D4600',
-  },
-}
-const theme1 = {
-  backgroundColor: colors.theme1.primany,
-  optsPages: {
-    header: {
-      backgroundColor: colors.theme1.secondary,
-    },
-    opt: {
-      backgroundColor: colors.theme1.third,
-    },
-  },
-  listenPage: {
-    ArtistsOptionsModal: {
-      container: {
-        color: colors.theme1.text1,
-        backgroundColor: colors.theme1.secondary,
-      },
-      checkOptsBtns: {
-        backgroundColor: colors.theme1.primany,
-        color: colors.theme1.text1,
-      },
-      artistOption: {
-        backgroundColor: colors.theme1.primany,
-      },
-    },
-    SaveTrackModal: {
-      btn: {
-        color: colors.theme1.text2,
-        backgroundColor: colors.theme1.third,
-      },
-      modalDiv: {
-        backgroundColor: colors.theme1.primany,
-        color: colors.theme1.text1,
-      },
-      modalDivClose: {
-        color: colors.theme1.text2,
-      },
-      label: {
-        color: colors.theme1.text2,
-      },
-      textArea: {
-        color: colors.theme1.text2,
-      },
-    },
-    SearchTracks: {
-      searchInput: {
-        color: colors.theme1.text2,
-      },
-      xIcon: {
-        color: colors.theme1.text1,
-      },
-      cont: {
-        color: colors.theme1.text1,
-      },
-    },
-    TrackPlayback: {
-      cont: {
-        backgroundColor: colors.theme1.secondary,
-        color: colors.theme1.text1,
-      },
-      seekTimeSelect: {
-        color: colors.theme1.text2,
-      },
-      randomRow: {
-        backgroundColor: colors.theme1.primany,
-      },
-      btn: {
-        color: colors.theme1.text2,
-        backgroundColor: colors.theme1.third,
-      },
-      colorChangerVal: (bool) =>
-        bool
-          ? { backgroundColor: colors.theme1.fourth }
-          : { backgroundColor: colors.theme1.third },
-    },
-    IndexTrackModal: {
-      main_btn: {
-        color: colors.theme1.text1,
-        backgroundColor: '#1565c0',
-      },
-      cont: {
-        backgroundColor: '#ff7f50',
-        color: colors.theme1.text1,
-      },
-      userInputItem: {
-        backgroundColor: '#0077be',
-      },
-      closeModalBtn: {
-        color: colors.theme1.text2,
-      },
-      timeInput: {
-        color: colors.theme1.text2,
-      },
-    },
-  },
-}
 
-const ALL_THEMES = {
-  theme1: theme1,
+    primany: "#0074D9",
+    secondary: "#0074D9",
+    third: "#FFA500",
+    fourth: "navy",
+
+    /*
+
+      background-color: #333;
+      color:#849598 ;
+      background-color: #EDDF6A;
+      background-color: #f9f9f9;
+      background-color: #555;
+      color: white;
+    */
+  },
 }
+const theme1 = { }
 
 export default ALL_THEMES
