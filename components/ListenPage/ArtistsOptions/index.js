@@ -173,7 +173,6 @@ const styles = {
     marginLeft: '0.5em',
     fontSize: '0.5em',
     borderRadius: '5px',
-
     // border: 'none',
     cursor: 'pointer',
   },
@@ -192,13 +191,15 @@ const styles = {
     display: 'flex',
     margin: '0.25em',
     borderRadius: '15px',
-    backgroundColor: ALL_THEMES.theme1.primany,
+    backgroundColor: ALL_THEMES.theme1.primary,
   },
   checkbox: {
     // flex: 1,
     margin: '0.5em',
+
   },
   label: {
+    color: ALL_THEMES.theme1.text2,
     // flex: 30,
     // overflowWrap: 'break-word',
     // whiteSpace: 'nowrap',

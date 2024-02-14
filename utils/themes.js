@@ -1,17 +1,17 @@
 const ALL_THEMES = {
   theme1: {
-    text1: 'white',
-    text2: 'black',
-    // primany: '#001f3f',
-    // secondary: '#F58F29',
+    text2: 'white',
+    text1: 'black',
+    primary: '#001f3f',
+    secondary: '#F58F29',
     // third: 'skyblue',
-    // fourth: '#466995',
-    five: '#7D4600',
+    fourth: '#466995',
 
-    primany: "#0074D9",
-    secondary: "navy",
+    // primary: "#0074D9",
+    // secondary: "navy",
     third: "#FFA500",
-    fourth: "#0074D9",
+    // fourth: "#0074D9",
+    five: '#7D4600',
 
     /*
       background-color: #333;

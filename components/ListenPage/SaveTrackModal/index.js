@@ -153,7 +153,7 @@ const styles = {
     p: 4,
     borderRadius: '10px',
     padding: '20px',
-    backgroundColor: ALL_THEMES.theme1.primany,
+    backgroundColor: ALL_THEMES.theme1.primary,
     color: ALL_THEMES.theme1.text1,
   },
   modalDivClose: {

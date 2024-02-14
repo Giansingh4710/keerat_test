@@ -9,30 +9,6 @@ import { getNameOfTrack } from '@/utils/helper_funcs'
 export default function SearchTracks({ tracks, playSpecificTrack }) {
   const [searchInput, setSearchInput] = useState('')
 
-  const styles = {
-    cont: {
-      padding: '1em',
-    },
-    topRow: {
-      display: 'flex',
-      paddingBottom: '0.5em',
-    },
-    searchInput: {
-      flex: 5,
-      alignSelf: 'center',
-      borderRadius: '5px',
-      padding: '5px',
-      fontSize: '1em',
-      color: ALL_THEMES.theme1.text2,
-    },
-    xIcon: {
-      flex: 1,
-      paddingLeft: '1em',
-      alignSelf: 'center',
-      color: ALL_THEMES.theme1.text1,
-    },
-  }
-
   function ShowingOfTracks() {
     if (searchInput === '') {
       return <></>
@@ -54,29 +30,16 @@ export default function SearchTracks({ tracks, playSpecificTrack }) {
         allLinksWithWordInds.push(link)
       }
     })
-    
-    const lstStyles = {
-      cont:{
-        height: '200px',
-        overflow: 'scroll',
-        border: '1px solid white',
-        borderRadius: '5px',
-        color: ALL_THEMES.theme1.text1,
-      },
-      btn: {
-        fontSize: '0.5em',
-      },
-    }
 
     return (
-      <div style={lstStyles.cont}>
+      <div style={styles.results}>
         <p>{allLinksWithWordInds.length} Results Found</p>
-        <ol>
+        <ol style={styles.ol}>
           {allLinksWithWordInds.map((link, index) => {
             return (
               <li key={index}>
                 <button
-                  style={lstStyles.btn}
+                  style={styles.btn}
                   onClick={() => {
                     playSpecificTrack(link)
                   }}
@@ -107,4 +70,41 @@ export default function SearchTracks({ tracks, playSpecificTrack }) {
       <ShowingOfTracks />
     </div>
   )
+}
+
+const styles = {
+  cont: {
+    padding: '1em',
+  },
+  topRow: {
+    paddingBottom: '0.5em',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  searchInput: {
+    width: '26.5rem',
+    borderRadius: '0.5em',
+    fontSize: '1.5em',
+    color: ALL_THEMES.theme1.text2,
+    paddingLeft: '1em',
+    // background: 'url("https://static.thenounproject.com/png/101791-200.png") no-repeat left',
+    // backgroundSize: '20px',
+    backgroundColor: ALL_THEMES.theme1.text1,
+  },
+  xIcon: {
+    color: ALL_THEMES.theme1.text2,
+  },
+  ol: {
+    color: ALL_THEMES.theme1.text2,
+  },
+  results: {
+    color: ALL_THEMES.theme1.text2,
+    height: '200px',
+    overflow: 'scroll',
+    border: '1px solid white',
+    borderRadius: '5px',
+  },
+  btn: {
+    fontSize: '0.5em',
+  },
 }

@@ -11,7 +11,6 @@ import toast, { Toaster } from 'react-hot-toast'
 
 import AudiotrackIcon from '@mui/icons-material/Audiotrack'
 import PersonIcon from '@mui/icons-material/Person'
-import AlbumIcon from '@mui/icons-material/Album'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 
 const prefix = getPrefixForProd()
@@ -145,7 +144,7 @@ export default function TrackPlayback({
     if (shuffle) {
       imgSrc = `${prefix}/playbackImgs/shuffle.svg`
     }
-    return <img src={imgSrc} style={styles.playbackImg} />
+    return <img src={imgSrc} style={styles.randomRowBtns} />
   }, [shuffle])
 
   const playPauseBtn = useMemo(() => <PlayPauseBtn />, [paused])
@@ -180,16 +179,6 @@ export default function TrackPlayback({
         <div style={styles.contLine}>
           <IconButton
             onClick={() => {
-              toast.success(`You are listening to '${album}' !!!`)
-            }}
-          >
-            <AlbumIcon style={styles.musicIcon} />
-          </IconButton>
-          <TinyText>{album}</TinyText>
-        </div>
-        <div style={styles.contLine}>
-          <IconButton
-            onClick={() => {
               toast.success(`At ${formatTime(currentTime)} = ${currentTime}!`)
             }}
           >
@@ -201,6 +190,7 @@ export default function TrackPlayback({
           </TinyText>
         </div>
       </div>
+      {audioComponent}
       <div style={styles.randomRow}>
         <button
           onClick={() => {
@@ -231,10 +221,9 @@ export default function TrackPlayback({
           </select>
         </div>
         <button style={styles.btn} onClick={copyLink}>
-          <img src={`${prefix}/playbackImgs/copy.svg`} style={styles.playbackImg} />
+          <img src={`${prefix}/playbackImgs/copy.svg`} style={styles.randomRowBtns} />
         </button>
       </div>
-      {audioComponent}
       <div style={styles.playBackOptions}>
         <button onClick={prevTrack} style={styles.playbackIcon}>
           <img
@@ -312,6 +301,11 @@ const styles = {
     alignSelf: 'center',
     justifyContent: 'center',
     padding: '0.5em',
+    color: ALL_THEMES.theme1.text2,
+  },
+  seekTimeSelect: {
+    marginLeft: '0.5em',
+    color: ALL_THEMES.theme1.text1,
   },
   audio: {
     width: '100%',
@@ -335,11 +329,6 @@ const styles = {
     width: '100%',
     height: '100%',
   },
-  seekTimeSelect: {
-    marginLeft: '0.5em',
-    color: ALL_THEMES.theme1.text2,
-  },
-
   randomRow: {
     flex: 2,
     display: 'flex',
@@ -347,10 +336,14 @@ const styles = {
     width: '100%',
     borderRadius: '0.5em',
     // marginButtom: '1.5em',
-    backgroundColor: ALL_THEMES.theme1.primany,
+    backgroundColor: ALL_THEMES.theme1.primary,
+  },
+  randomRowBtns: {
+    width: '100%',
+    height: '220%',
   },
   btn: {
-    border: 'none',
+    // border: 'none',
     padding: '0.5rem',
     height: '4vh',
     margin: '0.5em',

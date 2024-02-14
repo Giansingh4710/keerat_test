@@ -24,7 +24,7 @@ export default function OptsPage({ opts }) {
 
 const styles = {
   body:{
-    backgroundColor: ALL_THEMES.theme1.primany,
+    backgroundColor: ALL_THEMES.theme1.primary,
   },
   header: {
     fontWeight: 'bold',
@@ -33,6 +33,7 @@ const styles = {
     fontSize: '1em',
     borderRadius: '1em',
     backgroundColor: ALL_THEMES.theme1.secondary,
+    color: ALL_THEMES.theme1.text1,
   },
   optsParent: {
     display: 'flex',
@@ -49,5 +50,6 @@ const styles = {
     textAlign: 'center',
     borderRadius: '1em',
     backgroundColor: ALL_THEMES.theme1.third,
+    color: ALL_THEMES.theme1.text2,
   },
 }

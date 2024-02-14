@@ -206,11 +206,10 @@ export default function ListenPage({ title, tracksObj }) {
   return (
     <body
       style={{
-        backgroundColor: ALL_THEMES.theme1.primany,
+        backgroundColor: ALL_THEMES.theme1.primary,
       }}
     >
-      <NavBar />
-      {/* <Sidebar /> */}
+      <NavBar title={title}/>
       <SearchTracks
         tracks={TRACK_LINKS}
         playSpecificTrack={playSpecificTrack}
