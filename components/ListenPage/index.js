@@ -9,11 +9,15 @@ import ArtistsOptions from './ArtistsOptions/index.js'
 import TrackPlayback from './TrackPlayback/index.js'
 import SaveTrackModal from './SaveTrackModal/index.js'
 import SearchTracks from './SearchTracks/index.js'
-import IndexTrackBtnAndModal from './IndexTrackModal/index.js'
 import ChangeColorsModal from './ChangeColorsModal/index.js'
+import IndexTrackBtnAndModal from './IndexTrackModal/index.js'
 
-import { useEffect, useRef, useState } from 'react'
-import { getTrackLinks } from '@/utils/helper_funcs.js'
+import { Suspense, useEffect, useRef, useState } from 'react'
+import {
+  formatTime,
+  getNameOfTrack,
+  getTrackLinks,
+} from '@/utils/helper_funcs.js'
 
 export default function ListenPage({ title, tracksObj }) {
   const [TRACK_LINKS, setTrackLinks] = useState(getTrackLinks(tracksObj))
@@ -22,6 +26,13 @@ export default function ListenPage({ title, tracksObj }) {
   const [shuffle, setShuffle] = useState(false) // audio track stuff
   const timeToGoTo = useRef(0)
   const audioRef = useRef(null)
+  const skipTime = useRef(5)
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.onended = nextTrack
+    }
+  }, [audioRef?.current])
 
   const [tracksHistory, setTracksHistory] = useState({
     curr_ind: -1, //index in links_lst
@@ -78,13 +89,20 @@ export default function ListenPage({ title, tracksObj }) {
     getShuffle()
     if (!urlStuff()) {
       if (!getTrackLocalStorage()) {
-        nextTrack()
-        // randTrack()
+        // nextTrack()
+        randTrack()
       }
     }
 
     window.onbeforeunload = saveTrackInLocalStorage
   }, [])
+
+  //to get rid of next.js Hydration error
+  const [showChild, setShowChild] = useState(false)
+  useEffect(() => {
+    setShowChild(true)
+  }, [])
+  if (!showChild) return <body />
 
   function saveTrackInLocalStorage(link, time) {
     if (!link) {
@@ -118,6 +136,37 @@ export default function ListenPage({ title, tracksObj }) {
     return trackType
   }
 
+  function navigatorStuff(link, artist) {
+    navigator.mediaSession.setActionHandler('play', () =>
+      audioRef.current.play(),
+    )
+    navigator.mediaSession.setActionHandler('pause', () =>
+      audioRef.current.pause(),
+    )
+
+    navigator.mediaSession.setActionHandler('seekforward', () => {
+      audioRef.current.currentTime += skipTime.current
+    })
+    navigator.mediaSession.setActionHandler(
+      'seekbackward',
+      () => (audioRef.current.currentTime += skipTime.current * -1),
+    )
+    navigator.mediaSession.setActionHandler('previoustrack', prevTrack)
+    navigator.mediaSession.setActionHandler('nexttrack', nextTrack)
+
+    navigator.mediaSession.setActionHandler('seekto', function (event) {
+      audioRef.current.currentTime = event.seekTime
+    })
+
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: getNameOfTrack(link),
+        artist: artist,
+        album: title,
+      })
+    }
+  }
+
   function playTrack(curr_ind, curr_link, links_lst) {
     const curr_artist = getTypeOfTrack(curr_link)
     setTracksHistory({
@@ -126,6 +175,7 @@ export default function ListenPage({ title, tracksObj }) {
       links_lst,
       curr_artist,
     })
+    navigatorStuff(curr_link, curr_artist)
     saveTrackInLocalStorage(curr_link, '0')
   }
 
@@ -209,7 +259,7 @@ export default function ListenPage({ title, tracksObj }) {
         backgroundColor: ALL_THEMES.theme1.primary,
       }}
     >
-      <NavBar title={title}/>
+      <NavBar title={title} />
       <SearchTracks
         tracks={TRACK_LINKS}
         playSpecificTrack={playSpecificTrack}
@@ -225,22 +275,26 @@ export default function ListenPage({ title, tracksObj }) {
         setTrackLinks={setTrackLinks}
         numOfTracks={TRACK_LINKS.length}
       />
-      <TrackPlayback
-        artist={tracksHistory.curr_artist}
-        link={tracksHistory.curr_link}
-        allOpts={allOpts}
-        shuffle={shuffle}
-        setShuffle={setShuffle}
-        nextTrack={nextTrack}
-        prevTrack={prevTrack}
-        timeToGoTo={timeToGoTo}
-        album={title}
-        audioRef={audioRef}
-      />
-      <IndexTrackBtnAndModal
-        artist={tracksHistory.curr_artist}
-        link={tracksHistory.curr_link}
-      />
+      <Suspense fallback={<div>Getting Track...</div>}>
+        <TrackPlayback
+          artist={tracksHistory.curr_artist}
+          link={tracksHistory.curr_link}
+          allOpts={allOpts}
+          shuffle={shuffle}
+          setShuffle={setShuffle}
+          nextTrack={nextTrack}
+          prevTrack={prevTrack}
+          timeToGoTo={timeToGoTo}
+          audioRef={audioRef}
+          skipTime={skipTime}
+        />
+      </Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        <IndexTrackBtnAndModal
+          artist={tracksHistory.curr_artist}
+          link={tracksHistory.curr_link}
+        />
+      </Suspense>
       <ChangeColorsModal />
     </body>
   )

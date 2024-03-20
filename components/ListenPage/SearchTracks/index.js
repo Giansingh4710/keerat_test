@@ -1,7 +1,6 @@
 import ALL_THEMES from '@/utils/themes'
 import { useState } from 'react'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
-import SearchIcon from '@mui/icons-material/Search'
 
 import { IconButton } from '@mui/material'
 import { getNameOfTrack } from '@/utils/helper_funcs'

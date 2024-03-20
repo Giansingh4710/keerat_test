@@ -24,10 +24,10 @@ export default function ArtistsOptions({
     }
 
     toast((t) => (
-      <span>
+      <div>
         Total Tracks in Queue: <b>{numOfTracks}</b> <br />
         <button onClick={() => toast.dismiss(t.id)}>Dismiss</button>
-      </span>
+      </div>
     ))
   }, [allOpts, numOfTracks])
 

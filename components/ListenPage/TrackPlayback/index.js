@@ -1,17 +1,15 @@
+import React from 'react'
 import ALL_THEMES from '@/utils/themes'
 import { getPrefixForProd } from '@/utils/helper_funcs'
-
 import { IconButton, Typography } from '@mui/material'
-
 import { useMemo, useRef, useState } from 'react'
 import { formatTime, getNameOfTrack } from '@/utils/helper_funcs'
 import { styled } from '@mui/material/styles'
-
 import toast, { Toaster } from 'react-hot-toast'
-
 import AudiotrackIcon from '@mui/icons-material/Audiotrack'
 import PersonIcon from '@mui/icons-material/Person'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import AudioPlayer from './AudioPlayer'
 
 const prefix = getPrefixForProd()
 
@@ -25,42 +23,10 @@ export default function TrackPlayback({
   artist,
   allOpts,
   timeToGoTo,
-  album,
   audioRef,
+  skipTime,
 }) {
-  const [currentTime, setCurrentTime] = useState('0.0')
-  const [paused, setPaused] = useState(true)
-  const skipTime = useRef(5)
-
-  function navigatorStuff() {
-    const theAudioPlayer = audioRef.current
-    navigator.mediaSession.setActionHandler('play', () => theAudioPlayer.play())
-    navigator.mediaSession.setActionHandler('pause', () =>
-      theAudioPlayer.pause()
-    )
-
-    navigator.mediaSession.setActionHandler('seekforward', () => {
-      theAudioPlayer.currentTime += skipTime.current
-    })
-    navigator.mediaSession.setActionHandler(
-      'seekbackward',
-      () => (theAudioPlayer.currentTime += skipTime.current * -1)
-    )
-    navigator.mediaSession.setActionHandler('previoustrack', prevTrack)
-    navigator.mediaSession.setActionHandler('nexttrack', nextTrack)
-
-    navigator.mediaSession.setActionHandler('seekto', function (event) {
-      theAudioPlayer.currentTime = event.seekTime
-    })
-
-    if ('mediaSession' in navigator) {
-      navigator.mediaSession.metadata = new MediaMetadata({
-        title: getNameOfTrack(link),
-        artist: artist,
-        album: album,
-      })
-    }
-  }
+  const [paused, setPaused] = useState(audioRef.current?.paused)
 
   function copyLink() {
     const url = new URL(window.location.href.split('?')[0].split('#')[0])
@@ -73,71 +39,35 @@ export default function TrackPlayback({
       return -1
     }
 
-    url.searchParams.append('time', parseInt(currentTime))
+    url.searchParams.append('time', parseInt(audioRef.current.currentTime))
     url.searchParams.append('artist', artist)
     url.searchParams.append('trackIndex', get_ind_from_artist_tracks(link))
     navigator.clipboard.writeText(url.href)
-    toast.success(`Link with timestamp: ${formatTime(currentTime)} Copied`)
+    toast.success(
+      `Link with timestamp: ${formatTime(audioRef.current.currentTime)} Copied`,
+    )
+  }
+
+  function togglePlayPause() {
+    if (paused) {
+      audioRef.current?.play()
+    } else {
+      audioRef.current?.pause()
+    }
   }
 
   function PlayPauseBtn() {
-    if (paused) {
-      return (
-        <button
-          style={styles.playbackIcon}
-          onClick={() => {
-            audioRef.current.play()
-            setPaused(false)
-          }}
-        >
-          <img
-            src={`${prefix}/playbackImgs/play.svg`}
-            style={styles.playbackImg}
-          />
-        </button>
-      )
-    }
+    const imgSrc =
+      `${prefix}/playbackImgs/` + (paused ? 'play' : 'pause') + '.svg'
 
     return (
-      <button
-        style={styles.playbackIcon}
-        onClick={() => {
-          audioRef.current.pause()
-          setPaused(true)
-        }}
-      >
-        <img
-          src={`${prefix}/playbackImgs/pause.svg`}
-          style={styles.playbackImg}
-        />
+      <button style={styles.playbackIcon} onClick={togglePlayPause}>
+        <img src={imgSrc} style={styles.playbackImg} />
       </button>
     )
   }
 
-  const audioComponent = useMemo(() => {
-    return (
-      <audio
-        src={link}
-        style={styles.audio}
-        ref={audioRef}
-        controls={true}
-        autoPlay={true}
-        onPause={() => setPaused(true)}
-        onPlay={() => setPaused(false)}
-        onTimeUpdate={(e) => setCurrentTime(e.target.currentTime)}
-        onError={() => {
-          toast.error('Error Loading Track!')
-        }}
-        onEnded={nextTrack}
-        onLoadedData={() => {
-          console.log(timeToGoTo.current, audioRef.current.duration)
-          audioRef.current.currentTime = parseInt(timeToGoTo.current)
-          timeToGoTo.current = 0
-          navigatorStuff()
-        }}
-      ></audio>
-    )
-  }, [link])
+  const playPauseBtn = useMemo(() => <PlayPauseBtn />, [paused])
 
   const shuffleImg = useMemo(() => {
     let imgSrc = `${prefix}/playbackImgs/inorder.svg`
@@ -146,8 +76,6 @@ export default function TrackPlayback({
     }
     return <img src={imgSrc} style={styles.randomRowBtns} />
   }, [shuffle])
-
-  const playPauseBtn = useMemo(() => <PlayPauseBtn />, [paused])
 
   return (
     <div style={styles.cont}>
@@ -176,21 +104,15 @@ export default function TrackPlayback({
           </IconButton>
           <TinyText>{artist}</TinyText>
         </div>
-        <div style={styles.contLine}>
-          <IconButton
-            onClick={() => {
-              toast.success(`At ${formatTime(currentTime)} = ${currentTime}!`)
-            }}
-          >
-            <AccessTimeIcon style={styles.musicIcon} />
-          </IconButton>
-          <TinyText>
-            {formatTime(currentTime)} /{' '}
-            {formatTime(audioRef?.current?.duration)}
-          </TinyText>
-        </div>
       </div>
-      {audioComponent}
+
+      <AudioPlayer
+        link={link}
+        audioRef={audioRef}
+        setPaused={setPaused}
+        timeToGoTo={timeToGoTo}
+      />
+
       <div style={styles.randomRow}>
         <button
           onClick={() => {
@@ -221,7 +143,10 @@ export default function TrackPlayback({
           </select>
         </div>
         <button style={styles.btn} onClick={copyLink}>
-          <img src={`${prefix}/playbackImgs/copy.svg`} style={styles.randomRowBtns} />
+          <img
+            src={`${prefix}/playbackImgs/copy.svg`}
+            style={styles.randomRowBtns}
+          />
         </button>
       </div>
       <div style={styles.playBackOptions}>
@@ -274,7 +199,7 @@ const styles = {
     backgroundColor: ALL_THEMES.theme1.third,
     color: ALL_THEMES.theme1.text2,
 
-    border: "3px solid #34568b",
+    border: '3px solid #34568b',
     borderRadius: '1.5em',
   },
   trackInfo: {
@@ -306,11 +231,6 @@ const styles = {
   seekTimeSelect: {
     marginLeft: '0.5em',
     color: ALL_THEMES.theme1.text1,
-  },
-  audio: {
-    width: '100%',
-    height: '100%',
-    margin: '1em 0',
   },
   playBackOptions: {
     display: 'flex',
