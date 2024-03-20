@@ -23,12 +23,9 @@ export default function ArtistsOptions({
       optionsDivRef.current.scrollTop = scrollTo.current
     }
 
-    toast((t) => (
-      <div>
-        Total Tracks in Queue: <b>{numOfTracks}</b> <br />
-        <button onClick={() => toast.dismiss(t.id)}>Dismiss</button>
-      </div>
-    ))
+    toast(`Total Tracks in Queue: ${numOfTracks}`, {
+      duration: 1000,
+    })
   }, [allOpts, numOfTracks])
 
   function TheOptions() {
@@ -82,49 +79,57 @@ export default function ArtistsOptions({
   }
 
   return (
-    <div style={styles.container}>
-      <Toaster position='top-left' reverseOrder={true} />
-      <div style={styles.topRow}>
-        <p style={styles.trackNums}>Total Tracks in Queue: {numOfTracks}</p>
-        <IconButton style={styles.xIcon} onClick={() => setShowOpts(false)}>
-          <HighlightOffIcon style={styles.xIcon} />
-        </IconButton>
-      </div>
-      <TheOptions />
-      <div style={styles.checkBtnsRow}>
-        <button
-          style={styles.checkOptsBtns}
-          onClick={() => {
-            setAllOpts((opts) => {
-              Object.keys(opts).forEach((artist) => {
-                opts[artist].checked = true
+    <>
+      <button onClick={() => setShowOpts(false)} style={styles.mainBtn}>
+        Close Track Options
+      </button>
+      <div style={styles.container}>
+        <Toaster position='top-left' reverseOrder={true} />
+        <div style={styles.topRow}>
+          <p style={styles.trackNums}>Total Tracks in Queue: {numOfTracks}</p>
+          <IconButton style={styles.xIcon} onClick={() => setShowOpts(false)}>
+            <HighlightOffIcon style={styles.xIcon} />
+          </IconButton>
+        </div>
+        <TheOptions />
+        <div style={styles.checkBtnsRow}>
+          <button
+            style={styles.checkOptsBtns}
+            onClick={() => {
+              setAllOpts((opts) => {
+                Object.keys(opts).forEach((artist) => {
+                  opts[artist].checked = true
+                })
+                setTrackLinks(getTrackLinks(opts))
+                return opts
               })
-              setTrackLinks(getTrackLinks(opts))
-              return opts
-            })
-          }}
-        >
-          Select All
-        </button>
-        <button
-          style={styles.checkOptsBtns}
-          onClick={() => {
-            setAllOpts((opts) => {
-              Object.keys(opts).forEach((artist) => {
-                opts[artist].checked = false
+            }}
+          >
+            Select All
+          </button>
+          <button
+            style={styles.checkOptsBtns}
+            onClick={() => {
+              setAllOpts((opts) => {
+                Object.keys(opts).forEach((artist) => {
+                  opts[artist].checked = false
+                })
+                setTrackLinks(getTrackLinks(opts))
+                return opts
               })
-              setTrackLinks(getTrackLinks(opts))
-              return opts
-            })
-          }}
-        >
-          Unselect All
-        </button>
-        <button style={styles.checkOptsBtns} onClick={() => setShowOpts(false)}>
-          Close
-        </button>
+            }}
+          >
+            Unselect All
+          </button>
+          <button
+            style={styles.checkOptsBtns}
+            onClick={() => setShowOpts(false)}
+          >
+            Close
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -156,6 +161,7 @@ const styles = {
     flex: 1,
     display: 'flex',
     justifyContent: 'flex-start',
+    fontSize: '1.5em',
   },
   xIcon: {
     fontSize: '1rem',
@@ -171,7 +177,7 @@ const styles = {
     // margin: '0rem',
     margin: '0.5em',
     marginLeft: '0.5em',
-    fontSize: '0.5em',
+    fontSize: '1.5em',
     borderRadius: '5px',
     // border: 'none',
     cursor: 'pointer',
@@ -196,10 +202,11 @@ const styles = {
   checkbox: {
     // flex: 1,
     margin: '0.5em',
-
   },
   label: {
     color: ALL_THEMES.theme1.text2,
+    fontWeight: 500,
+    fontSize: '2.5em',
     // flex: 30,
     // overflowWrap: 'break-word',
     // whiteSpace: 'nowrap',

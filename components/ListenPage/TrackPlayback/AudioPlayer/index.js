@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { MdVolumeOff, MdVolumeUp } from 'react-icons/md'
 import { formatTime } from '@/utils/helper_funcs'
 
 export default function AudioPlayer({
@@ -8,9 +7,9 @@ export default function AudioPlayer({
   setPaused,
   timeToGoTo,
   playbackSpeed,
+  nextTrack,
 }) {
   const [buffered, setBuffered] = React.useState(0)
-  const [volume, setVolume] = React.useState(0.2)
   const [currentTime, setCurrentTime] = React.useState(0)
 
   const handleBufferProgress = (e) => {
@@ -39,18 +38,17 @@ export default function AudioPlayer({
         ref={audioRef}
         key={link}
         autoPlay={true}
-        onCanPlay={(e) => {
-          e.currentTarget.volume = volume
-        }}
         onPlay={() => setPaused(false)}
         onPause={() => setPaused(true)}
         onTimeUpdate={handleBufferProgress}
         onProgress={handleBufferProgress}
-        onVolumeChange={(e) => setVolume(e.currentTarget.volume)}
+        onEnded={() => nextTrack()}
+        onError={() => alert('Error loading audio')}
         onLoadedData={() => {
           audioRef.current.currentTime = timeToGoTo.current
           timeToGoTo.current = 0
           audioRef.current.playbackRate = playbackSpeed.current
+          setPaused(audioRef.current.paused) // for initial load. Browser blocks autoplay
         }}
         onSeeking={() => {}}
       >
@@ -107,13 +105,19 @@ function AudioProgressBar({ audioRef, buffered, currentTime }) {
         <span>{formatTime(currentTime)}</span>
         <input
           type='range'
-          name='progress'
+          className='slider'
           style={{
             width: '100%',
-            appearance: 'none',
+            background: `linear-gradient(to right, grey ${bufferedWidth}%, #f0f0f0 ${bufferedWidth}% 100%)`,
+            // opacity: 0.7,
+
+            WebkitAppearance: 'none',
+            WebkitTransition: '0.2s',
+
+            height: '15px',
             borderRadius: '5px',
-            background: `linear-gradient(to right, #2196F3 ${bufferedWidth}%, #f0f0f0 ${bufferedWidth}% 100%)`,
-            transition: 'background-color 0.3s ease',
+            outline: 'none',
+            transition: 'opacity 0.2s',
           }}
           min={0}
           max={duration}
@@ -122,6 +126,27 @@ function AudioProgressBar({ audioRef, buffered, currentTime }) {
         />
         <span>{formatTime(duration)}</span>
       </div>
+      <style jsx>
+        {`
+          .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 10px;
+            height: 25px;
+            border-radius: 10px;
+            background: #ff8100;
+            cursor: pointer;
+          }
+
+          .slider::-moz-range-thumb {
+            width: 10px;
+            height: 25px;
+            border-radius: 10px;
+            background: #04aa6d;
+            cursor: pointer;
+          }
+        `}
+      </style>
     </div>
   )
 }

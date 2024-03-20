@@ -52,8 +52,9 @@ export default function TrackPlayback({
   }
 
   function togglePlayPause() {
-    if (paused) {
-      audioRef.current?.play()
+    // || audioRef... is for inital load. Browser blocks autoplay
+    if (paused || audioRef.current?.paused) { 
+      audioRef.current?.play() // setPaused is done on the audio tag
       console.log('playing')
     } else {
       audioRef.current?.pause()
@@ -67,7 +68,7 @@ export default function TrackPlayback({
 
     return (
       <button style={styles.playbackIcon} onClick={togglePlayPause}>
-        <img src={imgSrc} style={styles.playbackImg} />
+        <img src={imgSrc} style={styles.playbackImg} alt="playPauseBtn" />
       </button>
     )
   }
@@ -79,7 +80,7 @@ export default function TrackPlayback({
     if (shuffle) {
       imgSrc = `${prefix}/playbackImgs/shuffle.svg`
     }
-    return <img src={imgSrc} style={styles.randomRowBtns} />
+    return <img src={imgSrc} style={styles.randomRowBtnImgs} />
   }, [shuffle])
 
   return (
@@ -102,7 +103,7 @@ export default function TrackPlayback({
         <div style={styles.contLine}>
           <IconButton
             onClick={() => {
-              toast.success(`Dhan ${artist}!`)
+              toast.success(`Dhan ${artist}!!!`)
             }}
           >
             <PersonIcon style={styles.musicIcon} />
@@ -115,6 +116,7 @@ export default function TrackPlayback({
         link={link}
         audioRef={audioRef}
         setPaused={setPaused}
+        nextTrack={nextTrack}
         timeToGoTo={timeToGoTo}
         playbackSpeed={playbackSpeed}
       />
@@ -126,7 +128,7 @@ export default function TrackPlayback({
             localStorage.setItem('shuffle', !shuffle)
             toast.success('Shuffle ' + (!shuffle ? 'Enabled' : 'Disabled'))
           }}
-          style={styles.btn}
+          style={styles.randomRowBtn}
         >
           {shuffleImg}
         </button>
@@ -167,10 +169,10 @@ export default function TrackPlayback({
             <option value='60'>60 Seconds</option>
           </select>
         </div>
-        <button style={styles.btn} onClick={copyLink}>
+        <button style={styles.randomRowBtn} onClick={copyLink}>
           <img
             src={`${prefix}/playbackImgs/copy.svg`}
-            style={styles.randomRowBtns}
+            style={styles.randomRowBtnImgs}
           />
         </button>
       </div>
@@ -246,14 +248,6 @@ const styles = {
     fontSize: '1.2rem',
     paddingTop: '0.5em',
   },
-  middleDropDowns: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    padding: '0.5em',
-    color: ALL_THEMES.theme1.text2,
-  },
   seekTimeSelect: {
     marginLeft: '0.5em',
     color: ALL_THEMES.theme1.text1,
@@ -284,11 +278,20 @@ const styles = {
     // marginButtom: '1.5em',
     backgroundColor: ALL_THEMES.theme1.primary,
   },
-  randomRowBtns: {
-    width: '100%',
-    height: '220%',
+  middleDropDowns: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    padding: '0.5em',
+    color: ALL_THEMES.theme1.text2,
   },
-  btn: {
+  randomRowBtnImgs: {
+    width: '100%',
+    height: '2.5em',
+  },
+  randomRowBtn: {
     // border: 'none',
     padding: '0.5rem',
     height: '4vh',

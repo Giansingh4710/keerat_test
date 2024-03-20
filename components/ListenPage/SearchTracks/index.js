@@ -1,5 +1,5 @@
 import ALL_THEMES from '@/utils/themes'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 
 import { IconButton } from '@mui/material'
@@ -53,6 +53,8 @@ export default function SearchTracks({ tracks, playSpecificTrack }) {
     )
   }
 
+  const showTracks = useMemo(() => <ShowingOfTracks />, [searchInput])
+
   return (
     <div style={styles.cont}>
       <div style={styles.topRow}>
@@ -66,7 +68,7 @@ export default function SearchTracks({ tracks, playSpecificTrack }) {
           <HighlightOffIcon />
         </IconButton>
       </div>
-      <ShowingOfTracks />
+      {showTracks}
     </div>
   )
 }

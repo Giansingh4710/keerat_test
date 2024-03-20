@@ -1,23 +1,16 @@
 'use client'
 
 import ALL_THEMES from '@/utils/themes'
-
 import NavBar from '../NavBar/index.js'
-import Sidebar from '../Sidebar/index.js'
-
 import ArtistsOptions from './ArtistsOptions/index.js'
 import TrackPlayback from './TrackPlayback/index.js'
 import SaveTrackModal from './SaveTrackModal/index.js'
 import SearchTracks from './SearchTracks/index.js'
 import ChangeColorsModal from './ChangeColorsModal/index.js'
 import IndexTrackBtnAndModal from './IndexTrackModal/index.js'
-
 import { Suspense, useEffect, useRef, useState } from 'react'
-import {
-  formatTime,
-  getNameOfTrack,
-  getTrackLinks,
-} from '@/utils/helper_funcs.js'
+import { getNameOfTrack, getTrackLinks } from '@/utils/helper_funcs.js'
+import toast, { Toaster } from 'react-hot-toast'
 
 export default function ListenPage({ title, tracksObj }) {
   const [TRACK_LINKS, setTrackLinks] = useState(getTrackLinks(tracksObj))
@@ -27,12 +20,6 @@ export default function ListenPage({ title, tracksObj }) {
   const timeToGoTo = useRef(0)
   const audioRef = useRef(null)
   const skipTime = useRef(10)
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.onended = nextTrack
-    }
-  }, [audioRef?.current])
 
   const [tracksHistory, setTracksHistory] = useState({
     curr_ind: -1, //index in links_lst
@@ -44,38 +31,48 @@ export default function ListenPage({ title, tracksObj }) {
   useEffect(() => {
     function urlStuff() {
       const urlParams = new URLSearchParams(window.location.search)
+      if(urlParams.size === 0) return false
+
       const urlInd = parseInt(urlParams.get('trackIndex'))
       const urlArtist = urlParams.get('artist')
       const urlTime = urlParams.get('time')
       const urlSearch = urlParams.get('search')
 
-      if (urlArtist && allOpts[urlArtist].checked === false) {
+      if (allOpts[urlArtist]?.checked === false) {
         setAllOpts({
           ...allOpts,
           [urlArtist]: {
-            trackLinks: allOpts[urlArtist].trackLinks,
+            ...allOpts[urlArtist],
             checked: true,
           },
         })
       }
 
-      if (urlInd > -1) {
-        const the_link = allOpts[urlArtist].trackLinks[urlInd]
-        playSpecificTrack(the_link)
-        if (urlTime) timeToGoTo.current = parseInt(urlTime)
-        return true
+      const the_link = allOpts[urlArtist]?.trackLinks[urlInd]
+      if (!the_link) {
+        toast.error(`TrackIndex: '${urlInd}' or Artist: '${urlArtist}' from URL is not valid`)
+        return false
       }
-      return false
+      playSpecificTrack(the_link)
+      if (urlTime) timeToGoTo.current = parseInt(urlTime)
+      return true
     }
 
-    function getTrackLocalStorage() {
+    function getLastPlayedTrackLocalStorage() {
       const link = localStorage.getItem(`LastPlayed: ${title}`)
       const time = localStorage.getItem(`LastTime: ${title}`)
       // localStorage.getItem("LastPlayed: Classic Akhand Keertan")
-      console.log('link: ', link)
-      console.log('time: ', time)
+      if (typeof link != typeof '') return false
 
-      if (!link || typeof link != String) return false
+      if (link === "[object BeforeUnloadEvent]"){
+        toast.error('object BeforeUnloadEvent error')
+        return false
+      }
+
+      if (!TRACK_LINKS.includes(link)){
+        toast.error('Link in LocalStorage not in Track_LINKS')
+        return false
+      }
 
       playSpecificTrack(link)
       if (time) timeToGoTo.current = parseInt(time)
@@ -88,13 +85,10 @@ export default function ListenPage({ title, tracksObj }) {
 
     getShuffle()
     if (!urlStuff()) {
-      if (!getTrackLocalStorage()) {
-        // nextTrack()
-        randTrack()
+      if (!getLastPlayedTrackLocalStorage()) {
+        nextTrack()
       }
     }
-
-    window.onbeforeunload = saveTrackInLocalStorage
   }, [])
 
   //to get rid of next.js Hydration error
@@ -105,25 +99,18 @@ export default function ListenPage({ title, tracksObj }) {
   if (!showChild) return <body />
 
   function getLongestTrack() {
-    let longestLink = ""
-    for(let i=0; i<TRACK_LINKS.length; i++) {
-      longestLink = TRACK_LINKS[i].length > longestLink.length ? TRACK_LINKS[i] : longestLink
+    let longestLink = ''
+    for (let i = 0; i < TRACK_LINKS.length; i++) {
+      const newLink = getNameOfTrack(TRACK_LINKS[i])
+      longestLink = newLink.length > longestLink.length ? newLink : longestLink
     }
     console.log('longestLink: ', longestLink)
     return longestLink
   }
 
   function saveTrackInLocalStorage(link, time) {
-    if (!link) {
-      link = tracksHistory.curr_link
-    }
-    if (!time) {
-      time = audioRef.current.currentTime
-    }
     localStorage.setItem(`LastPlayed: ${title}`, link)
     localStorage.setItem(`LastTime: ${title}`, time)
-    console.log('saved localStorage: ', link, time)
-    return null
   }
 
   function getTypeOfTrack(link) {
@@ -197,6 +184,11 @@ export default function ListenPage({ title, tracksObj }) {
   }
 
   function nextTrack() {
+    if (TRACK_LINKS.length === 0) {
+      toast.error('No Tracks Available. Please select some Options.')
+      return
+    }
+
     let curr_ind
     let curr_link
     let links_lst
@@ -225,7 +217,11 @@ export default function ListenPage({ title, tracksObj }) {
   }
 
   function prevTrack() {
-    console.log('Before Prev', tracksHistory)
+    if (TRACK_LINKS.length === 0) {
+      toast.error('No Tracks Available')
+      return
+    }
+
     let curr_ind
     let curr_link
     let links_lst
@@ -245,7 +241,6 @@ export default function ListenPage({ title, tracksObj }) {
     }
 
     playTrack(curr_ind, curr_link, links_lst)
-    console.log('After Prev', { curr_ind, curr_link, links_lst })
   }
 
   function playSpecificTrack(link) {
@@ -268,6 +263,7 @@ export default function ListenPage({ title, tracksObj }) {
         backgroundColor: ALL_THEMES.theme1.primary,
       }}
     >
+      <Toaster position='top-left' reverseOrder={true} />
       <NavBar title={title} />
       <SearchTracks
         tracks={TRACK_LINKS}
