@@ -104,6 +104,15 @@ export default function ListenPage({ title, tracksObj }) {
   }, [])
   if (!showChild) return <body />
 
+  function getLongestTrack() {
+    let longestLink = ""
+    for(let i=0; i<TRACK_LINKS.length; i++) {
+      longestLink = TRACK_LINKS[i].length > longestLink.length ? TRACK_LINKS[i] : longestLink
+    }
+    console.log('longestLink: ', longestLink)
+    return longestLink
+  }
+
   function saveTrackInLocalStorage(link, time) {
     if (!link) {
       link = tracksHistory.curr_link

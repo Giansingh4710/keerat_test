@@ -210,7 +210,7 @@ const styles = {
     paddingTop: '0.5em',
   },
   musicIcon: {
-    fontSize: '1rem',
+    fontSize: '1.5rem',
     paddingRight: '0.5em',
   },
   trackNameAtag: {
@@ -218,7 +218,7 @@ const styles = {
     wordBreak: 'break-all',
     fontWeight: 500,
     letterSpacing: 0.2,
-    fontSize: '0.85rem',
+    fontSize: '1.2rem',
     paddingTop: '0.5em',
   },
   skipIntervelDiv: {
@@ -281,7 +281,7 @@ const styles = {
 }
 
 const TinyText = styled(Typography)({
-  fontSize: '0.8rem',
+  fontSize: '1.2rem',
   opacity: 0.7,
   fontWeight: 500,
   letterSpacing: 0.2,

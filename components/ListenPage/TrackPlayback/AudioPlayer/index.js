@@ -61,7 +61,7 @@ export default function AudioPlayer({ link, audioRef, setPaused, timeToGoTo }) {
           audioRef.current.currentTime = timeToGoTo.current
           timeToGoTo.current = 0
         }}
-        onSeeking={() => {}}
+        onSeeking={() => { }}
       >
         <source type='audio/mpeg' src={link} />
       </audio>
@@ -69,42 +69,17 @@ export default function AudioPlayer({ link, audioRef, setPaused, timeToGoTo }) {
   }, [link, audioRef])
 
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{
+      width: '100%',
+      paddingTop: '1em',
+      paddingBottom: '1em',
+    }}>
       {audioComponent}
       <AudioProgressBar
         audioRef={audioRef}
         buffered={buffered}
         currentTime={currentTime}
       />
-
-      <div className='grid grid-cols-3 items-center mt-4'>
-        <div className='flex gap-3 items-center justify-self-end'>
-          <button
-            style={{ borderRadius: '10px' }}
-            onClick={handleMuteUnmute}
-            aria-label={volume === 0 ? 'unmute' : 'mute'}
-          >
-            {volume === 0 ? (
-              <MdVolumeOff size={20} />
-            ) : (
-              <MdVolumeUp size={20} />
-            )}
-          </button>
-          <input
-            aria-label='volume'
-            name='volume'
-            type='range'
-            min={0}
-            step={0.05}
-            max={1}
-            value={volume}
-            className='w-[80px] m-0 h-2 rounded-full accent-amber-600 bg-gray-700 appearance-none cursor-pointer'
-            onChange={(e) => {
-              handleVolumeChange(e.currentTarget.valueAsNumber)
-            }}
-          />
-        </div>
-      </div>
     </div>
   )
 }
