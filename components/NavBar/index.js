@@ -1,14 +1,16 @@
-import React, { Children, useState } from 'react'
+import React, { Children, useEffect, useState } from 'react'
 import { getPrefixForProd } from '@/utils/helper_funcs'
 
-const prefix = getPrefixForProd()
-
 function LinkTag({ href }) {
+  const [prefix, setPrefix] = useState('')
+  useEffect(() => {
+    setPrefix(getPrefixForProd())
+  }, [])
+
   const linkStyles = {
     link: {
       backgroundColor: 'yellow',
       display: 'flex',
-
       justifyContent: 'left',
       padding: '0.1em',
       backgroundColor: '#333',
@@ -16,17 +18,20 @@ function LinkTag({ href }) {
     },
     text: {
       color: 'white',
-    }
+      textDecoration: 'underline',
+    },
   }
 
-  let hrefToLink  = `${href}`
+  let hrefToLink = `${href}`
   if ('http://45.76.2.28/trackIndex' === hrefToLink) {
-    hrefToLink  = `${prefix}${href}`
+    hrefToLink = `${prefix}${href}`
   }
 
   return (
     <div style={linkStyles.link}>
-      <a href={hrefToLink} style={linkStyles.text}>{href.split('/').pop()}</a>
+      <a href={hrefToLink} style={linkStyles.text}>
+        {href.split('/').pop()}
+      </a>
     </div>
   )
 }
@@ -54,6 +59,11 @@ export default function NavBar({ title }) {
 
 function BarRow({ name, main, children }) {
   const [showChildren, setShowChildren] = useState(false)
+
+  const [prefix, setPrefix] = useState('')
+  useEffect(() => {
+    setPrefix(getPrefixForProd())
+  }, [])
 
   function TheChildern() {
     if (showChildren === false) return <></>
@@ -104,12 +114,13 @@ function BarRow({ name, main, children }) {
 const styles = {
   cont: {
     width: '100%',
+    height: '100%',
     backgroundColor: '#333',
     borderRadius: '1em',
     border: '1px solid black',
   },
   topRow: {
-    height: '50px',
+    height: '45px',
     backgroundColor: '#333',
     borderRadius: '1em',
     display: 'flex',
@@ -118,7 +129,10 @@ const styles = {
   home: {
     flex: 0.5,
     height: '95%',
-    borderRadius: '0.5em',
+    paddingLeft: '15px',
+    paddingRight: '15px',
+    fontSize: '1em',
+    borderRadius: '10px',
     backgroundColor: '#eddf6a',
 
     display: 'flex',
@@ -126,15 +140,24 @@ const styles = {
     justifyContent: 'center',
   },
   title: {
-    flex: 3,
+    flex: 4,
+    alignSelf: 'center',
+    alignItems: 'center',
     color: 'white',
     fontSize: '1em',
   },
   burgerIcon: {
-    borderRadius: '0.5em',
     flex: 0.5,
     height: '95%',
+    paddingLeft: '15px',
+    paddingRight: '15px',
     fontSize: '2em',
+    borderRadius: '10px',
+    backgroundColor: '#eddf6a',
+
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   childs: {
     display: 'flex',
@@ -145,27 +168,4 @@ const styles = {
     flex: 1,
     width: '97%',
   },
-}
-
-function Old({ title }) {
-  return (
-    <nav className='topnav'>
-      <a href={`${prefix}/`} className='active'>
-        Home
-      </a>
-      <div className='dropdown'>
-        <button className='dropbtn'>Keertan &darr;</button>
-        <div className='dropdown_content'>
-          <a href={`${prefix}/Keertan/AkhandKeertan/`}>Akhand Keertan</a>
-          <a href={`${prefix}/Keertan/DarbarSahibPuratanKeertanSGPC`}>
-            Darbar Sahib Puratan Keertan
-          </a>
-          <a href={`${prefix}/Keertan/TimeBasedRaagKeertan/`}>
-            Time Based Raag Keertan
-          </a>
-          <a href={`${prefix}/Keertan/AllKeertan`}>All Keertan</a>
-        </div>
-      </div>
-    </nav>
-  )
 }

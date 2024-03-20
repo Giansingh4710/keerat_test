@@ -2,16 +2,13 @@ import React from 'react'
 import ALL_THEMES from '@/utils/themes'
 import { getPrefixForProd } from '@/utils/helper_funcs'
 import { IconButton, Typography } from '@mui/material'
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { formatTime, getNameOfTrack } from '@/utils/helper_funcs'
 import { styled } from '@mui/material/styles'
 import toast, { Toaster } from 'react-hot-toast'
 import AudiotrackIcon from '@mui/icons-material/Audiotrack'
 import PersonIcon from '@mui/icons-material/Person'
-import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AudioPlayer from './AudioPlayer'
-
-const prefix = getPrefixForProd()
 
 export default function TrackPlayback({
   shuffle,
@@ -27,6 +24,12 @@ export default function TrackPlayback({
   skipTime,
 }) {
   const [paused, setPaused] = useState(audioRef.current?.paused)
+  const playbackSpeed = useRef(1)
+
+  const [prefix, setPrefix] = useState('')
+  useEffect(() => {
+    setPrefix(getPrefixForProd())
+  }, [])
 
   function copyLink() {
     const url = new URL(window.location.href.split('?')[0].split('#')[0])
@@ -51,8 +54,10 @@ export default function TrackPlayback({
   function togglePlayPause() {
     if (paused) {
       audioRef.current?.play()
+      console.log('playing')
     } else {
       audioRef.current?.pause()
+      console.log('paused')
     }
   }
 
@@ -111,6 +116,7 @@ export default function TrackPlayback({
         audioRef={audioRef}
         setPaused={setPaused}
         timeToGoTo={timeToGoTo}
+        playbackSpeed={playbackSpeed}
       />
 
       <div style={styles.randomRow}>
@@ -125,7 +131,27 @@ export default function TrackPlayback({
           {shuffleImg}
         </button>
 
-        <div style={styles.skipIntervelDiv}>
+        <div style={styles.middleDropDowns}>
+          <label htmlFor='pickPlaybackSpeed'>Speed:</label>
+          <select
+            style={styles.seekTimeSelect}
+            id='pickPlaybackSpeed'
+            onChange={(e) => {
+              playbackSpeed.current = parseFloat(e.target.value)
+              audioRef.current.playbackRate = playbackSpeed.current
+            }}
+            defaultValue='1'
+          >
+            <option value='0.5'>0.5x</option>
+            <option value='1'>1x</option>
+            <option value='1.5'>1.5x</option>
+            <option value='2'>2x</option>
+            <option value='2.5'>2.5x</option>
+            <option value='3'>3x</option>
+          </select>
+        </div>
+
+        <div style={styles.middleDropDowns}>
           <label htmlFor='pickSkipInterval'>Skip Interval:</label>
           <select
             style={styles.seekTimeSelect}
@@ -133,11 +159,10 @@ export default function TrackPlayback({
             onChange={(e) => {
               skipTime.current = parseInt(e.target.value)
             }}
+            defaultValue='10'
           >
             <option value='5'>5 Seconds</option>
-            <option value='10' defaultValue>
-              10 Seconds
-            </option>
+            <option value='10'>10 Seconds</option>
             <option value='30'>30 Seconds</option>
             <option value='60'>60 Seconds</option>
           </select>
@@ -221,8 +246,9 @@ const styles = {
     fontSize: '1.2rem',
     paddingTop: '0.5em',
   },
-  skipIntervelDiv: {
+  middleDropDowns: {
     display: 'flex',
+    flexDirection: 'column',
     alignSelf: 'center',
     justifyContent: 'center',
     padding: '0.5em',

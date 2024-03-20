@@ -26,7 +26,7 @@ export default function ListenPage({ title, tracksObj }) {
   const [shuffle, setShuffle] = useState(false) // audio track stuff
   const timeToGoTo = useRef(0)
   const audioRef = useRef(null)
-  const skipTime = useRef(5)
+  const skipTime = useRef(10)
 
   useEffect(() => {
     if (audioRef.current) {

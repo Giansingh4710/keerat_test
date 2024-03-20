@@ -2,7 +2,13 @@ import * as React from 'react'
 import { MdVolumeOff, MdVolumeUp } from 'react-icons/md'
 import { formatTime } from '@/utils/helper_funcs'
 
-export default function AudioPlayer({ link, audioRef, setPaused, timeToGoTo }) {
+export default function AudioPlayer({
+  link,
+  audioRef,
+  setPaused,
+  timeToGoTo,
+  playbackSpeed,
+}) {
   const [buffered, setBuffered] = React.useState(0)
   const [volume, setVolume] = React.useState(0.2)
   const [currentTime, setCurrentTime] = React.useState(0)
@@ -27,22 +33,6 @@ export default function AudioPlayer({ link, audioRef, setPaused, timeToGoTo }) {
     }
   }
 
-  const handleMuteUnmute = () => {
-    if (!audioRef.current) return
-
-    if (audioRef.current.volume !== 0) {
-      audioRef.current.volume = 0
-    } else {
-      audioRef.current.volume = 1
-    }
-  }
-
-  const handleVolumeChange = (volumeValue) => {
-    if (!audioRef.current) return
-    audioRef.current.volume = volumeValue
-    setVolume(volumeValue)
-  }
-
   const audioComponent = React.useMemo(() => {
     return (
       <audio
@@ -60,8 +50,9 @@ export default function AudioPlayer({ link, audioRef, setPaused, timeToGoTo }) {
         onLoadedData={() => {
           audioRef.current.currentTime = timeToGoTo.current
           timeToGoTo.current = 0
+          audioRef.current.playbackRate = playbackSpeed.current
         }}
-        onSeeking={() => { }}
+        onSeeking={() => {}}
       >
         <source type='audio/mpeg' src={link} />
       </audio>
@@ -69,11 +60,13 @@ export default function AudioPlayer({ link, audioRef, setPaused, timeToGoTo }) {
   }, [link, audioRef])
 
   return (
-    <div style={{
-      width: '100%',
-      paddingTop: '1em',
-      paddingBottom: '1em',
-    }}>
+    <div
+      style={{
+        width: '100%',
+        paddingTop: '1em',
+        paddingBottom: '1em',
+      }}
+    >
       {audioComponent}
       <AudioProgressBar
         audioRef={audioRef}
@@ -118,11 +111,9 @@ function AudioProgressBar({ audioRef, buffered, currentTime }) {
           style={{
             width: '100%',
             appearance: 'none',
-            // padding: '0',
-            // margin: '0',
             borderRadius: '5px',
             background: `linear-gradient(to right, #2196F3 ${bufferedWidth}%, #f0f0f0 ${bufferedWidth}% 100%)`,
-            // transition: 'background-color 0.3s ease',
+            transition: 'background-color 0.3s ease',
           }}
           min={0}
           max={duration}
