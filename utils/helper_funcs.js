@@ -4,8 +4,10 @@ export function getPrefixForProd() {
   try {
     const isLocal = require('./local.js').default
     if (isLocal) return ''
+    return ''
     return '/keerat_test'
   } catch (e) {
+    return ''
     return '/keerat_test'
   }
 }
