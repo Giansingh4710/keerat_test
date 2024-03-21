@@ -90,9 +90,7 @@ function DisplayTracks({
   localStorageKey,
   modalOpen,
 }) {
-  const [savedTracks, setSavedTracks] = useState(
-    JSON.parse(localStorage.getItem(localStorageKey)),
-  )
+  const [savedTracks, setSavedTracks] = useState({})
 
   useEffect(() => {
     setSavedTracks(JSON.parse(localStorage.getItem(localStorageKey)))
@@ -153,7 +151,7 @@ function DisplayTracks({
 
   return (
     <div style={listStyles.cont}>
-      <p>{Object.keys(savedTracks).length}: Saved Tracks</p>
+      <p>{listItems.length}: Saved Tracks</p>
       <ol style={listStyles.ol}>{listItems}</ol>
     </div>
   )

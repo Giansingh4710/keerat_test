@@ -49,3 +49,6 @@ export function formatTime(timeInSeconds) {
   return formattedTime
 }
 
+export function containsOnlyDigits(str) {
+    return /^\d+$/.test(str);
+}

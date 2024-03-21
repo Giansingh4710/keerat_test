@@ -3,6 +3,7 @@ import { Button, Modal } from '@mui/material'
 import { useRef, useState } from 'react'
 import { ALL_SHABADS } from './allShabads.js'
 import CancelIcon from '@mui/icons-material/Cancel'
+import {containsOnlyDigits} from '@/utils/helper_funcs.js'
 
 export default function IndexTrackBtnAndModal({ artist, link }) {
   const [modalOpen, setModal] = useState(false)
@@ -12,6 +13,7 @@ export default function IndexTrackBtnAndModal({ artist, link }) {
   const [lineClicked, setLineClicked] = useState('')
   const [submitFormBtnDisabled, setSubmitFormBtnDisabled] = useState(false)
   const formData = useRef(null)
+  
 
   const [timestamp, setTimestamp] = useState({
     hours: '',
@@ -22,19 +24,42 @@ export default function IndexTrackBtnAndModal({ artist, link }) {
   function formValidation(e) {
     e.preventDefault()
 
+    const canPostDataToTrackIndex = localStorage.getItem('canPostDataToTrackIndex') === 'true' ? true : false
+    if (!canPostDataToTrackIndex){
+      alert('You are not allowed to post data to the track index')
+      const password = prompt('Enter password if you to save data?')
+      if (password === 'gaa') {
+        localStorage.setItem('canPostDataToTrackIndex', 'true')
+        alert('Correct password!!')
+      }else{
+        alert('Wrong password')
+      }
+      return
+    }
+
     function add_to_form_to_send_to_server(name, value) {
       const additionalField = document.createElement('input')
       additionalField.name = name
       additionalField.value = value
       formData.current.appendChild(additionalField)
     }
-    add_to_form_to_send_to_server('linkToGoTo', window.location.href)
+
+    if (description === '') {
+      alert('Description cannot be empty')
+      return
+    }
+
+    if (containsOnlyDigits(timestamp.hours) && containsOnlyDigits(timestamp.minutes) && containsOnlyDigits(timestamp.seconds)) {
+      alert('Timestamp cannot be empty')
+      return
+    }
+
+    add_to_form_to_send_to_server('linkToGoTo', window.location.href) //come back to this page
     add_to_form_to_send_to_server('keertani', artist)
     add_to_form_to_send_to_server('link', link)
 
     formData.current.submit()
     setSubmitFormBtnDisabled(true)
-    // setModal(false)
   }
 
   function ShowShabads() {
@@ -140,9 +165,6 @@ export default function IndexTrackBtnAndModal({ artist, link }) {
             method='post'
             action='http://45.76.2.28/trackIndex/util/addData.php'
           >
-            <span onClick={() => setModal(false)} style={styles.closeModalBtn}>
-              &times;
-            </span>
             <div style={styles.userInputItem}>
               <label style={styles.label} htmlFor='userDesc'>
                 Description:
@@ -235,13 +257,10 @@ export default function IndexTrackBtnAndModal({ artist, link }) {
                 }
               />
             </div>
-            <Button
-              variant='contained'
-              type='submit'
-              disabled={submitFormBtnDisabled}
-            >
+            <button onClick={() => setModal(false)}>Close</button>
+            <button type='submit' disabled={submitFormBtnDisabled}>
               Add
-            </Button>
+            </button>
           </form>
         </div>
       </Modal>
@@ -459,7 +478,7 @@ function get_sbds_first_letters(gurmukhi_input) {
 }
 
 const styles = {
-  main_btn:{
+  main_btn: {
     margin: '2em',
     borderRadius: '10px',
     color: ALL_THEMES.theme1.text2,
@@ -489,9 +508,9 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: '1em',
-    margin: '1em',
-    padding: '0.5em',
+    borderRadius: '10px',
+    marginBottom: '5px',
+    padding: '10px',
     backgroundColor: '#0077be',
   },
   label: {
@@ -505,6 +524,6 @@ const styles = {
   },
   timeInput: {
     width: '3em',
-    color: ALL_THEMES.theme1.text2,
+    color: ALL_THEMES.theme1.text1,
   },
 }

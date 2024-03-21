@@ -36,3 +36,12 @@ yarn-error.log*
 next-env.d.ts
 
 utils/local.js
+
+
+# from old html keerat
+.DS_Store
+*.mp3
+*.zip
+*azure/env.py
+*__pycache__/
+geckodriver.log
